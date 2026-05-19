@@ -25,13 +25,20 @@ export default {
           }),
         })
 
-        if (!res.ok) throw new Error('Errore invio email')
+        if (!res.ok) {
+          const errorBody = await res.text()
+          throw new Error(`Resend API error: ${res.status} - ${errorBody}`)
+        }
 
         return new Response(JSON.stringify({ success: true }), {
           headers: { 'Content-Type': 'application/json' },
         })
       } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), {
+        return new Response(JSON.stringify({
+          error: err.message,
+          hasKey: !!env.RESEND_API_KEY,
+          keyPrefix: env.RESEND_API_KEY ? env.RESEND_API_KEY.substring(0, 8) + '...' : null,
+        }), {
           status: 500,
           headers: { 'Content-Type': 'application/json' },
         })
