@@ -2,9 +2,7 @@ import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from './Icon'
 import Reveal from './Reveal'
-import videoSiti from '../assets/hf_20260518_170213_fdcf93e0-3c9c-4dbb-9bb5-cf6139efcfb6.mp4'
-import videoAI from '../assets/hf_20260518_170503_386bf7d7-9c9f-44f1-8dec-9a47fb9b6e3d.mp4'
-import videoCom from '../assets/hf_20260518_170736_536080c3-8e58-4040-9339-62a07abbaff3.mp4'
+
 
 function VideoThumb({ src }) {
   const ref = useRef(null)
@@ -42,7 +40,7 @@ function VideoThumb({ src }) {
 const pilastri = [
   {
     id: 'siti-web',
-    video: videoSiti,
+    video: '/video/hf_20260518_170213_fdcf93e0-3c9c-4dbb-9bb5-cf6139efcfb6.mp4',
     headline: 'Sviluppo web professionale, senza template.',
     body: 'Un sito web non è un biglietto da visita digitale. È il tuo venditore migliore, attivo 24 ore su 24, 7 giorni su 7. Se non è veloce, se non è trovabile su Google, se non guida l\'utente verso un\'azione — non sta lavorando per te. Costruisco siti con React e Vite, tecnologie usate dai migliori team di sviluppo al mondo. Il risultato? Pagine che caricano in meno di un secondo, perfettamente indicizzate, ottimizzate per mobile e con un design pensato per convertire.',
     include: [
@@ -57,7 +55,7 @@ const pilastri = [
   },
   {
     id: 'automazioni-ai',
-    video: videoAI,
+    video: '/video/hf_20260518_170503_386bf7d7-9c9f-44f1-8dec-9a47fb9b6e3d.mp4',
     headline: "L'AI non è il futuro. È ora.",
     body: 'Ogni giorno ripeti le stesse attività: rispondere alle stesse domande, cercare gli stessi dati, mandare le stesse email. Ore sottratte a ciò che conta davvero — il tuo prodotto, i tuoi clienti, la tua crescita. Progetto flussi di lavoro intelligenti che fanno al posto tuo le attività ripetitive. Agenti AI che qualificano lead, inviano email personalizzate, raccolgono dati e ti restituiscono solo ciò che è rilevante. Tu non gestisci il rumore: prendi le decisioni.',
     include: [
@@ -71,7 +69,7 @@ const pilastri = [
   },
   {
     id: 'comunicazione',
-    video: videoCom,
+    video: '/video/hf_20260518_170736_536080c3-8e58-4040-9339-62a07abbaff3.mp4',
     headline: 'Non più rumore di fondo. Messaggi che restano.',
     body: 'Su Instagram, LinkedIn e Facebook ogni giorno vengono pubblicati milioni di contenuti. La maggior parte viene ignorata. Perché? Perché non hanno una strategia. Non sanno a chi parlano, non sanno cosa vogliono ottenere, non hanno un tono di voce riconoscibile. Costruisco per te una strategia di contenuti che parte da un\'analisi del tuo pubblico e dei tuoi obiettivi. Ogni post, ogni storia, ogni email ha un perché. E un risultato misurabile.',
     include: [

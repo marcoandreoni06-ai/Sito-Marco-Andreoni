@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import heroVideo from '../assets/hf_20260518_170213_fdcf93e0-3c9c-4dbb-9bb5-cf6139efcfb6.mp4'
 import Reveal from './Reveal'
 
 export default function HeroSection() {
@@ -12,7 +11,7 @@ export default function HeroSection() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover opacity-20"
       >
-        <source src={heroVideo} type="video/mp4" />
+        <source src="/video/hf_20260518_170213_fdcf93e0-3c9c-4dbb-9bb5-cf6139efcfb6.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
 

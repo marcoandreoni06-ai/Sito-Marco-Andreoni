@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import bgVideo from '../assets/hf_20260518_170503_386bf7d7-9c9f-44f1-8dec-9a47fb9b6e3d.mp4'
 import Reveal from './Reveal'
 
 export default function ChiSonoHero() {
@@ -12,7 +11,7 @@ export default function ChiSonoHero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover opacity-15"
       >
-        <source src={bgVideo} type="video/mp4" />
+        <source src="/video/hf_20260518_170503_386bf7d7-9c9f-44f1-8dec-9a47fb9b6e3d.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
 

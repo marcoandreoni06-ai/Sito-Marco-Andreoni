@@ -7,7 +7,7 @@ import AspettativeSection from '../components/AspettativeSection'
 import CtaSection from '../components/CtaSection'
 import FaqSection from '../components/FaqSection'
 import Reveal from '../components/Reveal'
-import bgVideo from '../assets/hf_20260518_170736_536080c3-8e58-4040-9339-62a07abbaff3.mp4'
+
 
 const contattiFaq = [
   {
@@ -51,7 +51,7 @@ export default function Contatti() {
           playsInline
           className="absolute inset-0 w-full h-full object-cover opacity-10"
         >
-          <source src={bgVideo} type="video/mp4" />
+          <source src="/video/hf_20260518_170736_536080c3-8e58-4040-9339-62a07abbaff3.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
         <div className="mx-auto max-w-3xl text-center relative z-10">
