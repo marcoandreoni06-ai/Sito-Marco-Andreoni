@@ -18,8 +18,8 @@ export async function onRequest(context) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Sito Web <noreply@tuodominio.it>',
-        to: 'tua@email.com',
+        from: 'Sito Web <onboarding@resend.dev>',
+        to: 'marco.andreoni06@gmail.com',
         subject: `Nuovo contatto da ${nome}`,
         html: `<p><strong>Nome:</strong> ${nome}</p>
                <p><strong>Email:</strong> ${email}</p>
