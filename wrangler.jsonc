@@ -1,0 +1,10 @@
+{
+  "name": "marcoandreoni",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-05-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "not_found_handling": "single-page-application"
+  }
+}
