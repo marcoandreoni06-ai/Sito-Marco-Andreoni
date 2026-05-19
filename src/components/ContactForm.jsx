@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { submitContactForm } from '../services/contact'
 import Reveal from './Reveal'
 
 const budgetOptions = [
@@ -39,8 +40,14 @@ export default function ContactForm() {
 
     setStatus('loading')
     try {
-      // In produzione: chiamata a Supabase o API
-      await new Promise((r) => setTimeout(r, 1000))
+      await submitContactForm({
+        nome: form.nome.trim(),
+        attivita: form.attivita.trim(),
+        email: form.email.trim(),
+        telefono: form.telefono.trim(),
+        messaggio: form.messaggio.trim(),
+        budget: form.budget,
+      })
       setStatus('success')
       setForm({ nome: '', attivita: '', email: '', telefono: '', messaggio: '', budget: '' })
     } catch {
