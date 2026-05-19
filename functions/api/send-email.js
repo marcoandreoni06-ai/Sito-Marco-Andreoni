@@ -9,7 +9,7 @@ export async function onRequest(context) {
   }
 
   try {
-    const { nome, email, messaggio } = await request.json()
+    const { nome, attivita, email, telefono, messaggio, budget } = await request.json()
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -22,7 +22,10 @@ export async function onRequest(context) {
         to: 'marco.andreoni06@gmail.com',
         subject: `Nuovo contatto da ${nome}`,
         html: `<p><strong>Nome:</strong> ${nome}</p>
+               <p><strong>Attività:</strong> ${attivita || '—'}</p>
                <p><strong>Email:</strong> ${email}</p>
+               <p><strong>Telefono:</strong> ${telefono || '—'}</p>
+               <p><strong>Budget:</strong> ${budget || '—'}</p>
                <p><strong>Messaggio:</strong> ${messaggio}</p>`,
       }),
     })
