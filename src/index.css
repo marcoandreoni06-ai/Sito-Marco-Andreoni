@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #030303;
+  --color-brand-white: #fafafa;
+  --color-brand-cream: #f5f1e8;
+
+  --color-brand-gray-100: #f0f0f0;
+  --color-brand-gray-200: #c9c9c9;
+  --color-brand-gray-300: #8d8d8c;
+  --color-brand-gray-400: #505050;
+  --color-brand-gray-500: #3b3b3b;
+  --color-brand-gray-600: #151514;
+  --color-brand-gray-700: #0a0a0a;
+
+  --color-accent-violet: #9d64f1;
+  --color-accent-purple: #ab6bd9;
+  --color-accent-mauve: #b871c4;
+  --color-accent-pink: #c577ae;
+  --color-accent-rose: #d27c98;
+  --color-accent-coral: #df8382;
+  --color-accent-salmon: #ec896c;
+  --color-accent-orange: #f88e57;
+
+  --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-pixel: "Press Start 2P", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  cursor: none !important;
+}
+
+.pixel-underline {
+  position: relative;
+}
+
+.pixel-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange));
+  mask: repeating-conic-gradient(#000 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
+  -webkit-mask: repeating-conic-gradient(#000 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s ease;
+}
+
+.pixel-underline:hover::after {
+  clip-path: inset(0 0 0 0);
+}
+
+/* ── Scroll Reveal Animations ── */
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal-fade-up.visible {
+  animation: reveal-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-pixel-step.visible {
+  animation: reveal-pixel-step 0.6s steps(8) forwards;
+}
+
+.reveal-scale-in.visible {
+  animation: reveal-scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes reveal-pixel-step {
+  0% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes reveal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Cool Button Hover Effects ── */
+
+a.rounded-full, button.rounded-full {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+a.rounded-full::before, button.rounded-full::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange));
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+a.rounded-full:hover, button.rounded-full:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 24px rgba(157, 100, 241, 0.25);
+}
+
+a.rounded-full:hover::before, button.rounded-full:hover::before {
+  opacity: 0.18;
+}
+
+/* Outline buttons: gradient fill on hover */
+a.rounded-full[class*="border-2"]:hover, button.rounded-full[class*="border-2"]:hover {
+  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange)) !important;
+  border-color: transparent !important;
+  color: white !important;
+}
