@@ -40,3 +40,19 @@ Il mio obiettivo è coniugare la **creatività visiva** e la **strategia comunic
 ---
 
 > *"Unire design, codice e automazione per trasformare la comunicazione in un asset strategico."*
+
+---
+
+## 📚 Flusso di Lavoro — La Guida Completa
+
+Questo progetto è accompagnato da una guida dettagliata in 5 parti che documenta ogni fase del flusso di lavoro, dall'idea al deploy. Puoi consultarla nella cartella [`/guide`](/guide):
+
+| # | Guida | Descrizione |
+|---|-------|-------------|
+| 1 | [Dall'idea al sito live](guide/01-flusso-di-lavoro-idea-sito-live.md) | Panoramica del sistema: VSCode, agenti AI, stack React + Vite, primo deploy |
+| 2 | [Allestire VSCode per siti dinamici](guide/02-allestire-sala-macchine-vscode-seo.md) | Estensioni, struttura cartelle, routing, SEO setup, styling con Tailwind |
+| 3 | [Collegare database e form contatti](guide/03-collegare-database-form-contatti.md) | Supabase, Resend, React Hook Form, serverless functions |
+| 4 | [Armatura SEO e performance](guide/04-armatura-seo-ottimizzazione-performance.md) | React Helmet, JSON-LD, Lighthouse 100/100, sitemap, ottimizzazione immagini |
+| 5 | [Deploy su Cloudflare Pages](guide/05-consegna-serverless-dominio-deploy.md) | GitHub, Cloudflare Pages, dominio personalizzato, Search Console |
+
+Tecnologie utilizzate: React 19 + Vite 8, Tailwind CSS 4, Supabase, Resend, Cloudflare Workers + Pages.
