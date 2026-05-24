@@ -45,6 +45,14 @@ export default {
       }
     }
 
-    return new Response('Not found', { status: 404 })
+    const hasExtension = url.pathname.match(/\.\w+$/)
+    if (hasExtension) {
+      return env.ASSETS.fetch(request)
+    }
+
+    const index = await env.ASSETS.fetch(`${url.origin}/index.html`)
+    return new Response(await index.text(), {
+      headers: { 'content-type': 'text/html;charset=UTF-8' },
+    })
   },
 }

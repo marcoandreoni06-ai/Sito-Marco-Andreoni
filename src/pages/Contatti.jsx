@@ -34,7 +34,7 @@ export default function Contatti() {
       <SEO
         title="Contatti"
         description="Contatta Marco Andreoni per una consulenza gratuita. Raccontami il tuo progetto e ti rispondo entro 24 ore con un'idea chiara di come possiamo lavorare insieme."
-        canonicalUrl="https://www.marcandreoni.it/contatti"
+        canonicalUrl="https://marcoandreoni.marco-andreoni06.workers.dev/contatti"
         structuredData={[
           getBreadcrumbSchema([
             { label: 'Home', url: '/' },

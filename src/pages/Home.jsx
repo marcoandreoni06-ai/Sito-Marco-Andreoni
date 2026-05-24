@@ -13,7 +13,7 @@ export default function Home() {
       <SEO
         title="Home"
         description="Marketing strategico, automazione AI e identità digitale per piccole imprese e professionisti nelle Marche. Sviluppo siti web performanti con React, AI automation e comunicazione digitale."
-        canonicalUrl="https://www.marcandreoni.it"
+        canonicalUrl="https://marcoandreoni.marco-andreoni06.workers.dev"
         structuredData={[
           getOrganizationSchema(),
           getBreadcrumbSchema([{ label: 'Home', url: '/' }]),

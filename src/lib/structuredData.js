@@ -1,7 +1,7 @@
 const SITE_CONFIG = {
   name: 'Marco Andreoni',
-  url: 'https://www.marcandreoni.it',
-  logo: 'https://www.marcandreoni.it/logo.png',
+  url: 'https://marcoandreoni.marco-andreoni06.workers.dev',
+  logo: 'https://marcoandreoni.marco-andreoni06.workers.dev/logo.png',
   sameAs: [
     'https://linkedin.com/in/marcoandreoni',
     'https://instagram.com/marcoandreoni',

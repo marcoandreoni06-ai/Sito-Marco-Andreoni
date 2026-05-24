@@ -16,7 +16,7 @@ export default function ChiSono() {
       <SEO
         title="Chi Sono"
         description="Marco Andreoni \u2014 Consulente in comunicazione digitale e automazione AI. Scopri la mia storia, il metodo 3I e come posso aiutare la tua impresa a crescere online."
-        canonicalUrl="https://www.marcandreoni.it/chi-sono"
+        canonicalUrl="https://marcoandreoni.marco-andreoni06.workers.dev/chi-sono"
         structuredData={[
           getPersonSchema(),
           getBreadcrumbSchema([
