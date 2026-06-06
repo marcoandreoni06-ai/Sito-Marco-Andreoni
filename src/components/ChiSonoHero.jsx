@@ -1,13 +1,11 @@
 import { ArrowUpRight, MapPin } from 'lucide-react'
 import MagneticButton from './ui/MagneticButton'
 import Aurora from './fx/Aurora'
-import PixelRain from './fx/PixelRain'
 
 export default function ChiSonoHero() {
   return (
     <section className="relative overflow-hidden px-6 pb-12 pt-36 sm:pt-40 md:pb-16">
-      <Aurora intensity={0.45} />
-      <PixelRain count={16} className="opacity-60" />
+      <Aurora intensity={0.9} />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">

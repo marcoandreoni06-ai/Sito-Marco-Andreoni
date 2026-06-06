@@ -2,14 +2,12 @@ import { ArrowUpRight, MapPin, Sparkles } from 'lucide-react'
 import MagneticButton from './ui/MagneticButton'
 import VideoFrame from './ui/VideoFrame'
 import Aurora from './fx/Aurora'
-import PixelRain from './fx/PixelRain'
 import { VIDEOS } from '../lib/media'
 
 export default function HeroSection() {
   return (
     <section className="relative overflow-hidden px-6 pb-16 pt-32 sm:pt-36 md:pb-24">
-      <Aurora intensity={0.5} />
-      <PixelRain count={20} className="opacity-70" />
+      <Aurora intensity={0.95} />
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">
@@ -22,10 +20,9 @@ export default function HeroSection() {
           <span className="grad-text-anim">vantaggio competitivo</span>.
         </h1>
 
-        <p className="reveal reveal-fade-up is-visible mx-auto mt-7 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg" style={{ animationDelay: '180ms' }}>
-          Marketing strategico, automazione AI e identità digitale per piccole imprese e
-          professionisti che vogliono crescere senza sprecare tempo. Ogni progetto è costruito su
-          misura, partendo da chi sei e dove vuoi arrivare.
+        <p className="reveal reveal-fade-up is-visible mx-auto mt-7 max-w-xl text-pretty text-base leading-relaxed text-muted sm:text-lg" style={{ animationDelay: '180ms' }}>
+          Marketing, automazione AI e identità digitale per piccole imprese che vogliono crescere
+          senza sprecare tempo. Ogni progetto, costruito su misura.
         </p>
 
         <div className="reveal reveal-fade-up is-visible mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '270ms' }}>

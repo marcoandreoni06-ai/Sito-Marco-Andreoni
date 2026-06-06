@@ -29,58 +29,64 @@ export default function Header() {
   }, [open])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
-      <div
-        className={`relative z-50 mx-auto flex max-w-6xl items-center justify-between rounded-full px-3 py-2 pl-4 transition-all duration-500 ${
-          scrolled || open ? 'glass shadow-[0_10px_40px_-24px_rgba(12,11,10,0.5)]' : 'border border-transparent'
-        }`}
-      >
-        <Link to="/" aria-label="Marco Andreoni — home" onClick={() => setOpen(false)}>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+        scrolled || open
+          ? 'border-line bg-paper/70 shadow-[0_8px_30px_-22px_rgba(12,11,10,0.45)] backdrop-blur-xl'
+          : 'border-transparent'
+      }`}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6 sm:py-3.5">
+        <Link to="/" aria-label="Marco Andreoni — home" onClick={() => setOpen(false)} className="shrink-0">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              end={link.to === '/'}
-              className={({ isActive }) =>
-                `link-u rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'text-ink' : 'text-muted hover:text-ink'
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className="flex items-center gap-1.5">
+          <nav className="hidden items-center gap-1 md:flex">
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                className={({ isActive }) =>
+                  `link-u rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'text-ink' : 'text-muted hover:text-ink'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
 
-        <div className="hidden md:block">
-          <MagneticButton to="/contatti" className="px-5 py-2.5 text-sm" strength={0.25}>
+          <MagneticButton
+            to="/contatti"
+            className="ml-1 hidden px-5 py-2.5 text-sm md:inline-flex"
+            strength={0.22}
+          >
             Prenota una call
             <ArrowUpRight className="h-4 w-4" />
           </MagneticButton>
-        </div>
 
-        <button
-          className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Chiudi menu' : 'Apri menu'}
-          aria-expanded={open}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Chiudi menu' : 'Apri menu'}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-40 origin-top bg-paper/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
+        className={`fixed inset-0 -z-10 bg-paper/97 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
         <nav className="flex h-full flex-col justify-center gap-2 px-8">
-          {links.map((link, i) => (
+          {links.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
@@ -91,7 +97,6 @@ export default function Header() {
                   isActive ? 'grad-text' : 'text-ink'
                 }`
               }
-              style={{ transitionDelay: `${i * 40}ms` }}
             >
               {link.label}
             </NavLink>

@@ -8,7 +8,7 @@ const card3i = [
     icon: BookOpen,
     title: 'Informare',
     claim: 'I tuoi clienti non comprano ciò che non capiscono.',
-    desc: 'Ogni pagina, ogni post, ogni email ha un obiettivo preciso: educare il tuo pubblico. Trasformo la tua competenza in contenuti di valore che accompagnano il cliente verso una decisione consapevole.',
+    desc: 'Ogni pagina, post ed email ha un obiettivo: educare il tuo pubblico. Trasformo la tua competenza in contenuti di valore che portano il cliente a una decisione consapevole.',
     esempi: [
       'Un artigiano che racconta come nasce un tavolo su misura',
       'Guide e approfondimenti pubblicati su LinkedIn',
@@ -20,7 +20,7 @@ const card3i = [
     icon: Flame,
     title: 'Ispirare',
     claim: 'Le persone comprano emozioni, poi giustificano con la logica.',
-    desc: 'Un design pulito, una storia ben raccontata, un flusso che sembra naturale perché progettato minuziosamente: tutto questo crea fiducia. E la fiducia trasforma un visitatore in cliente.',
+    desc: 'Un design pulito, una storia ben raccontata, un flusso naturale perché progettato con cura: tutto questo crea fiducia. E la fiducia trasforma un visitatore in cliente.',
     esempi: [
       'Una homepage che racconta chi sei in 5 secondi',
       'Immagini coerenti che parlano la lingua del tuo brand',
@@ -32,7 +32,7 @@ const card3i = [
     icon: Drama,
     title: 'Intrattenere',
     claim: 'Nessuno ha mai comprato da un noioso.',
-    desc: 'Intrattenere significa rendere interessante ciò che fai. Trovare l\'angolo giusto, il dettaglio che incuriosisce, il formato che tiene incollato. Non serve un budget da multinazionale: serve capire cosa rende unica la tua storia.',
+    desc: 'Rendere interessante ciò che fai: l\'angolo giusto, il dettaglio che incuriosisce, il formato che tiene incollato. Non serve un budget da multinazionale, serve capire cosa rende unica la tua storia.',
     esempi: [
       'Un reel sul “dietro le quinte” della lavorazione',
       'Un post che rompe uno stereotipo del tuo settore',

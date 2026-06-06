@@ -160,51 +160,31 @@ summary::marker { content: ""; }
 .aurora-blob {
   position: absolute;
   border-radius: 999px;
-  filter: blur(70px);
-  opacity: 0.5;
+  filter: blur(64px);
+  opacity: 0.62;
   will-change: transform;
 }
 .aurora-v {
-  width: 46vw; height: 46vw;
-  background: radial-gradient(circle at center, var(--color-violet), transparent 68%);
-  top: -14vw; left: -8vw;
+  width: 56vw; height: 56vw;
+  background: radial-gradient(circle at center, var(--color-violet), transparent 70%);
+  top: -16vw; left: -10vw;
   animation: drift-a 19s var(--ease-out-expo) infinite alternate;
 }
 .aurora-o {
-  width: 42vw; height: 42vw;
-  background: radial-gradient(circle at center, var(--color-orange), transparent 68%);
-  top: -6vw; right: -10vw;
+  width: 52vw; height: 52vw;
+  background: radial-gradient(circle at center, var(--color-orange), transparent 70%);
+  top: -8vw; right: -12vw;
   animation: drift-b 23s var(--ease-out-expo) infinite alternate;
 }
 .aurora-p {
-  width: 34vw; height: 34vw;
-  background: radial-gradient(circle at center, var(--color-pink), transparent 70%);
-  bottom: -16vw; left: 34vw;
+  width: 44vw; height: 44vw;
+  background: radial-gradient(circle at center, var(--color-pink), transparent 72%);
+  bottom: -18vw; left: 32vw;
   animation: drift-c 27s var(--ease-out-expo) infinite alternate;
 }
 @keyframes drift-a { from { transform: translate(0,0) scale(1); } to { transform: translate(8vw, 6vw) scale(1.18); } }
 @keyframes drift-b { from { transform: translate(0,0) scale(1); } to { transform: translate(-7vw, 9vw) scale(1.12); } }
 @keyframes drift-c { from { transform: translate(0,0) scale(1); } to { transform: translate(5vw, -7vw) scale(1.2); } }
-
-/* ── Signature: pixel / code rain ─────────────────────── */
-
-.pixel-rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.pixel-glyph {
-  position: absolute;
-  top: -2rem;
-  font-family: var(--font-pixel);
-  line-height: 1;
-  color: var(--color-violet);
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: pixel-fall linear infinite;
-}
-@keyframes pixel-fall {
-  0%   { transform: translateY(-10%); opacity: 0; }
-  8%   { opacity: var(--g-op, 0.6); }
-  88%  { opacity: var(--g-op, 0.6); }
-  100% { transform: translateY(115vh); opacity: 0; }
-}
 
 /* ── Signature gradient helpers ───────────────────────── */
 
@@ -409,5 +389,5 @@ summary::marker { content: ""; }
     transition-duration: 0.001ms !important;
   }
   .reveal { opacity: 1 !important; }
-  .grain, .aurora-blob, .pixel-rain, .marquee { animation: none !important; }
+  .grain, .aurora-blob, .marquee { animation: none !important; }
 }

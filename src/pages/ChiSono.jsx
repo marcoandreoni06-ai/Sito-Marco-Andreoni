@@ -36,8 +36,8 @@ export default function ChiSono() {
       <FaqSection />
       <CtaSection
         headline="Ti ho incuriosito?"
-        body="Se sei arrivato fin qui, probabilmente c'\u00e8 qualcosa che vuoi migliorare del tuo modo di comunicare online. O forse vuoi iniziare e non sai da dove partire. In entrambi i casi, il primo passo \u00e8 semplice."
-        cta="Prenota 15 minuti gratuiti \u2192"
+        body="Se sei arrivato fin qui, forse c'\u00e8 qualcosa che vuoi migliorare. Il primo passo \u00e8 semplice: prenota 15 minuti gratuiti."
+        cta="Prenota 15 minuti gratuiti"
       />
     </>
   )

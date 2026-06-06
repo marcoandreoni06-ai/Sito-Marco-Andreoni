@@ -1,11 +1,9 @@
 import Aurora from './fx/Aurora'
-import PixelRain from './fx/PixelRain'
 
 export default function ContattiHero() {
   return (
     <section className="relative overflow-hidden px-6 pb-10 pt-36 sm:pt-40">
-      <Aurora intensity={0.4} />
-      <PixelRain count={14} className="opacity-60" />
+      <Aurora intensity={0.85} />
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">
           <span className="eyebrow text-muted">Contatti</span>

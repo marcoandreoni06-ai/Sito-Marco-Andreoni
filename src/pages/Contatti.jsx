@@ -100,7 +100,7 @@ export default function Contatti() {
 
       <CtaSection
         headline="Non aspettare il momento perfetto."
-        body="Il momento perfetto non arriva mai: arriva il momento in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio — deve essere ben fatto, pensato per crescere e costruito sulla tua identità. Inizia con una chiacchierata, il resto lo costruiamo insieme."
+        body="Il momento perfetto non arriva mai: arriva quello in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio, ma ben fatto e pensato per crescere. Inizia con una chiacchierata."
         cta="Prenota 15 minuti gratuiti"
       />
     </>

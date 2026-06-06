@@ -29,7 +29,7 @@ export default function Home() {
       <PercheMeSection />
       <CtaSection
         headline="Il primo passo è una chiacchierata."
-        body="Niente presentazioni, niente preventivi forzati. Prenota 15 minuti gratuiti: mi racconti cosa fai, cosa vorresti ottenere e cosa ti blocca. Se c'è feeling, costruiamo qualcosa insieme."
+        body="Niente preventivi forzati. Prenota 15 minuti gratuiti: mi racconti cosa fai e cosa ti blocca. Se c'è feeling, costruiamo qualcosa insieme."
         cta="Prenota i tuoi 15 minuti gratuiti"
       />
     </>
