@@ -165,16 +165,22 @@ summary::marker { content: ""; }
   will-change: transform;
 }
 .aurora-v {
-  width: 56vw; height: 56vw;
+  width: 58vw; height: 58vw;
   background: radial-gradient(circle at center, var(--color-violet), transparent 70%);
-  top: -16vw; left: -10vw;
+  top: -24vw; left: -12vw;
   animation: drift-a 19s var(--ease-out-expo) infinite alternate;
 }
 .aurora-o {
-  width: 52vw; height: 52vw;
+  width: 54vw; height: 54vw;
   background: radial-gradient(circle at center, var(--color-orange), transparent 70%);
-  top: -8vw; right: -12vw;
+  top: -22vw; right: -14vw;
   animation: drift-b 23s var(--ease-out-expo) infinite alternate;
+}
+.aurora-t {
+  width: 54vw; height: 40vw;
+  background: radial-gradient(circle at center, var(--color-mauve), transparent 72%);
+  top: -17vw; left: 23vw;
+  animation: drift-b 21s var(--ease-out-expo) infinite alternate;
 }
 .aurora-p {
   width: 44vw; height: 44vw;

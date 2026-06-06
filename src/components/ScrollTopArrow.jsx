@@ -13,7 +13,10 @@ export default function ScrollTopArrow() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Torna in cima"
-      className={`grad-ring glass fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full text-ink transition-all duration-300 ${
+      // position:fixed inline so it beats `.grad-ring { position: relative }`
+      // (unlayered custom class would otherwise override the Tailwind `fixed` utility)
+      style={{ position: 'fixed' }}
+      className={`grad-ring glass bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full text-ink transition-all duration-300 ${
         show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >

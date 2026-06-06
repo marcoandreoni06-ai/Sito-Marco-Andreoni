@@ -28,55 +28,55 @@ export default function Header() {
     }
   }, [open])
 
+  // The glass pill only materialises once you scroll (or open the mobile menu).
+  // At the very top the bar is fully transparent — no background, no border.
+  const showPill = scrolled || open
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
-        scrolled || open
-          ? 'border-line bg-paper/70 shadow-[0_8px_30px_-22px_rgba(12,11,10,0.45)] backdrop-blur-xl'
-          : 'border-transparent'
-      }`}
-    >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-6 sm:py-3.5">
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
+      <div
+        className={`relative z-50 mx-auto flex max-w-6xl items-center justify-between rounded-full px-3 py-2 pl-4 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-500 ${
+          showPill
+            ? 'glass shadow-[0_10px_40px_-24px_rgba(12,11,10,0.5)]'
+            : 'border border-transparent bg-transparent shadow-none'
+        }`}
+      >
         <Link to="/" aria-label="Marco Andreoni — home" onClick={() => setOpen(false)} className="shrink-0">
           <Logo />
         </Link>
 
-        <div className="flex items-center gap-1.5">
-          <nav className="hidden items-center gap-1 md:flex">
-            {links.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === '/'}
-                className={({ isActive }) =>
-                  `link-u rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
-                    isActive ? 'text-ink' : 'text-muted hover:text-ink'
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
+        <nav className="hidden items-center gap-1 md:flex">
+          {links.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === '/'}
+              className={({ isActive }) =>
+                `link-u rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive ? 'text-ink' : 'text-muted hover:text-ink'
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
 
-          <MagneticButton
-            to="/contatti"
-            className="ml-1 hidden px-5 py-2.5 text-sm md:inline-flex"
-            strength={0.22}
-          >
+        <div className="hidden md:block">
+          <MagneticButton to="/contatti" className="px-5 py-2.5 text-sm" strength={0.25}>
             Prenota una call
             <ArrowUpRight className="h-4 w-4" />
           </MagneticButton>
-
-          <button
-            className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Chiudi menu' : 'Apri menu'}
-            aria-expanded={open}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
         </div>
+
+        <button
+          className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Chiudi menu' : 'Apri menu'}
+          aria-expanded={open}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
 
       {/* Mobile overlay */}

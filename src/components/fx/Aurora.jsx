@@ -8,6 +8,7 @@ export default function Aurora({ className = '', intensity = 1 }) {
     <div className={`aurora ${className}`} style={{ opacity: intensity }} aria-hidden="true">
       <span className="aurora-blob aurora-v" />
       <span className="aurora-blob aurora-o" />
+      <span className="aurora-blob aurora-t" />
       <span className="aurora-blob aurora-p" />
     </div>
   )
