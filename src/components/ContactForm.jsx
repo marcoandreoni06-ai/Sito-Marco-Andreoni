@@ -1,42 +1,32 @@
 import { useState } from 'react'
+import { Check, ArrowUpRight, AlertCircle } from 'lucide-react'
 import { submitContactForm } from '../services/contact'
-import Reveal from './Reveal'
 
-const budgetOptions = [
-  'Non lo so ancora',
-  'Sotto i 1.000\u20ac',
-  '1.000\u20ac - 3.000\u20ac',
-  '3.000\u20ac - 5.000\u20ac',
-  'Oltre 5.000\u20ac',
-]
+const budgetOptions = ['Non lo so ancora', 'Sotto i 1.000€', '1.000€ – 3.000€', '3.000€ – 5.000€', 'Oltre 5.000€']
+
+const inputBase =
+  'w-full rounded-xl border bg-panel px-4 py-3 text-sm text-ink placeholder-faint outline-none transition-all duration-200 focus:border-violet focus:ring-2 focus:ring-violet/15'
 
 export default function ContactForm() {
-  const [form, setForm] = useState({
-    nome: '',
-    attivita: '',
-    email: '',
-    telefono: '',
-    messaggio: '',
-    budget: '',
-  })
+  const [form, setForm] = useState({ nome: '', attivita: '', email: '', telefono: '', messaggio: '', budget: '' })
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | loading | success | error
 
   function validate() {
-    const errs = {}
-    if (!form.nome.trim()) errs.nome = 'Inserisci il tuo nome'
-    if (!form.attivita.trim()) errs.attivita = 'Inserisci la tua attività'
-    if (!form.email.trim()) errs.email = 'Inserisci un indirizzo email valido'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = 'Inserisci un indirizzo email valido'
-    if (!form.messaggio.trim()) errs.messaggio = 'Scrivi un messaggio prima di inviare'
-    return errs
+    const e = {}
+    if (!form.nome.trim()) e.nome = 'Inserisci il tuo nome'
+    if (!form.attivita.trim()) e.attivita = 'Inserisci la tua attività'
+    if (!form.email.trim()) e.email = 'Inserisci la tua email'
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Inserisci un indirizzo email valido'
+    if (!form.messaggio.trim()) e.messaggio = 'Scrivi un messaggio prima di inviare'
+    return e
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-    const errs = validate()
-    setErrors(errs)
-    if (Object.keys(errs).length) return
+  async function handleSubmit(ev) {
+    ev.preventDefault()
+    const e = validate()
+    setErrors(e)
+    if (Object.keys(e).length) return
 
     setStatus('loading')
     try {
@@ -55,162 +45,114 @@ export default function ContactForm() {
     }
   }
 
-  function handleChange(e) {
-    const { name, value } = e.target
-    setForm((prev) => ({ ...prev, [name]: value }))
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }))
+  function handleChange(ev) {
+    const { name, value } = ev.target
+    setForm((p) => ({ ...p, [name]: value }))
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: '' }))
   }
 
   if (status === 'success') {
     return (
-      <div className="rounded-2xl border border-green-200 bg-green-50 p-8 text-center">
-        <p className="text-lg font-semibold text-green-800 mb-2">
-          Grazie, ho ricevuto il tuo messaggio!
+      <div className="rounded-3xl border border-line bg-panel p-10 text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full grad">
+          <Check className="h-7 w-7 text-white" strokeWidth={3} />
+        </div>
+        <h3 className="mt-6 font-display text-2xl font-semibold tracking-tight text-ink">
+          Ricevuto. Grazie!
+        </h3>
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-muted">
+          Ti rispondo entro 24 ore. Se hai urgenza, scrivimi su{' '}
+          <a href="https://linkedin.com/in/marcoandreoni" target="_blank" rel="noopener noreferrer" className="link-u font-medium text-ink">LinkedIn</a>{' '}
+          o a{' '}
+          <a href="mailto:marco.andreoni06@gmail.com" className="link-u font-medium text-ink">marco.andreoni06@gmail.com</a>.
         </p>
-        <p className="text-sm text-green-700">
-          Ti risponderò entro 24 ore. Se hai urgenza, puoi contattarmi direttamente su{' '}
-          <a href="https://linkedin.com/in/marcoandreoni" target="_blank" rel="noopener noreferrer" className="underline">
-            LinkedIn
-          </a>{' '}
-          o via email a{' '}
-          <a href="mailto:marco@marcandreoni.it" className="underline">
-            marco@marcandreoni.it
-          </a>.
-        </p>
+        <button onClick={() => setStatus('idle')} className="btn btn-ghost mt-7 px-6 py-3 text-sm">
+          Invia un altro messaggio
+        </button>
       </div>
     )
   }
 
   return (
-    <Reveal>
-      <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="nome" className="block text-sm font-medium text-brand-black mb-1.5">
-            Nome e Cognome <span className="text-accent-salmon">*</span>
-          </label>
-          <input
-            id="nome"
-            name="nome"
-            type="text"
-            value={form.nome}
-            onChange={handleChange}
-            className={`w-full rounded-xl border ${errors.nome ? 'border-red-400' : 'border-brand-gray-200'} bg-white px-4 py-3 text-sm text-brand-black placeholder-brand-gray-300 outline-none transition-all focus:border-brand-black`}
-            placeholder="Mario Rossi"
-          />
-          {errors.nome && <p className="mt-1 text-xs text-red-500">{errors.nome}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="attivita" className="block text-sm font-medium text-brand-black mb-1.5">
-            Attività / Azienda <span className="text-accent-salmon">*</span>
-          </label>
-          <input
-            id="attivita"
-            name="attivita"
-            type="text"
-            value={form.attivita}
-            onChange={handleChange}
-            className={`w-full rounded-xl border ${errors.attivita ? 'border-red-400' : 'border-brand-gray-200'} bg-white px-4 py-3 text-sm text-brand-black placeholder-brand-gray-300 outline-none transition-all focus:border-brand-black`}
-            placeholder="La tua attività"
-          />
-          {errors.attivita && <p className="mt-1 text-xs text-red-500">{errors.attivita}</p>}
-        </div>
+    <form onSubmit={handleSubmit} noValidate className="rounded-3xl border border-line bg-cream p-6 sm:p-8">
+      <div className="grid gap-5 sm:grid-cols-2">
+        <Field label="Nome e cognome" required error={errors.nome}>
+          <input name="nome" type="text" value={form.nome} onChange={handleChange} placeholder="Mario Rossi"
+            className={`${inputBase} ${errors.nome ? 'border-coral' : 'border-line'}`} />
+        </Field>
+        <Field label="Attività / Azienda" required error={errors.attivita}>
+          <input name="attivita" type="text" value={form.attivita} onChange={handleChange} placeholder="La tua attività"
+            className={`${inputBase} ${errors.attivita ? 'border-coral' : 'border-line'}`} />
+        </Field>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2">
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-brand-black mb-1.5">
-            Email <span className="text-accent-salmon">*</span>
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            className={`w-full rounded-xl border ${errors.email ? 'border-red-400' : 'border-brand-gray-200'} bg-white px-4 py-3 text-sm text-brand-black placeholder-brand-gray-300 outline-none transition-all focus:border-brand-black`}
-            placeholder="mario@esempio.it"
-          />
-          {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="telefono" className="block text-sm font-medium text-brand-black mb-1.5">
-            Telefono
-          </label>
-          <input
-            id="telefono"
-            name="telefono"
-            type="tel"
-            value={form.telefono}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-brand-gray-200 bg-white px-4 py-3 text-sm text-brand-black placeholder-brand-gray-300 outline-none transition-all focus:border-brand-black"
-            placeholder="+39 333 1234567"
-          />
-        </div>
+      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+        <Field label="Email" required error={errors.email}>
+          <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="mario@esempio.it"
+            className={`${inputBase} ${errors.email ? 'border-coral' : 'border-line'}`} />
+        </Field>
+        <Field label="Telefono">
+          <input name="telefono" type="tel" value={form.telefono} onChange={handleChange} placeholder="+39 333 1234567"
+            className={`${inputBase} border-line`} />
+        </Field>
       </div>
 
-      <div>
-        <label htmlFor="messaggio" className="block text-sm font-medium text-brand-black mb-1.5">
-          Come posso aiutarti? <span className="text-accent-salmon">*</span>
-        </label>
-        <textarea
-          id="messaggio"
-          name="messaggio"
-          rows={5}
-          value={form.messaggio}
-          onChange={handleChange}
-          className={`w-full rounded-xl border ${errors.messaggio ? 'border-red-400' : 'border-brand-gray-200'} bg-white px-4 py-3 text-sm text-brand-black placeholder-brand-gray-300 outline-none transition-all focus:border-brand-black resize-y`}
-          placeholder="Parlami del tuo progetto, dei tuoi obiettivi e di cosa ti serve. Più dettagli mi dai, più mirata sarà la mia risposta."
-        />
-        {errors.messaggio && <p className="mt-1 text-xs text-red-500">{errors.messaggio}</p>}
+      <div className="mt-5">
+        <Field label="Come posso aiutarti?" required error={errors.messaggio}>
+          <textarea name="messaggio" rows={5} value={form.messaggio} onChange={handleChange}
+            placeholder="Parlami del tuo progetto, dei tuoi obiettivi e di cosa ti serve. Più dettagli mi dai, più mirata sarà la mia risposta."
+            className={`${inputBase} resize-y ${errors.messaggio ? 'border-coral' : 'border-line'}`} />
+        </Field>
       </div>
 
-      <div>
-        <label htmlFor="budget" className="block text-sm font-medium text-brand-black mb-1.5">
-          Budget indicativo
-        </label>
-        <select
-          id="budget"
-          name="budget"
-          value={form.budget}
-          onChange={handleChange}
-          className="w-full rounded-xl border border-brand-gray-200 bg-white px-4 py-3 text-sm text-brand-black outline-none transition-all focus:border-brand-black"
-        >
-          <option value="">Seleziona un'opzione</option>
-          {budgetOptions.map((opt) => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
+      <div className="mt-5">
+        <Field label="Budget indicativo">
+          <select name="budget" value={form.budget} onChange={handleChange} className={`${inputBase} border-line`}>
+            <option value="">Seleziona un'opzione</option>
+            {budgetOptions.map((o) => (<option key={o} value={o}>{o}</option>))}
+          </select>
+        </Field>
       </div>
 
-      <p className="text-xs text-brand-gray-300">
-        I tuoi dati saranno trattati nel rispetto del GDPR e utilizzati esclusivamente per rispondere alla tua richiesta.
+      <p className="mt-5 text-xs leading-relaxed text-faint">
+        I tuoi dati saranno trattati nel rispetto del GDPR e usati solo per rispondere alla tua richiesta.
       </p>
 
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="w-full rounded-full bg-brand-black px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-gray-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-      >
+      <button type="submit" disabled={status === 'loading'} className="btn btn-primary mt-5 w-full px-7 py-4 text-sm disabled:cursor-not-allowed disabled:opacity-60">
         {status === 'loading' ? (
           <>
-            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            Invio in corso...
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-paper/40 border-t-paper" />
+            Invio in corso…
           </>
         ) : (
-          'Invia messaggio \u2192'
+          <>
+            Invia messaggio
+            <ArrowUpRight className="h-4 w-4" />
+          </>
         )}
       </button>
 
       {status === 'error' && (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          Qualcosa è andato storto. Riprova tra qualche minuto o scrivimi direttamente a{' '}
-          <a href="mailto:marco@marcandreoni.it" className="underline">marco@marcandreoni.it</a>.
+        <div className="mt-5 flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4 text-sm text-ink-soft">
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
+          <p>
+            Qualcosa è andato storto. Riprova tra poco o scrivimi direttamente a{' '}
+            <a href="mailto:marco.andreoni06@gmail.com" className="link-u font-medium text-ink">marco.andreoni06@gmail.com</a>.
+          </p>
         </div>
       )}
     </form>
-    </Reveal>
+  )
+}
+
+function Field({ label, required, error, children }) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-sm font-medium text-ink">
+        {label} {required && <span className="grad-text">*</span>}
+      </span>
+      {children}
+      {error && <span className="mt-1 block text-xs text-coral">{error}</span>}
+    </label>
   )
 }

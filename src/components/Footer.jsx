@@ -1,72 +1,94 @@
 import { Link } from 'react-router-dom'
-import Icon from './Icon'
+import { Mail, ArrowUpRight, MapPin } from 'lucide-react'
+import Logo from './Logo'
+import Eyebrow from './ui/Eyebrow'
+import Reveal from './Reveal'
+import { LinkedinIcon, InstagramIcon } from './ui/SocialIcons'
 
 export default function Footer() {
+  const year = new Date().getFullYear()
+
   return (
-    <footer className="border-t border-brand-gray-100 bg-brand-cream">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-3">
+    <footer className="relative overflow-hidden border-t border-line bg-cream">
+      {/* Big editorial CTA band */}
+      <div className="mx-auto max-w-6xl px-6 pt-20 pb-14">
+        <Reveal>
+          <Eyebrow>Iniziamo</Eyebrow>
+          <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-6xl">
+            Trasformiamo la tua comunicazione in un{' '}
+            <span className="grad-text-anim">vantaggio competitivo</span>.
+          </h2>
+          <div className="mt-8">
+            <Link to="/contatti" className="btn btn-primary px-7 py-3.5 text-sm">
+              Prenota 15 minuti gratuiti
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-12 border-t border-line py-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <h3 className="text-xs font-pixel text-brand-gray-300 uppercase tracking-wider mb-4">
-              Marco Andreoni
-            </h3>
-            <p className="text-sm text-brand-gray-400 leading-relaxed">
-              Marketing strategico, automazione AI e identità digitale per piccole imprese e professionisti nelle Marche.
+            <Logo />
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+              Comunicazione digitale, automazione AI e sviluppo web su misura per piccole imprese e
+              professionisti delle Marche.
+            </p>
+            <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted">
+              <MapPin className="h-4 w-4 text-violet" />
+              Fano · Marche · Italia
             </p>
           </div>
 
           <div>
-            <h3 className="text-xs font-pixel text-brand-gray-300 uppercase tracking-wider mb-4">
-              Link
-            </h3>
-            <nav className="flex flex-col gap-2">
-              <Link to="/" className="text-sm text-brand-gray-400 hover:text-brand-black transition-colors">
-                Home
-              </Link>
-              <Link to="/chi-sono" className="text-sm text-brand-gray-400 hover:text-brand-black transition-colors">
-                Chi Sono
-              </Link>
-              <Link to="/contatti" className="text-sm text-brand-gray-400 hover:text-brand-black transition-colors">
-                Contatti
-              </Link>
+            <p className="mb-4 font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Naviga</p>
+            <nav className="flex flex-col gap-3 text-sm">
+              <Link to="/" className="w-fit text-muted transition-colors hover:text-ink link-u">Home</Link>
+              <Link to="/chi-sono" className="w-fit text-muted transition-colors hover:text-ink link-u">Chi sono</Link>
+              <Link to="/contatti" className="w-fit text-muted transition-colors hover:text-ink link-u">Contatti</Link>
             </nav>
           </div>
 
           <div>
-            <h3 className="text-xs font-pixel text-brand-gray-300 uppercase tracking-wider mb-4">
-              Contatti
-            </h3>
-            <div className="flex flex-col gap-2 text-sm text-brand-gray-400">
-              <a href="mailto:marco@marcandreoni.it" className="hover:text-brand-black transition-colors flex items-center gap-2">
-                <Icon name="mail" className="w-4 h-4" />
-                marco@marcandreoni.it
+            <p className="mb-4 font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Contatti</p>
+            <div className="flex flex-col gap-3 text-sm">
+              <a href="mailto:marco.andreoni06@gmail.com" className="inline-flex w-fit items-center gap-2 text-muted transition-colors hover:text-ink link-u">
+                <Mail className="h-4 w-4" /> marco.andreoni06@gmail.com
               </a>
-              <div className="flex gap-3 mt-2">
+              <div className="mt-1 flex gap-3">
                 <a
                   href="https://linkedin.com/in/marcoandreoni"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand-gray-300 hover:text-brand-black transition-colors"
                   aria-label="LinkedIn"
+                  className="grad-ring flex h-10 w-10 items-center justify-center rounded-full text-ink transition-transform hover:-translate-y-0.5"
                 >
-                  <Icon name="linkedin" className="w-5 h-5" />
+                  <LinkedinIcon className="h-4 w-4" />
                 </a>
                 <a
                   href="https://instagram.com/marcoandreoni"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand-gray-300 hover:text-brand-black transition-colors"
                   aria-label="Instagram"
+                  className="grad-ring flex h-10 w-10 items-center justify-center rounded-full text-ink transition-transform hover:-translate-y-0.5"
                 >
-                  <Icon name="instagram" className="w-5 h-5" />
+                  <InstagramIcon className="h-4 w-4" />
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-brand-gray-200 text-center text-xs text-brand-gray-300">
-          &copy; {new Date().getFullYear()} Marco Andreoni. Tutti i diritti riservati.
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-line py-7 text-xs text-faint sm:flex-row">
+          <span className="inline-flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full grad" />
+            </span>
+            Disponibile per nuovi progetti
+          </span>
+          <span>© {year} Marco Andreoni · P.IVA in attivazione · Tutti i diritti riservati</span>
         </div>
       </div>
     </footer>

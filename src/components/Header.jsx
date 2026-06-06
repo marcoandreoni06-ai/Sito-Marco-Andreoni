@@ -1,82 +1,111 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import Icon from './Icon'
-import logoSrc from '../assets/logo.png'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
+import Logo from './Logo'
+import MagneticButton from './ui/MagneticButton'
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/chi-sono', label: 'Chi Sono' },
+  { to: '/chi-sono', label: 'Chi sono' },
   { to: '/contatti', label: 'Contatti' },
 ]
 
 export default function Header() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-brand-black border-b border-brand-gray-700">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-0.5">
-        <Link to="/" className="flex items-center">
-          <img src={logoSrc} alt="Marco Andreoni" className="h-19 w-auto" />
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
+      <div
+        className={`relative z-50 mx-auto flex max-w-6xl items-center justify-between rounded-full px-3 py-2 pl-4 transition-all duration-500 ${
+          scrolled || open ? 'glass shadow-[0_10px_40px_-24px_rgba(12,11,10,0.5)]' : 'border border-transparent'
+        }`}
+      >
+        <Link to="/" aria-label="Marco Andreoni — home" onClick={() => setOpen(false)}>
+          <Logo />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
+              end={link.to === '/'}
               className={({ isActive }) =>
-                `px-3 py-2 text-sm font-medium transition-colors hover:text-white pixel-underline ${
-                  isActive ? 'text-white' : 'text-brand-gray-200'
+                `link-u rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive ? 'text-ink' : 'text-muted hover:text-ink'
                 }`
               }
             >
               {link.label}
             </NavLink>
           ))}
-          <Link
-            to="/contatti"
-            className="rounded-full bg-white px-5 py-2 text-sm font-medium text-brand-black transition-all hover:bg-brand-gray-200"
-          >
-            Prenota consulenza
-          </Link>
         </nav>
 
+        <div className="hidden md:block">
+          <MagneticButton to="/contatti" className="px-5 py-2.5 text-sm" strength={0.25}>
+            Prenota una call
+            <ArrowUpRight className="h-4 w-4" />
+          </MagneticButton>
+        </div>
+
         <button
-          className="md:hidden p-2 text-white"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Chiudi menu' : 'Apri menu'}
+          aria-expanded={open}
         >
-          <Icon name={open ? 'x' : 'menu'} className="w-5 h-5" />
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {open && (
-        <div className="md:hidden border-t border-brand-gray-700 bg-brand-black px-6 pb-6 pt-4">
-          <nav className="flex flex-col gap-4">
-            {links.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors pixel-underline ${
-                    isActive ? 'text-white' : 'text-brand-gray-200'
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-            <Link
-              to="/contatti"
+      {/* Mobile overlay */}
+      <div
+        className={`fixed inset-0 z-40 origin-top bg-paper/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
+          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      >
+        <nav className="flex h-full flex-col justify-center gap-2 px-8">
+          {links.map((link, i) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.to === '/'}
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-white px-5 py-2.5 text-center text-sm font-medium text-brand-black"
+              className={({ isActive }) =>
+                `font-display text-4xl font-semibold tracking-tight transition-colors ${
+                  isActive ? 'grad-text' : 'text-ink'
+                }`
+              }
+              style={{ transitionDelay: `${i * 40}ms` }}
             >
-              Prenota consulenza
-            </Link>
-          </nav>
-        </div>
-      )}
+              {link.label}
+            </NavLink>
+          ))}
+          <Link
+            to="/contatti"
+            onClick={() => setOpen(false)}
+            className="btn btn-primary mt-8 w-full px-6 py-4 text-base"
+          >
+            Prenota una call gratuita
+            <ArrowUpRight className="h-5 w-5" />
+          </Link>
+        </nav>
+      </div>
     </header>
   )
 }

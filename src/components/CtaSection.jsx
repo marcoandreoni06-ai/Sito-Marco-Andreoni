@@ -1,31 +1,28 @@
-import { Link } from 'react-router-dom'
-import Icon from './Icon'
+import { ArrowUpRight } from 'lucide-react'
+import MagneticButton from './ui/MagneticButton'
+import Aurora from './fx/Aurora'
 import Reveal from './Reveal'
 
 export default function CtaSection({ headline, body, cta }) {
   return (
-    <section className="py-24 px-6 bg-brand-cream">
-      <div className="mx-auto max-w-2xl text-center">
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-brand-black mb-6">
-            {headline}
-          </h2>
-        </Reveal>
-        <Reveal delay={100}>
-          <p className="text-brand-gray-400 leading-relaxed mb-8">
-            {body}
-          </p>
-        </Reveal>
-        <Reveal delay={200}>
-          <Link
-            to="/contatti"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-black px-8 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-gray-500"
-          >
-            {cta}
-            <Icon name="arrowRight" className="w-4 h-4" />
-          </Link>
-        </Reveal>
-      </div>
+    <section className="px-6 py-24 md:py-28">
+      <Reveal variant="scale-in" className="mx-auto max-w-5xl">
+        <div className="relative overflow-hidden rounded-[2rem] bg-ink px-7 py-16 text-center sm:px-16 sm:py-20">
+          <Aurora intensity={0.55} className="opacity-70" />
+          <div className="relative z-10 mx-auto max-w-2xl">
+            <h2 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-5xl">
+              {headline}
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-pretty leading-relaxed text-paper/70">{body}</p>
+            <div className="mt-9 flex justify-center">
+              <MagneticButton to="/contatti" variant="light" className="px-8 py-4 text-sm">
+                {cta}
+                <ArrowUpRight className="h-4 w-4" />
+              </MagneticButton>
+            </div>
+          </div>
+        </div>
+      </Reveal>
     </section>
   )
 }

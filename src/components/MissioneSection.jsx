@@ -1,63 +1,49 @@
 import Reveal from './Reveal'
+import Eyebrow from './ui/Eyebrow'
+
+const valori = [
+  { k: '01', title: 'Trasparenza', desc: 'Ti spiego ogni scelta, tecnica e strategica, in italiano semplice. Niente buzzword per confonderti.' },
+  { k: '02', title: 'Qualità sopra quantità', desc: 'Preferisco un progetto ben fatto a dieci fatti a metà. Non ho fretta.' },
+  { k: '03', title: 'Risultati misurabili', desc: 'Se non si può misurare, non si può migliorare. Ogni progetto ha KPI chiari dal giorno uno.' },
+  { k: '04', title: 'Relazioni lunghe', desc: 'Non cerco il cliente facile. Cerco chi vuole costruire un percorso di crescita, non un sitino “tanto per esserci”.' },
+]
 
 export default function MissioneSection() {
-  const valori = [
-    {
-      title: 'Trasparenza',
-      desc: 'Ti spiego ogni scelta, tecnica e strategica, in italiano semplice. Niente buzzword per confonderti.',
-    },
-    {
-      title: 'Qualità sopra quantità',
-      desc: 'Preferisco un progetto ben fatto che dieci fatti a metà. Non ho fretta.',
-    },
-    {
-      title: 'Risultati misurabili',
-      desc: 'Se non si può misurare, non si può migliorare. Ogni progetto ha KPI chiari fin dal giorno uno.',
-    },
-    {
-      title: 'Relazioni lunghe',
-      desc: 'Non cerco il cliente facile. Cerco chi vuole costruire un percorso di crescita, non un sitino "tanto per esserci".',
-    },
-  ]
-
   return (
-    <section className="py-24 px-6">
-      <div className="mx-auto max-w-4xl">
-        <div className="max-w-2xl mb-16">
-          <Reveal variant="pixel-step">
-            <p className="text-xs font-pixel text-accent-violet tracking-wider mb-4">
-              MISSIONE
-            </p>
-          </Reveal>
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-brand-black mb-6">
-              Cosa guida ogni mio progetto.
-            </h2>
-          </Reveal>
-          <p className="text-brand-gray-400 leading-relaxed mb-4">
-            Credo che la tecnologia debba essere al servizio delle persone, non il contrario.
-          </p>
-          <p className="text-brand-gray-400 leading-relaxed">
-            La mia missione è <strong className="text-brand-black">rendere il digitale accessibile, comprensibile e redditizio</strong> per chi non è nativo digitale. Per l'artigiano che non ha tempo di imparare SEO, per il negoziante che non sa cosa sia un funnel, per il professionista che vuole farsi trovare online senza diventare un programmatore.
-          </p>
-          <p className="text-brand-gray-400 leading-relaxed mt-4">
-            Non ti insegnerò a fare il mio lavoro. Ti darò strumenti che fanno il lavoro per te.
-          </p>
-        </div>
-
-        <Reveal>
-          <div className="grid gap-6 sm:grid-cols-2">
-          {valori.map((v) => (
-            <div key={v.title} className="flex gap-4">
-              <span className="text-accent-orange font-bold text-lg flex-shrink-0">{v.title.split(' ')[0][0]}</span>
-              <div>
-                <h3 className="font-bold text-brand-black mb-1">{v.title}</h3>
-                <p className="text-sm text-brand-gray-400 leading-relaxed">{v.desc}</p>
+    <section className="border-y border-line bg-cream px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <Reveal><Eyebrow>Missione</Eyebrow></Reveal>
+            <Reveal>
+              <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+                Cosa guida ogni mio progetto.
+              </h2>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="mt-6 space-y-4 text-pretty leading-relaxed text-muted">
+                <p>Credo che la tecnologia debba essere al servizio delle persone, non il contrario.</p>
+                <p>
+                  La mia missione è <strong className="font-semibold text-ink">rendere il digitale
+                  accessibile, comprensibile e redditizio</strong> per chi non è nativo digitale. Non ti
+                  insegnerò a fare il mio lavoro: ti darò strumenti che fanno il lavoro per te.
+                </p>
               </div>
-            </div>
-          ))}
+            </Reveal>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {valori.map((v, i) => (
+              <Reveal key={v.title} delay={i * 70}>
+                <div className="h-full rounded-2xl border border-line bg-panel p-6">
+                  <span className="font-pixel text-[0.62rem] grad-text">{v.k}</span>
+                  <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">{v.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{v.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
-        </Reveal>
       </div>
     </section>
   )

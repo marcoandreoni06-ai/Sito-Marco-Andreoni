@@ -1,75 +1,80 @@
+import { Code2, Bot, Gauge, Database, Palette, PenLine } from 'lucide-react'
+import Reveal from './Reveal'
+import Eyebrow from './ui/Eyebrow'
+
 const competenze = [
   {
+    icon: Code2,
     area: 'Sviluppo Web',
-    competenze: 'Siti e web app performanti, responsive, SEO-ready. Architettura modulare e componenti riutilizzabili.',
-    strumenti: 'React, Vite, Tailwind CSS, JavaScript',
+    desc: 'Siti e web app performanti, responsive, SEO-ready. Architettura modulare e componenti riutilizzabili.',
+    tools: ['React', 'Vite', 'Tailwind CSS', 'JavaScript'],
   },
   {
+    icon: Bot,
     area: 'AI & Automazione',
-    competenze: 'Agenti AI autonomi, flussi di lead generation, scraping dati, email automation, prompt engineering avanzato.',
-    strumenti: 'Claude Code, Open Code, Gemini, metodo C.R.A.F.T.',
+    desc: 'Agenti AI autonomi, lead generation, scraping dati, email automation, prompt engineering avanzato.',
+    tools: ['Claude Code', 'Open Code', 'Gemini', 'C.R.A.F.T.'],
   },
   {
+    icon: Gauge,
     area: 'SEO & Performance',
-    competenze: 'Meta-tag dinamici, dati strutturati JSON-LD, sitemap automatica, Core Web Vitals, Lighthouse 100/100.',
-    strumenti: 'React Helmet, Vite plugin sitemap, Lighthouse',
+    desc: 'Meta-tag dinamici, dati strutturati JSON-LD, sitemap automatica, Core Web Vitals, Lighthouse 100/100.',
+    tools: ['React Helmet', 'Vite sitemap', 'Lighthouse'],
   },
   {
+    icon: Database,
     area: 'Database & Backend',
-    competenze: 'Database PostgreSQL cloud, API REST, serverless functions, gestione sicura delle credenziali.',
-    strumenti: 'Supabase, Cloudflare Pages Functions, Resend',
+    desc: 'Database cloud, API REST, serverless functions, gestione sicura delle credenziali.',
+    tools: ['Supabase', 'Cloudflare', 'Resend'],
   },
   {
+    icon: Palette,
     area: 'Design & Brand',
-    competenze: 'Identità visiva coordinata, graphic design, UX principles, wireframing.',
-    strumenti: 'Figma, Photoshop, Tailwind',
+    desc: 'Identità visiva coordinata, graphic design, principi UX, wireframing.',
+    tools: ['Figma', 'Photoshop', 'Tailwind'],
   },
   {
+    icon: PenLine,
     area: 'Comunicazione & Content',
-    competenze: 'Copywriting persuasivo, strategia social, storytelling, calendario editoriale.',
-    strumenti: '\u2014',
+    desc: 'Copywriting persuasivo, strategia social, storytelling, calendario editoriale.',
+    tools: ['Copywriting', 'Social', 'Storytelling'],
   },
 ]
 
-import Reveal from './Reveal'
-
 export default function CompetenzeSection() {
   return (
-    <section className="py-24 px-6">
-      <div className="mx-auto max-w-5xl">
-        <Reveal variant="pixel-step">
-          <p className="text-xs font-pixel text-accent-violet tracking-wider mb-4">
-            COMPETENZE
-          </p>
-        </Reveal>
-        <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-brand-black mb-10">
-            Cosa so fare.
-          </h2>
-        </Reveal>
-
-        <Reveal>
-          <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-brand-gray-200">
-                <th className="pb-3 pr-4 font-bold text-brand-black">Area</th>
-                <th className="pb-3 pr-4 font-bold text-brand-black">Competenze</th>
-                <th className="pb-3 font-bold text-brand-black">Strumenti</th>
-              </tr>
-            </thead>
-            <tbody>
-              {competenze.map((c) => (
-                <tr key={c.area} className="border-b border-brand-gray-100 last:border-0">
-                  <td className="py-4 pr-4 font-semibold text-brand-black align-top">{c.area}</td>
-                  <td className="py-4 pr-4 text-brand-gray-400 align-top">{c.competenze}</td>
-                  <td className="py-4 text-brand-gray-300 align-top">{c.strumenti}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <section className="border-t border-line bg-cream px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-14 max-w-2xl">
+          <Reveal><Eyebrow>Competenze</Eyebrow></Reveal>
+          <Reveal>
+            <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
+              Cosa so fare.
+            </h2>
+          </Reveal>
         </div>
-        </Reveal>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {competenze.map((c, i) => {
+            const Icon = c.icon
+            return (
+              <Reveal key={c.area} delay={(i % 3) * 70}>
+                <div data-cursor className="group h-full rounded-3xl border border-line bg-panel p-7 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong">
+                  <div className="grad-ring flex h-12 w-12 items-center justify-center rounded-2xl bg-cream">
+                    <Icon className="h-5 w-5 text-violet transition-colors group-hover:text-orange" />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-ink">{c.area}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-muted">{c.desc}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {c.tools.map((t) => (
+                      <span key={t} className="tag">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

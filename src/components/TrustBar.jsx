@@ -1,29 +1,25 @@
-import Reveal from './Reveal'
+import Marquee from './fx/Marquee'
+
+const capabilities = [
+  'Sviluppo web',
+  'Automazioni AI',
+  'SEO & Performance',
+  'Identità visiva',
+  'Social media',
+  'Copywriting',
+  'Strategia digitale',
+  'Lead generation',
+]
 
 export default function TrustBar() {
-  const partners = ['Azienda X', 'Progetto Y', 'Collaborazione Z', 'Brand W']
-
   return (
-    <section className="border-y border-brand-gray-100 bg-brand-cream py-10 px-6">
-      <div className="mx-auto max-w-4xl text-center">
-        <Reveal variant="pixel-step">
-          <p className="text-xs font-pixel text-brand-gray-300 uppercase tracking-wider mb-6">
-            Hanno collaborato con me
-          </p>
-        </Reveal>
-        <Reveal>
-          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4">
-            {partners.map((name) => (
-              <span
-                key={name}
-                className="text-sm font-semibold text-brand-gray-300 tracking-wide"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </Reveal>
+    <section className="border-y border-line bg-paper py-8">
+      <div className="mx-auto mb-6 max-w-6xl px-6">
+        <p className="text-center font-pixel text-[0.6rem] uppercase tracking-wider text-faint">
+          Cosa porto sul tavolo
+        </p>
       </div>
+      <Marquee items={capabilities} duration={30} />
     </section>
   )
 }

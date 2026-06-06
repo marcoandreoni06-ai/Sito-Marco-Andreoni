@@ -1,54 +1,38 @@
-import { Link } from 'react-router-dom'
-import Reveal from './Reveal'
+import { ArrowUpRight, MapPin } from 'lucide-react'
+import MagneticButton from './ui/MagneticButton'
+import Aurora from './fx/Aurora'
+import PixelRain from './fx/PixelRain'
 
 export default function ChiSonoHero() {
   return (
-    <section className="relative min-h-[70vh] flex items-center pt-16 pb-16 px-6 overflow-hidden">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-15"
-      >
-        <source src="/video/hf_20260518_170503_386bf7d7-9c9f-44f1-8dec-9a47fb9b6e3d.mp4" type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
+    <section className="relative overflow-hidden px-6 pb-12 pt-36 sm:pt-40 md:pb-16">
+      <Aurora intensity={0.45} />
+      <PixelRain count={16} className="opacity-60" />
 
-      <div className="mx-auto max-w-4xl text-center relative z-10">
-        <Reveal variant="pixel-step">
-          <p className="text-xs font-pixel text-accent-orange mb-6 tracking-wider">
-            CHI SONO
-          </p>
-        </Reveal>
-        <Reveal delay={100}>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-brand-black leading-tight">
-            Non costruisco solo siti. Costruisco ponti tra la tua idea e chi deve conoscerla.
-          </h1>
-        </Reveal>
-        <Reveal delay={200}>
-          <p className="mt-6 text-lg text-brand-gray-400">
-            Marco Andreoni — Consulente in comunicazione digitale e automazione AI.
-            <br />
-            Fano, Marche — Italia.
-          </p>
-        </Reveal>
-        <Reveal delay={300}>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              to="/contatti"
-              className="rounded-full bg-brand-black px-7 py-3 text-sm font-medium text-white transition-all hover:bg-brand-gray-500"
-            >
-              Scopri come posso aiutarti
-            </Link>
-            <a
-              href="#la-mia-storia"
-              className="rounded-full border-2 border-brand-black px-7 py-3 text-sm font-medium text-brand-black transition-all hover:bg-brand-black hover:text-white"
-            >
-              Leggi la mia storia
-            </a>
-          </div>
-        </Reveal>
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
+        <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">
+          <span className="eyebrow text-muted">Chi sono</span>
+        </p>
+        <h1 className="reveal reveal-fade-up is-visible font-display text-[2.4rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-6xl" style={{ animationDelay: '90ms' }}>
+          Non costruisco solo siti. Costruisco <span className="grad-text-anim">ponti</span> tra la tua
+          idea e chi deve conoscerla.
+        </h1>
+        <p className="reveal reveal-fade-up is-visible mx-auto mt-7 max-w-xl text-pretty leading-relaxed text-muted sm:text-lg" style={{ animationDelay: '180ms' }}>
+          Marco Andreoni — consulente in comunicazione digitale e automazione AI.
+        </p>
+        <p className="reveal reveal-fade-up is-visible mt-3 inline-flex items-center gap-1.5 text-sm text-faint" style={{ animationDelay: '220ms' }}>
+          <MapPin className="h-3.5 w-3.5 text-violet" /> Fano, Marche — Italia
+        </p>
+
+        <div className="reveal reveal-fade-up is-visible mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '300ms' }}>
+          <MagneticButton href="#metodo-3i" className="px-7 py-3.5 text-sm">
+            Scopri come posso aiutarti
+            <ArrowUpRight className="h-4 w-4" />
+          </MagneticButton>
+          <MagneticButton href="#la-mia-storia" variant="ghost" className="px-7 py-3.5 text-sm" strength={0.25}>
+            Leggi la mia storia
+          </MagneticButton>
+        </div>
       </div>
     </section>
   )

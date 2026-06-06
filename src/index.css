@@ -1,146 +1,413 @@
 @import "tailwindcss";
 
+/* ============================================================
+   MARCO ANDREONI — Design System
+   Light premium editorial · signature violet→orange gradient
+   ============================================================ */
+
 @theme {
-  --color-brand-black: #030303;
-  --color-brand-white: #fafafa;
-  --color-brand-cream: #f5f1e8;
+  /* — Surfaces (warm paper, not flat white) — */
+  --color-paper: #f7f4ee;
+  --color-cream: #f1ebe0;
+  --color-panel: #ffffff;
+  --color-ink: #0c0b0a;
+  --color-ink-soft: #2a2724;
+  --color-muted: #6a645c;
+  --color-faint: #9b948a;
+  --color-line: #e6dfd2;
+  --color-line-strong: #d8d0c1;
 
-  --color-brand-gray-100: #f0f0f0;
-  --color-brand-gray-200: #c9c9c9;
-  --color-brand-gray-300: #8d8d8c;
-  --color-brand-gray-400: #505050;
-  --color-brand-gray-500: #3b3b3b;
-  --color-brand-gray-600: #151514;
-  --color-brand-gray-700: #0a0a0a;
+  /* — Brand accent spectrum (violet → orange) — */
+  --color-violet: #9d64f1;
+  --color-purple: #ab6bd9;
+  --color-mauve: #b871c4;
+  --color-pink: #c577ae;
+  --color-rose: #d27c98;
+  --color-coral: #df8382;
+  --color-salmon: #ec896c;
+  --color-orange: #f88e57;
 
-  --color-accent-violet: #9d64f1;
-  --color-accent-purple: #ab6bd9;
-  --color-accent-mauve: #b871c4;
-  --color-accent-pink: #c577ae;
-  --color-accent-rose: #d27c98;
-  --color-accent-coral: #df8382;
-  --color-accent-salmon: #ec896c;
-  --color-accent-orange: #f88e57;
+  /* — Type — */
+  --font-display: "Clash Display", "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-pixel: "Press Start 2P", ui-monospace, monospace;
 
-  --font-sans: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-pixel: "Press Start 2P", monospace;
+  /* — Motion — */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-* {
-  cursor: none !important;
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01", "cv03";
+  overflow-x: hidden;
 }
 
-.pixel-underline {
-  position: relative;
+::selection {
+  background: color-mix(in oklab, var(--color-violet) 28%, transparent);
+  color: var(--color-ink);
 }
 
-.pixel-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange));
-  mask: repeating-conic-gradient(#000 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
-  -webkit-mask: repeating-conic-gradient(#000 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.35s ease;
+/* Headings default to the editorial display face */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-.pixel-underline:hover::after {
-  clip-path: inset(0 0 0 0);
+/* Hide the native disclosure marker on <details> across browsers */
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::marker { content: ""; }
+
+/* Thin, brand-tinted scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-cream); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 999px;
+  border: 3px solid var(--color-cream);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* ── Scroll Reveal Animations ── */
+/* ── Custom cursor (fine pointers only) ───────────────── */
 
-.reveal {
-  opacity: 0;
+@media (hover: hover) and (pointer: fine) {
+  .cursor-on * { cursor: none !important; }
 }
 
-.reveal-fade-up.visible {
-  animation: reveal-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 7px; height: 7px;
+  border-radius: 999px;
+  background: var(--color-ink);
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  background: #fff;
+}
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-ink);
+  z-index: 9998;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width .22s var(--ease-out-expo), height .22s var(--ease-out-expo),
+              border-color .22s ease, background-color .22s ease, opacity .2s ease;
+  mix-blend-mode: difference;
+  border-color: #fff;
+}
+.cursor-ring.is-active {
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.12);
+}
+.cursor-ring.is-hidden { opacity: 0; }
+
+/* ── Cinematic grain overlay ──────────────────────────── */
+
+.grain {
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 7s steps(6) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -5%); }
+  60% { transform: translate(-2%, 4%); }
+  80% { transform: translate(4%, -2%); }
 }
 
-.reveal-pixel-step.visible {
-  animation: reveal-pixel-step 0.6s steps(8) forwards;
-}
+/* ── Aurora (animated violet→orange blooms) ───────────── */
 
-.reveal-scale-in.visible {
-  animation: reveal-scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes reveal-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(1.5rem);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
-}
-
-@keyframes reveal-pixel-step {
-  0% {
-    opacity: 0;
-    clip-path: inset(100% 0 0 0);
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-@keyframes reveal-scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ── Cool Button Hover Effects ── */
-
-a.rounded-full, button.rounded-full {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
-}
-
-a.rounded-full::before, button.rounded-full::before {
-  content: '';
+.aurora {
   position: absolute;
   inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange));
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.5;
+  will-change: transform;
+}
+.aurora-v {
+  width: 46vw; height: 46vw;
+  background: radial-gradient(circle at center, var(--color-violet), transparent 68%);
+  top: -14vw; left: -8vw;
+  animation: drift-a 19s var(--ease-out-expo) infinite alternate;
+}
+.aurora-o {
+  width: 42vw; height: 42vw;
+  background: radial-gradient(circle at center, var(--color-orange), transparent 68%);
+  top: -6vw; right: -10vw;
+  animation: drift-b 23s var(--ease-out-expo) infinite alternate;
+}
+.aurora-p {
+  width: 34vw; height: 34vw;
+  background: radial-gradient(circle at center, var(--color-pink), transparent 70%);
+  bottom: -16vw; left: 34vw;
+  animation: drift-c 27s var(--ease-out-expo) infinite alternate;
+}
+@keyframes drift-a { from { transform: translate(0,0) scale(1); } to { transform: translate(8vw, 6vw) scale(1.18); } }
+@keyframes drift-b { from { transform: translate(0,0) scale(1); } to { transform: translate(-7vw, 9vw) scale(1.12); } }
+@keyframes drift-c { from { transform: translate(0,0) scale(1); } to { transform: translate(5vw, -7vw) scale(1.2); } }
+
+/* ── Signature: pixel / code rain ─────────────────────── */
+
+.pixel-rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.pixel-glyph {
+  position: absolute;
+  top: -2rem;
+  font-family: var(--font-pixel);
+  line-height: 1;
+  color: var(--color-violet);
   opacity: 0;
-  transition: opacity 0.35s ease;
+  will-change: transform, opacity;
+  animation: pixel-fall linear infinite;
+}
+@keyframes pixel-fall {
+  0%   { transform: translateY(-10%); opacity: 0; }
+  8%   { opacity: var(--g-op, 0.6); }
+  88%  { opacity: var(--g-op, 0.6); }
+  100% { transform: translateY(115vh); opacity: 0; }
 }
 
-a.rounded-full:hover, button.rounded-full:hover {
-  transform: scale(1.04);
-  box-shadow: 0 4px 24px rgba(157, 100, 241, 0.25);
+/* ── Signature gradient helpers ───────────────────────── */
+
+.grad {
+  background-image: linear-gradient(100deg, var(--color-violet), var(--color-rose) 48%, var(--color-orange));
+}
+.grad-text {
+  background-image: linear-gradient(100deg, var(--color-violet), var(--color-rose) 46%, var(--color-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.grad-text-anim {
+  background-image: linear-gradient(100deg, var(--color-violet), var(--color-mauve), var(--color-coral), var(--color-orange), var(--color-violet));
+  background-size: 280% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: grad-pan 9s linear infinite;
+}
+@keyframes grad-pan { to { background-position: 280% 0; } }
+
+.grad-ring { position: relative; }
+.grad-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(120deg, var(--color-violet), var(--color-orange));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-a.rounded-full:hover::before, button.rounded-full:hover::before {
-  opacity: 0.18;
+/* ── Eyebrow (pixel label) ────────────────────────────── */
+
+.eyebrow {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.4rem; height: 2px;
+  background: linear-gradient(90deg, var(--color-violet), var(--color-orange));
 }
 
-/* Outline buttons: gradient fill on hover */
-a.rounded-full[class*="border-2"]:hover, button.rounded-full[class*="border-2"]:hover {
-  background: linear-gradient(90deg, var(--color-accent-violet), var(--color-accent-orange)) !important;
-  border-color: transparent !important;
-  color: white !important;
+/* ── Glass nav ────────────────────────────────────────── */
+
+.glass {
+  background: color-mix(in oklab, var(--color-paper) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
+}
+
+/* ── Buttons ──────────────────────────────────────────── */
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform .35s var(--ease-out-expo), box-shadow .35s var(--ease-out-expo), color .3s ease;
+  overflow: hidden;
+}
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.btn-primary::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, var(--color-violet), var(--color-orange));
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.btn-primary:hover { box-shadow: 0 12px 40px -12px color-mix(in oklab, var(--color-violet) 60%, transparent); }
+.btn-primary:hover::before { opacity: 1; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-line-strong);
+}
+.btn-ghost::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, var(--color-violet), var(--color-orange));
+  opacity: 0; transition: opacity .4s ease;
+}
+.btn-ghost:hover { color: #fff; border-color: transparent; }
+.btn-ghost:hover::before { opacity: 1; }
+
+.btn-light {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.btn-light::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, var(--color-violet), var(--color-orange));
+  opacity: 0; transition: opacity .4s ease;
+}
+.btn-light:hover { color: #fff; box-shadow: 0 16px 44px -16px rgba(12,11,10,0.7); }
+.btn-light:hover::before { opacity: 1; }
+
+/* ── Animated link underline ──────────────────────────── */
+
+.link-u { position: relative; }
+.link-u::after {
+  content: "";
+  position: absolute; left: 0; bottom: -2px;
+  width: 100%; height: 1.5px;
+  background: linear-gradient(90deg, var(--color-violet), var(--color-orange));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .4s var(--ease-out-expo);
+}
+.link-u:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ── Tool tags ────────────────────────────────────────── */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-panel);
+  padding: 0.28rem 0.72rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+/* ── Marquee ──────────────────────────────────────────── */
+
+.marquee { display: flex; width: max-content; animation: marquee var(--mq-dur, 32s) linear infinite; }
+.marquee-track:hover .marquee { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ── Halftone texture (decorative) ────────────────────── */
+
+.halftone {
+  background-image: radial-gradient(var(--color-ink) 1px, transparent 1.4px);
+  background-size: 8px 8px;
+}
+
+/* ── Scroll reveal ────────────────────────────────────── */
+
+.reveal { opacity: 0; will-change: transform, opacity; }
+.reveal-fade-up.is-visible { animation: r-fade-up .9s var(--ease-out-expo) forwards; }
+.reveal-fade.is-visible { animation: r-fade 1s ease forwards; }
+.reveal-scale-in.is-visible { animation: r-scale .9s var(--ease-out-expo) forwards; }
+.reveal-clip.is-visible { animation: r-clip 1s var(--ease-out-expo) forwards; }
+.reveal-pixel-step.is-visible { animation: r-pixel .7s steps(7) forwards; }
+
+@keyframes r-fade-up {
+  from { opacity: 0; transform: translateY(26px); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes r-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes r-scale {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes r-clip {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(12px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+@keyframes r-pixel {
+  0% { opacity: 0; clip-path: inset(100% 0 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+/* ── Utilities ────────────────────────────────────────── */
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+.hairline { border-color: var(--color-line); }
+
+/* ── Reduced motion ───────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1 !important; }
+  .grain, .aurora-blob, .pixel-rain, .marquee { animation: none !important; }
 }

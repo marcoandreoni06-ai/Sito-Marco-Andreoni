@@ -1,31 +1,27 @@
+import { Mail, Phone, Clock } from 'lucide-react'
+import { LinkedinIcon, InstagramIcon } from '../components/ui/SocialIcons'
 import SEO from '../seo/SEO'
 import { getBreadcrumbSchema } from '../lib/structuredData'
+import ContattiHero from '../components/ContattiHero'
 import ContactForm from '../components/ContactForm'
-import ContattiAltriSection from '../components/ContattiAltriSection'
-import DoveSection from '../components/DoveSection'
 import AspettativeSection from '../components/AspettativeSection'
-import CtaSection from '../components/CtaSection'
+import DoveSection from '../components/DoveSection'
 import FaqSection from '../components/FaqSection'
+import CtaSection from '../components/CtaSection'
 import Reveal from '../components/Reveal'
 
-
 const contattiFaq = [
-  {
-    q: 'Quanto costa una consulenza?',
-    a: 'La prima chiamata conoscitiva di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.',
-  },
-  {
-    q: 'Offri assistenza anche dopo il progetto?',
-    a: 'Sì. Ogni progetto include un periodo di assistenza post-lancio. Per aggiornamenti o modifiche successive, possiamo concordare un piano di manutenzione continuativo.',
-  },
-  {
-    q: 'Lavori anche con partite IVA?',
-    a: 'Certo. Lavoro regolarmente con partite IVA, ditte individuali e società. Emissione di fattura per ogni prestazione.',
-  },
-  {
-    q: 'Accetti pagamenti rateali?',
-    a: 'Per progetti più consistenti, valutiamo insieme un piano di pagamento personalizzato. Parliamone nella chiamata conoscitiva.',
-  },
+  { q: 'Quanto costa una consulenza?', a: 'La prima chiamata conoscitiva di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
+  { q: 'Offri assistenza anche dopo il progetto?', a: 'Sì. Ogni progetto include un periodo di assistenza post-lancio. Per aggiornamenti o modifiche successive, possiamo concordare un piano di manutenzione continuativo.' },
+  { q: 'Lavori anche con partite IVA?', a: 'Certo. Lavoro regolarmente con partite IVA, ditte individuali e società. Emissione di fattura per ogni prestazione.' },
+  { q: 'Accetti pagamenti rateali?', a: 'Per progetti più consistenti, valutiamo insieme un piano di pagamento personalizzato. Parliamone nella chiamata conoscitiva.' },
+]
+
+const canali = [
+  { icon: Mail, label: 'Email', value: 'marco.andreoni06@gmail.com', href: 'mailto:marco.andreoni06@gmail.com' },
+  { icon: LinkedinIcon, label: 'LinkedIn', value: 'in/marcoandreoni', href: 'https://linkedin.com/in/marcoandreoni' },
+  { icon: InstagramIcon, label: 'Instagram', value: '@marcoandreoni', href: 'https://instagram.com/marcoandreoni' },
+  { icon: Phone, label: 'Telefono', value: 'Dopo il primo contatto', href: null },
 ]
 
 export default function Contatti() {
@@ -43,64 +39,69 @@ export default function Contatti() {
         ]}
       />
 
-      <section className="relative pt-22 pb-16 px-6 overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-10"
-        >
-          <source src="/video/hf_20260518_170736_536080c3-8e58-4040-9339-62a07abbaff3.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white" />
-        <div className="mx-auto max-w-3xl text-center relative z-10">
-          <Reveal variant="pixel-step">
-            <p className="text-xs font-pixel text-accent-orange mb-6 tracking-wider">
-              CONTATTI
-            </p>
+      <ContattiHero />
+
+      <section className="px-6 pb-8 pt-6">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12">
+          <Reveal>
+            <ContactForm />
           </Reveal>
-          <Reveal delay={100}>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-brand-black leading-tight">
-              Hai un progetto in mente? Parliamone.
-            </h1>
-          </Reveal>
-          <Reveal delay={200}>
-            <p className="mt-6 text-lg text-brand-gray-400 max-w-xl mx-auto">
-              Raccontami cosa fai, cosa vuoi ottenere e cosa ti blocca. Ti rispondo entro 24 ore con un'idea chiara di come possiamo lavorare insieme.
-            </p>
+
+          <Reveal delay={80} className="lg:pt-2">
+            <aside className="flex flex-col gap-4">
+              <div className="rounded-3xl border border-line bg-panel p-6">
+                <p className="font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Contatto diretto</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  Preferisci scrivermi direttamente? Mi trovi anche qui.
+                </p>
+                <div className="mt-5 flex flex-col gap-2">
+                  {canali.map((c) => {
+                    const Icon = c.icon
+                    const inner = (
+                      <>
+                        <span className="grad-ring flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream text-violet">
+                          <Icon className="h-4 w-4" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-pixel text-[0.5rem] uppercase tracking-wider text-faint">{c.label}</span>
+                          <span className="block truncate text-sm font-medium text-ink">{c.value}</span>
+                        </span>
+                      </>
+                    )
+                    return c.href ? (
+                      <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-3 rounded-2xl border border-transparent p-2 transition-colors hover:border-line hover:bg-cream">
+                        {inner}
+                      </a>
+                    ) : (
+                      <div key={c.label} className="flex items-center gap-3 rounded-2xl p-2 opacity-80">{inner}</div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-line bg-cream p-6">
+                <span className="grad-ring flex h-10 w-10 items-center justify-center rounded-xl bg-panel text-violet">
+                  <Clock className="h-4 w-4" />
+                </span>
+                <p className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">Risposta entro 24 ore</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                  Dal lunedì al venerdì. Se scrivi nel weekend, ti rispondo il lunedì successivo.
+                </p>
+              </div>
+            </aside>
           </Reveal>
         </div>
       </section>
 
-      <section className="pb-24 px-6">
-        <div className="mx-auto max-w-2xl">
-          <Reveal variant="pixel-step">
-            <p className="text-xs font-pixel text-accent-violet tracking-wider mb-2">
-              SCRIVIMI
-            </p>
-          </Reveal>
-          <Reveal delay={100}>
-            <p className="text-sm text-brand-gray-400 mb-8">
-              Compila il form qui sotto. Più dettagli mi dai, più mirata sarà la mia risposta.
-            </p>
-          </Reveal>
-          <ContactForm />
-        </div>
-      </section>
-
-      <ContattiAltriSection />
-      <DoveSection />
       <AspettativeSection />
-
-      <section className="pb-24">
-        <FaqSection items={contattiFaq} />
-      </section>
+      <DoveSection />
+      <FaqSection items={contattiFaq} title="Le domande che ricevo più spesso." />
 
       <CtaSection
         headline="Non aspettare il momento perfetto."
-        body="Il momento perfetto non arriva mai. Arriva il momento in cui decidi che è il caso di iniziare. Il tuo sito non deve essere perfetto al lancio: deve essere ben fatto, pensato per crescere, e costruito sulla tua identità. Il resto viene da sé, con il tempo, con i contenuti, con il lavoro costante. Se aspetti di avere tutto pronto, non inizierai mai. Inizia con una chiacchierata. Il resto lo costruiamo insieme."
-        cta="Prenota 15 minuti gratuiti \u2192"
+        body="Il momento perfetto non arriva mai: arriva il momento in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio — deve essere ben fatto, pensato per crescere e costruito sulla tua identità. Inizia con una chiacchierata, il resto lo costruiamo insieme."
+        cta="Prenota 15 minuti gratuiti"
       />
     </>
   )

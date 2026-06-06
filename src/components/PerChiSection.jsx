@@ -1,48 +1,45 @@
 import Reveal from './Reveal'
+import Eyebrow from './ui/Eyebrow'
+
+const punti = [
+  'Ha un prodotto o servizio di qualità ma fatica a farlo conoscere online',
+  'Non ha tempo da dedicare al digitale (e non vuole imparare)',
+  'Ha già bruciato soldi con agenzie che promettevano e non mantenevano',
+  'Vuole capire cosa funziona e perché, non solo “avere un sito”',
+  'Crede nel lungo termine, non nel risultato immediato',
+]
 
 export default function PerChiSection() {
-  const punti = [
-    'Ha un prodotto o servizio di qualità ma fatica a farlo conoscere online',
-    'Non ha tempo da dedicare al digitale (e non vuole imparare)',
-    'Ha già bruciato soldi con agenzie che promettevano e non mantenevano',
-    'Vuole capire cosa funziona e perché, non solo "avere un sito"',
-    'Crede nel lungo termine, non nel risultato immediato',
-  ]
-
   return (
-    <section className="py-24 px-6">
+    <section className="border-t border-line bg-cream px-6 py-24 md:py-32">
       <div className="mx-auto max-w-3xl">
-        <Reveal variant="pixel-step">
-          <p className="text-xs font-pixel text-accent-salmon tracking-wider mb-4">
-            PER CHI LAVORO
-          </p>
-        </Reveal>
+        <Reveal><Eyebrow>Per chi lavoro</Eyebrow></Reveal>
         <Reveal>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-brand-black mb-6">
+          <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
             I progetti che amo di più.
           </h2>
         </Reveal>
-        <Reveal delay={100}>
-          <p className="text-brand-gray-400 leading-relaxed mb-8">
-            Mi trovi bene con chi:
-          </p>
+        <Reveal delay={80}>
+          <p className="mt-5 leading-relaxed text-muted">Mi trovo bene con chi:</p>
         </Reveal>
-        <Reveal delay={150}>
-          <ul className="space-y-4">
+
+        <ul className="mt-8 flex flex-col gap-3">
           {punti.map((p, i) => (
-            <li key={i} className="flex items-start gap-4">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-accent-salmon/10 text-accent-salmon text-xs font-bold flex-shrink-0 mt-0.5">
-                {i + 1}
-              </span>
-              <span className="text-brand-gray-500 leading-relaxed">{p}</span>
-            </li>
+            <Reveal key={p} delay={i * 60}>
+              <li className="flex items-start gap-4 rounded-2xl border border-line bg-panel p-5">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full grad font-pixel text-[0.6rem] text-white">
+                  {i + 1}
+                </span>
+                <span className="pt-1 leading-relaxed text-ink-soft">{p}</span>
+              </li>
+            </Reveal>
           ))}
         </ul>
-        </Reveal>
-        <Reveal delay={200}>
-          <p className="mt-8 text-brand-gray-400 italic">
-          Se ti riconosci in almeno uno di questi punti, probabilmente possiamo lavorare bene insieme.
-        </p>
+
+        <Reveal delay={120}>
+          <p className="mt-8 text-pretty italic text-muted">
+            Se ti riconosci in almeno uno di questi punti, probabilmente possiamo lavorare bene insieme.
+          </p>
         </Reveal>
       </div>
     </section>

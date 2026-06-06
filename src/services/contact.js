@@ -1,23 +1,19 @@
-import { supabase } from '../lib/supabaseClient'
-
+/**
+ * Sends a contact request to the serverless email endpoint (/api/send-email),
+ * handled in production by the Cloudflare Worker via Resend. Email-only: no
+ * database — the message lands directly in Marco's inbox.
+ */
 export async function submitContactForm({ nome, attivita, email, telefono, messaggio, budget }) {
-  const { data, error } = await supabase
-    .from('contatti')
-    .insert([{ nome, attivita, email, telefono, messaggio, budget }])
+  const res = await fetch('/api/send-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome, attivita, email, telefono, messaggio, budget }),
+  })
 
-  if (error) {
-    throw new Error(error.message)
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '')
+    throw new Error(`Invio non riuscito (${res.status}). ${detail}`)
   }
 
-  try {
-    await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, attivita, email, telefono, messaggio, budget }),
-    })
-  } catch {
-    // L'endpoint serverless sarà disponibile dopo il deploy su Cloudflare
-  }
-
-  return { success: true, data }
+  return res.json().catch(() => ({ success: true }))
 }

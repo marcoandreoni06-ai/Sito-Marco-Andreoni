@@ -3,6 +3,7 @@ import { getOrganizationSchema, getBreadcrumbSchema } from '../lib/structuredDat
 import HeroSection from '../components/HeroSection'
 import TrustBar from '../components/TrustBar'
 import PilastriSection from '../components/PilastriSection'
+import StatsSection from '../components/StatsSection'
 import MetodoSection from '../components/MetodoSection'
 import PercheMeSection from '../components/PercheMeSection'
 import CtaSection from '../components/CtaSection'
@@ -23,12 +24,13 @@ export default function Home() {
       <HeroSection />
       <TrustBar />
       <PilastriSection />
+      <StatsSection />
       <MetodoSection />
       <PercheMeSection />
       <CtaSection
         headline="Il primo passo è una chiacchierata."
-        body="Niente presentazioni, niente preventivi forzati. Prenota 15 minuti gratuiti. Mi racconti cosa fai, cosa vorresti ottenere e cosa ti blocca. Se c'è feeling, costruiamo qualcosa insieme. Se non c'è, avrai comunque un'idea più chiara di cosa ti serve."
-        cta="Prenota i tuoi 15 minuti gratuiti \u2192"
+        body="Niente presentazioni, niente preventivi forzati. Prenota 15 minuti gratuiti: mi racconti cosa fai, cosa vorresti ottenere e cosa ti blocca. Se c'è feeling, costruiamo qualcosa insieme."
+        cta="Prenota i tuoi 15 minuti gratuiti"
       />
     </>
   )

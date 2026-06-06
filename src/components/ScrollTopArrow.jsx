@@ -1,29 +1,24 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function ScrollTopArrow() {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    function onScroll() {
-      setShow(window.scrollY > 400)
-    }
+    const onScroll = () => setShow(window.scrollY > 600)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  function scrollTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
     <button
-      onClick={scrollTop}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Torna in cima"
-      className={`fixed bottom-6 right-6 z-40 w-12 h-12 flex items-center justify-center text-accent-orange transition-all duration-300 ${
-        show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      className={`grad-ring glass fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full text-ink transition-all duration-300 ${
+        show ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >
-      <svg viewBox="0 0 16 16" className="w-7 h-7 fill-current">
+      {/* pixel-art up arrow — a nod to the brand's arcade identity */}
+      <svg viewBox="0 0 16 16" className="h-5 w-5 fill-current" aria-hidden="true">
         <rect x="6" y="0" width="4" height="3" />
         <rect x="4" y="3" width="8" height="3" />
         <rect x="2" y="6" width="12" height="3" />
