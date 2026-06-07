@@ -86,7 +86,7 @@ export default function PilastriSection() {
             return (
               <article
                 key={p.id}
-                className="grid items-center gap-8 md:grid-cols-[1fr_3fr] md:gap-10"
+                className={`grid items-center gap-8 md:gap-10 ${flip ? 'md:grid-cols-[3fr_1fr]' : 'md:grid-cols-[1fr_3fr]'}`}
               >
                 {/* Video */}
                 <Reveal
