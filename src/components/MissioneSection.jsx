@@ -2,10 +2,10 @@ import Reveal from './Reveal'
 import Eyebrow from './ui/Eyebrow'
 
 const valori = [
-  { k: '01', title: 'Trasparenza', desc: 'Ti spiego ogni scelta, tecnica e strategica, in italiano semplice. Niente buzzword per confonderti.' },
-  { k: '02', title: 'Qualità sopra quantità', desc: 'Preferisco un progetto ben fatto a dieci fatti a metà. Non ho fretta.' },
-  { k: '03', title: 'Risultati misurabili', desc: 'Se non si può misurare, non si può migliorare. Ogni progetto ha KPI chiari dal giorno uno.' },
-  { k: '04', title: 'Relazioni lunghe', desc: 'Non cerco il cliente facile. Cerco chi vuole costruire un percorso di crescita, non un sitino “tanto per esserci”.' },
+  { k: '01', title: 'Trasparenza', desc: 'Ti spiego ogni scelta in italiano semplice. Niente buzzword per confonderti.' },
+  { k: '02', title: 'Qualità sopra quantità', desc: 'Preferisco un progetto ben fatto a dieci fatti a metà.' },
+  { k: '03', title: 'Risultati misurabili', desc: 'Se non si misura, non si migliora. KPI chiari dal giorno uno.' },
+  { k: '04', title: 'Relazioni lunghe', desc: 'Cerco chi vuole un percorso di crescita, non un sito “tanto per esserci”.' },
 ]
 
 export default function MissioneSection() {
@@ -22,11 +22,11 @@ export default function MissioneSection() {
             </Reveal>
             <Reveal delay={80}>
               <div className="mt-6 space-y-4 text-pretty leading-relaxed text-muted">
-                <p>Credo che la tecnologia debba essere al servizio delle persone, non il contrario.</p>
+                <p>La tecnologia deve essere al servizio delle persone, non il contrario.</p>
                 <p>
                   La mia missione è <strong className="font-semibold text-ink">rendere il digitale
-                  accessibile, comprensibile e redditizio</strong> per chi non è nativo digitale. Non ti
-                  insegnerò a fare il mio lavoro: ti darò strumenti che fanno il lavoro per te.
+                  accessibile, comprensibile e redditizio</strong> per chi non è nativo digitale: strumenti
+                  che fanno il lavoro per te.
                 </p>
               </div>
             </Reveal>

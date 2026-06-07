@@ -8,25 +8,25 @@ const fasi = [
     n: '01',
     fase: 'Ascolto',
     durata: '1–2 incontri',
-    desc: 'Ci conosciamo. Analizzo il tuo business, i tuoi obiettivi, il tuo mercato e i tuoi competitor. Capisco cosa ti serve davvero.',
+    desc: 'Analizzo il tuo business, i tuoi obiettivi e i tuoi competitor. Capisco cosa ti serve davvero.',
   },
   {
     n: '02',
     fase: 'Strategia',
     durata: '2–5 giorni',
-    desc: 'Progetto la soluzione: architettura del sito, flussi di automazione, piano contenuti. Ti presento un documento chiaro con costi e tempi.',
+    desc: 'Progetto la soluzione e te la presento in un documento chiaro, con costi e tempi.',
   },
   {
     n: '03',
     fase: 'Esecuzione',
     durata: '1–4 settimane',
-    desc: 'Costruisco tutto con tecnologie moderne e agenti AI. Ogni fase ti viene mostrata e approvata prima di procedere.',
+    desc: 'Costruisco tutto con tecnologie moderne e agenti AI. Ogni fase la approvi prima di procedere.',
   },
   {
     n: '04',
     fase: 'Ottimizzazione',
     durata: 'Continua',
-    desc: 'Lancio, monitoraggio, aggiustamenti. Il progetto non finisce online: lo seguo per assicurarmi che funzioni e porti risultati.',
+    desc: 'Lancio, monitoraggio e aggiustamenti. Ti seguo perché il progetto porti risultati nel tempo.',
   },
 ]
 
@@ -44,7 +44,7 @@ export default function MetodoSection() {
           </Reveal>
           <Reveal delay={80}>
             <p className="mt-5 text-pretty leading-relaxed text-muted">
-              Non improvviso. Ogni progetto segue un processo collaudato in quattro fasi, dalla prima
+              Niente improvvisazione: un processo collaudato in quattro fasi, dalla prima
               chiacchierata fino al lancio e oltre.
             </p>
           </Reveal>

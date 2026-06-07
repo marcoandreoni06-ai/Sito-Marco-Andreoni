@@ -3,7 +3,6 @@ import { getPersonSchema, getBreadcrumbSchema } from '../lib/structuredData'
 import ChiSonoHero from '../components/ChiSonoHero'
 import StoriaSection from '../components/StoriaSection'
 import MissioneSection from '../components/MissioneSection'
-import Metodo3ISection from '../components/Metodo3ISection'
 import CompetenzeSection from '../components/CompetenzeSection'
 import ComeLavoroSection from '../components/ComeLavoroSection'
 import PerChiSection from '../components/PerChiSection'
@@ -15,7 +14,7 @@ export default function ChiSono() {
     <>
       <SEO
         title="Chi Sono"
-        description="Marco Andreoni \u2014 Consulente in comunicazione digitale e automazione AI. Scopri la mia storia, il metodo 3I e come posso aiutare la tua impresa a crescere online."
+        description="Marco Andreoni \u2014 Consulente in comunicazione digitale e automazione AI. Scopri la mia storia, le mie competenze e come posso aiutare la tua impresa a crescere online."
         canonicalUrl="https://marcoandreoni.marco-andreoni06.workers.dev/chi-sono"
         structuredData={[
           getPersonSchema(),
@@ -29,14 +28,13 @@ export default function ChiSono() {
       <ChiSonoHero />
       <StoriaSection />
       <MissioneSection />
-      <Metodo3ISection />
       <CompetenzeSection />
       <ComeLavoroSection />
       <PerChiSection />
       <FaqSection />
       <CtaSection
         headline="Ti ho incuriosito?"
-        body="Se sei arrivato fin qui, forse c'\u00e8 qualcosa che vuoi migliorare. Il primo passo \u00e8 semplice: prenota 15 minuti gratuiti."
+        body="Se sei arrivato fin qui, forse c'\u00e8 qualcosa che vuoi migliorare. Il primo passo \u00e8 semplice: 15 minuti gratuiti, senza impegno."
         cta="Prenota 15 minuti gratuiti"
       />
     </>

@@ -192,6 +192,37 @@ summary::marker { content: ""; }
 @keyframes drift-b { from { transform: translate(0,0) scale(1); } to { transform: translate(-7vw, 9vw) scale(1.12); } }
 @keyframes drift-c { from { transform: translate(0,0) scale(1); } to { transform: translate(5vw, -7vw) scale(1.2); } }
 
+/* Two slowly-wandering spheres (violet + orange) for the home hero. */
+.aurora-duo .aurora-blob { filter: blur(72px); opacity: 0.7; }
+.aurora-wander-v {
+  width: 46vw; height: 46vw;
+  background: radial-gradient(circle at center, var(--color-violet), transparent 70%);
+  top: 2vh; left: 8vw;
+  animation: wander-v 34s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+.aurora-wander-o {
+  width: 42vw; height: 42vw;
+  background: radial-gradient(circle at center, var(--color-orange), transparent 70%);
+  top: 14vh; right: 6vw;
+  animation: wander-o 41s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+@keyframes wander-v {
+  0%   { transform: translate(0, 0) scale(1); }
+  20%  { transform: translate(22vw, 10vh) scale(1.12); }
+  40%  { transform: translate(34vw, -6vh) scale(0.95); }
+  60%  { transform: translate(12vw, 16vh) scale(1.16); }
+  80%  { transform: translate(-6vw, 4vh) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes wander-o {
+  0%   { transform: translate(0, 0) scale(1); }
+  22%  { transform: translate(-26vw, 12vh) scale(1.1); }
+  44%  { transform: translate(-10vw, -8vh) scale(0.92); }
+  66%  { transform: translate(-34vw, 6vh) scale(1.18); }
+  84%  { transform: translate(-14vw, 18vh) scale(1.04); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
 /* ── Signature gradient helpers ───────────────────────── */
 
 .grad {
@@ -246,6 +277,8 @@ summary::marker { content: ""; }
   width: 1.4rem; height: 2px;
   background: linear-gradient(90deg, var(--color-violet), var(--color-orange));
 }
+.eyebrow.no-tick { gap: 0; }
+.eyebrow.no-tick::before { display: none; }
 
 /* ── Glass nav ────────────────────────────────────────── */
 

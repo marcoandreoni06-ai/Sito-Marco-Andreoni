@@ -7,7 +7,7 @@ const fasiDettaglio = [
     n: '01',
     fase: 'Conoscenza',
     durata: 'gratuita · 15 minuti',
-    desc: 'Una chiamata senza impegno. Mi racconti cosa fai, cosa vorresti ottenere e cosa ti blocca. Io ti racconto come lavoro e quali sono i prossimi passi.',
+    desc: 'Una chiamata senza impegno. Mi racconti cosa ti blocca, io ti dico come lavoro e quali sono i prossimi passi.',
     punti: [
       "Hai un'idea chiara di cosa ti serve (anche se non lavoreremo insieme)",
       'So se posso aiutarti e come',
@@ -18,7 +18,7 @@ const fasiDettaglio = [
     n: '02',
     fase: 'Analisi e proposta',
     durata: '',
-    desc: "Se c'è feeling, approfondisco. Analizzo il tuo mercato, i tuoi competitor, la tua situazione attuale. Progetto una strategia su misura.",
+    desc: "Se c'è feeling, approfondisco: mercato, competitor, situazione attuale. Progetto una strategia su misura.",
     punti: ['Obiettivi e KPI', 'Soluzione tecnica e creativa', 'Tempistiche dettagliate', 'Investimento trasparente, nessuna voce nascosta'],
   },
   {
@@ -32,7 +32,7 @@ const fasiDettaglio = [
     n: '04',
     fase: 'Lancio e supporto',
     durata: '',
-    desc: 'Deploy su dominio personalizzato, SSL attivo, Google Search Console configurata. Il sito è live. Ma non finisce qui.',
+    desc: 'Deploy su dominio personalizzato, SSL e Search Console configurati. Il sito è live. Ma non finisce qui.',
     punti: ['Monitoraggio delle performance', 'Aggiustamenti post-lancio', 'Assistenza continuativa', 'Report periodico sui risultati'],
   },
 ]

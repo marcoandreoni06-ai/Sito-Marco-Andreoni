@@ -18,24 +18,40 @@ export default function DoveSection() {
               <div className="mt-5 space-y-4 text-pretty leading-relaxed text-muted">
                 <p>
                   La mia base è a <strong className="font-semibold text-ink">Fano</strong>, in provincia di
-                  Pesaro e Urbino. Lavoro volentieri in presenza in tutta la zona delle Marche, ma seguo
-                  progetti da remoto in tutta Italia.
+                  Pesaro e Urbino. Lavoro in presenza nelle Marche e da remoto in tutta Italia.
                 </p>
                 <p>
-                  Se sei della zona, possiamo incontrarci per un caffè e parlare del tuo progetto dal vivo.
-                  Se sei più lontano, una videochiamata funziona altrettanto bene.
+                  Se sei della zona, ci vediamo per un caffè. Se sei lontano, una videochiamata
+                  funziona altrettanto bene.
                 </p>
               </div>
             </Reveal>
           </div>
 
           <Reveal variant="scale-in" delay={60}>
-            <div className="grad-ring relative flex aspect-square items-center justify-center overflow-hidden rounded-[1.5rem] bg-cream">
-              <div className="halftone absolute inset-0 opacity-[0.06]" />
-              <div className="relative text-center">
-                <MapPin className="mx-auto h-9 w-9 text-violet" />
-                <p className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">Fano</p>
-                <p className="font-pixel text-[0.55rem] uppercase tracking-wider text-muted">Marche · Italia</p>
+            <div className="grad-ring relative aspect-square overflow-hidden rounded-[1.5rem] bg-cream">
+              <iframe
+                title="Mappa — Via Vittorio De Sica 1, Fano"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=13.0088825%2C43.8193989%2C13.0168825%2C43.8243989&layer=mapnik&marker=43.8218989%2C13.0128825"
+                className="absolute inset-0 h-full w-full grayscale-[0.25] contrast-[1.05]"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              {/* tint on-palette, non bloccante */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-20 mix-blend-multiply"
+                style={{ background: 'linear-gradient(135deg, var(--color-violet), var(--color-orange))' }}
+              />
+              {/* indirizzo */}
+              <div className="pointer-events-none absolute inset-x-4 bottom-4 flex items-center gap-2.5 rounded-2xl border border-line bg-panel/90 px-4 py-3 shadow-lg backdrop-blur">
+                <span className="grad-ring flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream text-violet">
+                  <MapPin className="h-4 w-4" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-display text-sm font-semibold tracking-tight text-ink">Fano · Marche</span>
+                  <span className="block truncate text-xs text-muted">Via Vittorio De Sica 1, 61032</span>
+                </span>
               </div>
             </div>
           </Reveal>

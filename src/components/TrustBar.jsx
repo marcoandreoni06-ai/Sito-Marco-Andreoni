@@ -16,7 +16,7 @@ export default function TrustBar() {
     <section className="border-y border-line bg-paper py-8">
       <div className="mx-auto mb-6 max-w-6xl px-6">
         <p className="text-center font-pixel text-[0.6rem] uppercase tracking-wider text-faint">
-          Cosa porto sul tavolo
+          Cosa so fare
         </p>
       </div>
       <Marquee items={capabilities} duration={30} />

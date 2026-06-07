@@ -2,8 +2,8 @@ import Reveal from './Reveal'
 import Eyebrow from './ui/Eyebrow'
 
 const punti = [
-  'Ha un prodotto o servizio di qualità ma fatica a farlo conoscere online',
-  'Non ha tempo da dedicare al digitale (e non vuole imparare)',
+  'Ha un prodotto di qualità ma fatica a farlo conoscere online',
+  'Non ha tempo da dedicare al digitale (e non vuole impararlo)',
   'Ha già bruciato soldi con agenzie che promettevano e non mantenevano',
   'Vuole capire cosa funziona e perché, non solo “avere un sito”',
   'Crede nel lungo termine, non nel risultato immediato',

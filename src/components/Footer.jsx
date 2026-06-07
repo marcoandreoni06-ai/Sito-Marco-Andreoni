@@ -32,8 +32,8 @@ export default function Footer() {
           <div>
             <Logo />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
-              Comunicazione digitale, automazione AI e sviluppo web su misura per piccole imprese e
-              professionisti delle Marche.
+              Comunicazione digitale, automazione AI e sviluppo web su misura per piccole imprese
+              delle Marche.
             </p>
             <p className="mt-5 inline-flex items-center gap-2 text-sm text-muted">
               <MapPin className="h-4 w-4 text-violet" />

@@ -6,22 +6,22 @@ const cards = [
   {
     icon: Ear,
     title: 'Ascolto vero',
-    desc: 'Non parto da un template. Parto da te. Ogni soluzione è pensata per il tuo caso specifico, non adattata a un pacchetto esistente.',
+    desc: 'Non parto da un template. Parto da te: ogni soluzione è pensata per il tuo caso specifico.',
   },
   {
     icon: Unlock,
     title: 'Nessun vendor lock-in',
-    desc: 'Tutto ciò che costruisco è basato su tecnologie open source e dati di tua proprietà. Se domani vuoi cambiare fornitore, porti via tutto.',
+    desc: 'Tecnologie open source e dati di tua proprietà. Se domani cambi fornitore, porti via tutto.',
   },
   {
     icon: BadgeEuro,
     title: 'Prezzi trasparenti',
-    desc: 'Sai esattamente cosa paghi e perché. Nessuna voce nascosta, nessun costo ricorrente imposto. Preventivi chiari, senza sorprese.',
+    desc: 'Sai cosa paghi e perché. Nessuna voce nascosta, nessun costo ricorrente imposto.',
   },
   {
     icon: LifeBuoy,
     title: 'Supporto reale',
-    desc: 'Non sparisco dopo il lancio. Ogni progetto include assistenza e aggiornamenti. Perché un sito abbandonato è un sito che non funziona.',
+    desc: 'Non sparisco dopo il lancio. Ogni progetto include assistenza e aggiornamenti.',
   },
 ]
 

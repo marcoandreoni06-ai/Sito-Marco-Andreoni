@@ -4,8 +4,7 @@ import CountUp from './fx/CountUp'
 
 const stats = [
   { value: 3, suffix: '', label: 'Anni di progetti', desc: 'Sul campo, tra collaborazioni e formazione continua.' },
-  { value: 100, suffix: '/100', label: 'Lighthouse', desc: 'Performance, SEO e accessibilità certificate.' },
-  { value: 24, suffix: 'h', label: 'Tempo di risposta', desc: 'Ogni richiesta ricevuta, letta e risposta entro un giorno.' },
+  { value: 24, suffix: 'h', label: 'Tempo di risposta', desc: 'Ogni richiesta, letta e risposta entro un giorno.' },
   { value: 100, suffix: '%', label: 'Su misura', desc: 'Zero template. Ogni progetto parte da te.' },
 ]
 
@@ -20,7 +19,7 @@ export default function StatsSection() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 70} className="bg-paper">
               <div className="h-full p-7">

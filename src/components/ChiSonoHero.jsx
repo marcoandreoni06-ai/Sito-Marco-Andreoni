@@ -9,11 +9,11 @@ export default function ChiSonoHero() {
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">
-          <span className="eyebrow text-muted">Chi sono</span>
+          <span className="eyebrow no-tick text-muted">Chi sono</span>
         </p>
         <h1 className="reveal reveal-fade-up is-visible font-display text-[2.4rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-6xl" style={{ animationDelay: '90ms' }}>
-          Non costruisco solo siti. Costruisco <span className="grad-text-anim">ponti</span> tra la tua
-          idea e chi deve conoscerla.
+          Non costruisco solo siti. Costruisco <span className="grad-text-anim">ponti</span> tra la
+          tua idea e chi deve conoscerla.
         </h1>
         <p className="reveal reveal-fade-up is-visible mx-auto mt-7 max-w-xl text-pretty leading-relaxed text-muted sm:text-lg" style={{ animationDelay: '180ms' }}>
           Marco Andreoni — consulente in comunicazione digitale e automazione AI.
@@ -23,7 +23,7 @@ export default function ChiSonoHero() {
         </p>
 
         <div className="reveal reveal-fade-up is-visible mt-9 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '300ms' }}>
-          <MagneticButton href="#metodo-3i" className="px-7 py-3.5 text-sm">
+          <MagneticButton href="#competenze" className="px-7 py-3.5 text-sm">
             Scopri come posso aiutarti
             <ArrowUpRight className="h-4 w-4" />
           </MagneticButton>

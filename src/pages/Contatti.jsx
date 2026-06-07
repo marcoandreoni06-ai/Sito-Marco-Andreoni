@@ -11,10 +11,10 @@ import CtaSection from '../components/CtaSection'
 import Reveal from '../components/Reveal'
 
 const contattiFaq = [
-  { q: 'Quanto costa una consulenza?', a: 'La prima chiamata conoscitiva di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
-  { q: 'Offri assistenza anche dopo il progetto?', a: 'Sì. Ogni progetto include un periodo di assistenza post-lancio. Per aggiornamenti o modifiche successive, possiamo concordare un piano di manutenzione continuativo.' },
-  { q: 'Lavori anche con partite IVA?', a: 'Certo. Lavoro regolarmente con partite IVA, ditte individuali e società. Emissione di fattura per ogni prestazione.' },
-  { q: 'Accetti pagamenti rateali?', a: 'Per progetti più consistenti, valutiamo insieme un piano di pagamento personalizzato. Parliamone nella chiamata conoscitiva.' },
+  { q: 'Quanto costa una consulenza?', a: 'La prima call di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
+  { q: 'Offri assistenza anche dopo il progetto?', a: 'Sì, ogni progetto include assistenza post-lancio. Per gli aggiornamenti successivi possiamo concordare un piano di manutenzione.' },
+  { q: 'Lavori anche con partite IVA?', a: 'Certo. Lavoro con partite IVA, ditte individuali e società, con fattura per ogni prestazione.' },
+  { q: 'Accetti pagamenti rateali?', a: 'Per i progetti più consistenti valutiamo insieme un piano di pagamento personalizzato.' },
 ]
 
 const canali = [
@@ -100,7 +100,7 @@ export default function Contatti() {
 
       <CtaSection
         headline="Non aspettare il momento perfetto."
-        body="Il momento perfetto non arriva mai: arriva quello in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio, ma ben fatto e pensato per crescere. Inizia con una chiacchierata."
+        body="Il momento perfetto non arriva mai: arriva quello in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio, ma pensato per crescere."
         cta="Prenota 15 minuti gratuiti"
       />
     </>

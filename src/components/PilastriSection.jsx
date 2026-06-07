@@ -11,9 +11,9 @@ const pilastri = [
     n: '01',
     icon: Code2,
     kicker: 'Siti web che vendono',
-    video: VIDEOS.web,
+    video: VIDEOS.ai,
     headline: 'Sviluppo web professionale, senza template.',
-    body: "Non un biglietto da visita digitale: il tuo venditore migliore, attivo 24/7. Lo costruisco con React e Vite — pagine che caricano in meno di un secondo, ben indicizzate e pensate per convertire.",
+    body: "Non un biglietto da visita: il tuo venditore migliore, attivo 24/7. Costruito con React e Vite — veloce, indicizzato e pensato per convertire.",
     include: [
       'Design responsivo (telefono, tablet, desktop)',
       'SEO on-page (meta-tag, dati strutturati, sitemap)',
@@ -29,9 +29,9 @@ const pilastri = [
     n: '02',
     icon: Bot,
     kicker: 'Automazioni AI',
-    video: VIDEOS.ai,
+    video: VIDEOS.comms,
     headline: "L'AI non è il futuro. È ora.",
-    body: 'Ogni giorno ripeti le stesse attività: stesse domande, stessi dati, stesse email. Progetto flussi intelligenti che le svolgono al posto tuo — agenti AI che qualificano lead, scrivono email e raccolgono dati, lasciandoti solo le decisioni.',
+    body: 'Stesse attività, ogni giorno. Progetto agenti AI che qualificano lead, scrivono email e raccolgono dati al posto tuo — a te restano solo le decisioni.',
     include: [
       'Lead generation automatizzata',
       'Email marketing sequenziale (drip campaigns)',
@@ -46,9 +46,9 @@ const pilastri = [
     n: '03',
     icon: Radio,
     kicker: 'Comunicazione',
-    video: VIDEOS.comms,
+    video: VIDEOS.hero,
     headline: 'Non più rumore di fondo. Messaggi che restano.',
-    body: 'Ogni giorno vengono pubblicati milioni di contenuti: la maggior parte viene ignorata perché senza strategia. Costruisco una comunicazione che parte dal tuo pubblico e dai tuoi obiettivi — ogni post ha un perché, e un risultato misurabile.',
+    body: 'La maggior parte dei contenuti viene ignorata perché senza strategia. Costruisco una comunicazione che parte dal tuo pubblico: ogni post ha un perché e un risultato misurabile.',
     include: [
       'Social media management (pianificazione, creazione, analisi)',
       'Copywriting per sito, email e social',
@@ -73,8 +73,8 @@ export default function PilastriSection() {
           </Reveal>
           <Reveal delay={80}>
             <p className="mt-5 text-pretty leading-relaxed text-muted">
-              Non vendo pacchetti preconfezionati. Costruisco strumenti su misura per il tuo business,
-              partendo da un'analisi concreta delle tue esigenze.
+              Niente pacchetti preconfezionati. Strumenti su misura, partendo da un'analisi
+              concreta delle tue esigenze.
             </p>
           </Reveal>
         </div>

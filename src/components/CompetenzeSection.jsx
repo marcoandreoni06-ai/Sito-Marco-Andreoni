@@ -43,7 +43,7 @@ const competenze = [
 
 export default function CompetenzeSection() {
   return (
-    <section className="border-t border-line bg-cream px-6 py-24 md:py-32">
+    <section id="competenze" className="border-t border-line bg-cream px-6 py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="mb-14 max-w-2xl">
           <Reveal><Eyebrow>Competenze</Eyebrow></Reveal>
