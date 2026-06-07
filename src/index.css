@@ -43,7 +43,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -103,8 +102,6 @@ summary::marker { content: ""; }
   z-index: 9999;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  background: #fff;
 }
 .cursor-ring {
   position: fixed;
@@ -117,12 +114,10 @@ summary::marker { content: ""; }
   transform: translate(-50%, -50%);
   transition: width .22s var(--ease-out-expo), height .22s var(--ease-out-expo),
               border-color .22s ease, background-color .22s ease, opacity .2s ease;
-  mix-blend-mode: difference;
-  border-color: #fff;
 }
 .cursor-ring.is-active {
   width: 56px; height: 56px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(12,11,10,0.06);
 }
 .cursor-ring.is-hidden { opacity: 0; }
 
@@ -289,6 +284,24 @@ summary::marker { content: ""; }
   border: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
 }
 
+/* ── App fade-in (first paint) ────────────────────────── */
+
+@keyframes app-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.app-fade-in { animation: app-in 240ms ease-out both; }
+
+/* ── Stat card hover ──────────────────────────────────── */
+
+.stat-card {
+  transition: transform .2s var(--ease-out-expo), box-shadow .2s var(--ease-out-expo);
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px -12px rgba(12,11,10,0.12);
+}
+
 /* ── Buttons ──────────────────────────────────────────── */
 
 .btn {
@@ -308,15 +321,12 @@ summary::marker { content: ""; }
   background: var(--color-ink);
   color: var(--color-paper);
 }
-.btn-primary::before {
-  content: "";
-  position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(100deg, var(--color-violet), var(--color-orange));
-  opacity: 0;
-  transition: opacity .4s ease;
+.btn-primary:hover { transform: scale(1.04); }
+
+.btn:active {
+  transform: scale(0.96) !important;
+  transition-duration: 90ms !important;
 }
-.btn-primary:hover { box-shadow: 0 12px 40px -12px color-mix(in oklab, var(--color-violet) 60%, transparent); }
-.btn-primary:hover::before { opacity: 1; }
 
 .btn-ghost {
   background: transparent;
@@ -429,4 +439,6 @@ summary::marker { content: ""; }
   }
   .reveal { opacity: 1 !important; }
   .grain, .aurora-blob, .marquee { animation: none !important; }
+  .app-fade-in { animation: none !important; opacity: 1 !important; }
+  .stat-card { transition: none !important; }
 }

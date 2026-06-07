@@ -21,7 +21,7 @@ export default function StatsSection() {
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
           {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 70} className="bg-paper">
+            <Reveal key={s.label} delay={i * 70} className="stat-card bg-paper">
               <div className="h-full p-7">
                 <p className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
                   <span className="grad-text">

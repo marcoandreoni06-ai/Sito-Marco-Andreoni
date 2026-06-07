@@ -16,7 +16,7 @@ export default function Reveal({
   children,
   variant = 'fade-up',
   delay = 0,
-  threshold = 0.16,
+  threshold = 0.06,
   once = true,
   className = '',
   as: Tag = 'div',
@@ -36,7 +36,7 @@ export default function Reveal({
           setVisible(false)
         }
       },
-      { threshold, rootMargin: '0px 0px -8% 0px' },
+      { threshold, rootMargin: '0px 0px -3% 0px' },
     )
     observer.observe(el)
     return () => observer.disconnect()

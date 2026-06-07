@@ -1,3 +1,4 @@
+import PageTransition from '../components/fx/PageTransition'
 import SEO from '../seo/SEO'
 import { getPersonSchema, getBreadcrumbSchema } from '../lib/structuredData'
 import ChiSonoHero from '../components/ChiSonoHero'
@@ -11,7 +12,7 @@ import CtaSection from '../components/CtaSection'
 
 export default function ChiSono() {
   return (
-    <>
+    <PageTransition>
       <SEO
         title="Chi Sono"
         description="Marco Andreoni \u2014 Consulente in comunicazione digitale e automazione AI. Scopri la mia storia, le mie competenze e come posso aiutare la tua impresa a crescere online."
@@ -37,6 +38,6 @@ export default function ChiSono() {
         body="Se sei arrivato fin qui, forse c'\u00e8 qualcosa che vuoi migliorare. Il primo passo \u00e8 semplice: 15 minuti gratuiti, senza impegno."
         cta="Prenota 15 minuti gratuiti"
       />
-    </>
+    </PageTransition>
   )
 }

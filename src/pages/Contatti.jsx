@@ -9,6 +9,7 @@ import DoveSection from '../components/DoveSection'
 import FaqSection from '../components/FaqSection'
 import CtaSection from '../components/CtaSection'
 import Reveal from '../components/Reveal'
+import PageTransition from '../components/fx/PageTransition'
 
 const contattiFaq = [
   { q: 'Quanto costa una consulenza?', a: 'La prima call di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
@@ -26,7 +27,7 @@ const canali = [
 
 export default function Contatti() {
   return (
-    <>
+    <PageTransition>
       <SEO
         title="Contatti"
         description="Contatta Marco Andreoni per una consulenza gratuita. Raccontami il tuo progetto e ti rispondo entro 24 ore con un'idea chiara di come possiamo lavorare insieme."
@@ -103,6 +104,6 @@ export default function Contatti() {
         body="Il momento perfetto non arriva mai: arriva quello in cui decidi di iniziare. Il tuo sito non deve essere perfetto al lancio, ma pensato per crescere."
         cta="Prenota 15 minuti gratuiti"
       />
-    </>
+    </PageTransition>
   )
 }
