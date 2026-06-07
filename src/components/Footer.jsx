@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Mail, ArrowUpRight, MapPin } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 import Logo from './Logo'
-import Eyebrow from './ui/Eyebrow'
-import Reveal from './Reveal'
 import { LinkedinIcon, InstagramIcon } from './ui/SocialIcons'
 
 export default function Footer() {
@@ -10,23 +8,6 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-line bg-cream">
-      {/* Big editorial CTA band */}
-      <div className="mx-auto max-w-6xl px-6 pt-20 pb-14">
-        <Reveal>
-          <Eyebrow>Iniziamo</Eyebrow>
-          <h2 className="mt-5 max-w-3xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-6xl">
-            Trasformiamo la tua comunicazione in un{' '}
-            <span className="grad-text-anim">vantaggio competitivo</span>.
-          </h2>
-          <div className="mt-8">
-            <Link to="/contatti" className="btn btn-primary px-7 py-3.5 text-sm">
-              Prenota 15 minuti gratuiti
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </Reveal>
-      </div>
-
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 border-t border-line py-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>

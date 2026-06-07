@@ -1,8 +1,31 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
 import MagneticButton from './ui/MagneticButton'
+
+function HamburgerIcon({ open }) {
+  const t = 'transform 0.38s cubic-bezier(0.16, 1, 0.3, 1)'
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+      stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+      <line x1="3" y1="7.5" x2="19" y2="7.5"
+        style={{
+          transformOrigin: '11px 7.5px',
+          transform: open ? 'translateY(3.5px) rotate(45deg)' : 'translateY(0) rotate(0deg)',
+          transition: t,
+        }}
+      />
+      <line x1="3" y1="14.5" x2="19" y2="14.5"
+        style={{
+          transformOrigin: '11px 14.5px',
+          transform: open ? 'translateY(-3.5px) rotate(-45deg)' : 'translateY(0) rotate(0deg)',
+          transition: t,
+        }}
+      />
+    </svg>
+  )
+}
 
 const links = [
   { to: '/', label: 'Home' },
@@ -75,7 +98,7 @@ export default function Header() {
           aria-label={open ? 'Chiudi menu' : 'Apri menu'}
           aria-expanded={open}
         >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <HamburgerIcon open={open} />
         </button>
       </div>
 
