@@ -60,7 +60,7 @@ export default function Header() {
       <div
         className={`relative z-50 mx-auto flex max-w-6xl items-center justify-between rounded-full px-3 py-2 pl-4 transition-[background-color,box-shadow,backdrop-filter,border-color] duration-500 ${
           showPill
-            ? 'glass shadow-[0_10px_40px_-24px_rgba(12,11,10,0.5)]'
+            ? 'glass'
             : 'border border-transparent bg-transparent shadow-none'
         }`}
       >
@@ -104,7 +104,7 @@ export default function Header() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 -z-10 bg-paper/97 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
+        className={`glass-overlay fixed inset-0 -z-10 transition-opacity duration-300 md:hidden ${
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
