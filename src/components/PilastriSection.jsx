@@ -86,7 +86,7 @@ export default function PilastriSection() {
             return (
               <article
                 key={p.id}
-                className="grid items-center gap-8 md:grid-cols-[5fr_7fr] md:gap-10"
+                className="grid items-center gap-8 md:grid-cols-[1fr_3fr] md:gap-10"
               >
                 {/* Video */}
                 <Reveal
@@ -94,7 +94,7 @@ export default function PilastriSection() {
                   className={flip ? 'md:order-2' : ''}
                 >
                   <div className="relative">
-                    <VideoFrame src={p.video} className="aspect-video rounded-[1.2rem]" />
+                    <VideoFrame src={p.video} className="aspect-square rounded-[1.2rem]" />
                     <div className="absolute -bottom-4 left-5 rounded-xl border border-line bg-panel px-3.5 py-2 shadow-lg">
                       <span className="font-pixel text-[0.7rem] grad-text">{p.n}</span>
                     </div>
