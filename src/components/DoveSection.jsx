@@ -29,7 +29,7 @@ export default function DoveSection() {
           </div>
 
           <Reveal variant="scale-in" delay={60}>
-            <div className="grad-ring relative aspect-square overflow-hidden rounded-[1.5rem] bg-cream">
+            <div className="grad-ring relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-cream">
               <iframe
                 title="Mappa — Via Vittorio De Sica 1, Fano"
                 src="https://www.openstreetmap.org/export/embed.html?bbox=13.0088825%2C43.8193989%2C13.0168825%2C43.8243989&layer=mapnik&marker=43.8218989%2C13.0128825"
