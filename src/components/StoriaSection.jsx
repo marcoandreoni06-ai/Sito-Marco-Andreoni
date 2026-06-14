@@ -3,7 +3,7 @@ import Eyebrow from './ui/Eyebrow'
 
 export default function StoriaSection() {
   return (
-    <section id="la-mia-storia" className="px-6 py-24 md:py-32">
+    <section id="la-mia-storia" className="px-6 py-20 md:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-3xl">
           <div>
@@ -33,9 +33,12 @@ export default function StoriaSection() {
         </div>
 
         {/* Pull quote */}
-        <Reveal>
-          <blockquote className="mt-16 max-w-4xl border-l-2 border-violet pl-6 sm:mt-20 sm:pl-8">
-            <p className="font-display text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
+        <Reveal variant="left">
+          <blockquote className="relative mt-16 max-w-4xl pl-7 sm:mt-20 sm:pl-9">
+            {/* Barra gradiente + segno di citazione */}
+            <span aria-hidden="true" className="absolute left-0 top-1 bottom-1 w-[3px] rounded-full grad" />
+            <span aria-hidden="true" className="block font-display text-5xl leading-[0.6] grad-text">“</span>
+            <p className="mt-3 font-display text-2xl font-medium leading-snug tracking-tight text-ink sm:text-[1.95rem]">
               Oggi aiuto queste realtà a{' '}
               <span className="grad-text">esistere online con la stessa qualità</span> con cui esistono
               nella vita reale: strategia, codice, storytelling e automazioni.

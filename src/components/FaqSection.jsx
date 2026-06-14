@@ -15,7 +15,7 @@ export default function FaqSection({ items, title = 'Prima di contattarmi, forse
   const data = items || faq
 
   return (
-    <section className="px-6 py-24 md:py-32">
+    <section className="px-6 py-20 md:py-32">
       <div className="mx-auto max-w-3xl">
         <Reveal><Eyebrow>FAQ</Eyebrow></Reveal>
         <Reveal>

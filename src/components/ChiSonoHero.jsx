@@ -4,14 +4,21 @@ import Aurora from './fx/Aurora'
 
 export default function ChiSonoHero() {
   return (
-    <section className="relative overflow-hidden px-6 pb-12 pt-36 sm:pt-40 md:pb-16">
-      <Aurora intensity={0.9} />
+    <section className="relative overflow-hidden px-6 pb-16 pt-32 sm:pt-36 md:pb-20">
+      <Aurora intensity={0.9} variant="duo" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hero-halftone" />
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+      <div className="hero-ticks relative z-10 mx-auto w-full max-w-4xl px-1 py-2 text-center">
         <p className="reveal reveal-fade-up is-visible mb-7 flex justify-center">
-          <span className="eyebrow no-tick text-muted">Chi sono</span>
+          <span className="grad-ring inline-flex items-center gap-2.5 rounded-full bg-panel/70 px-4 py-2 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full grad" />
+            </span>
+            <span className="eyebrow no-tick text-ink-soft">Chi sono</span>
+          </span>
         </p>
-        <h1 className="reveal reveal-fade-up is-visible font-display text-[2.4rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-6xl" style={{ animationDelay: '90ms' }}>
+        <h1 className="reveal reveal-fade-up is-visible font-display text-[2.5rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-6xl" style={{ animationDelay: '90ms' }}>
           Non costruisco solo siti. Costruisco <span className="grad-text-anim">ponti</span> tra la
           tua idea e chi deve conoscerla.
         </h1>

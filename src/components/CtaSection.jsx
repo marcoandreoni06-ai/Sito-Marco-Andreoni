@@ -5,7 +5,7 @@ import Reveal from './Reveal'
 
 export default function CtaSection({ headline, body, cta }) {
   return (
-    <section className="px-6 py-24 md:py-28">
+    <section className="px-6 py-20 md:py-28">
       <Reveal variant="scale-in" className="mx-auto max-w-5xl">
         <div className="relative overflow-hidden rounded-[2rem] bg-ink px-7 py-16 text-center sm:px-16 sm:py-20">
           <Aurora intensity={0.55} className="opacity-70" />

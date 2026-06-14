@@ -11,6 +11,7 @@ import ScrollTopArrow from './components/ScrollTopArrow'
 const Home = lazy(() => import('./pages/Home'))
 const ChiSono = lazy(() => import('./pages/ChiSono'))
 const Contatti = lazy(() => import('./pages/Contatti'))
+const ProofOfWork = lazy(() => import('./pages/ProofOfWork'))
 
 const prefersReduced = typeof window !== 'undefined'
   && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -49,6 +50,7 @@ export default function App() {
               <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
                 <Route path="/chi-sono" element={<ChiSono />} />
+                <Route path="/lab" element={<ProofOfWork />} />
                 <Route path="/contatti" element={<Contatti />} />
               </Routes>
             </AnimatePresence>

@@ -11,7 +11,7 @@ const punti = [
 
 export default function PerChiSection() {
   return (
-    <section className="border-t border-line bg-cream px-6 py-24 md:py-32">
+    <section className="border-t border-line bg-cream px-6 py-20 md:py-32">
       <div className="mx-auto max-w-3xl">
         <Reveal><Eyebrow>Per chi lavoro</Eyebrow></Reveal>
         <Reveal>
@@ -26,7 +26,7 @@ export default function PerChiSection() {
         <ul className="mt-8 flex flex-col gap-3">
           {punti.map((p, i) => (
             <Reveal key={p} delay={i * 60}>
-              <li className="flex items-start gap-4 rounded-2xl border border-line bg-panel p-5">
+              <li data-cursor className="card-hover flex items-start gap-4 rounded-2xl border border-line bg-panel p-5">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full grad font-pixel text-[0.6rem] text-white">
                   {i + 1}
                 </span>

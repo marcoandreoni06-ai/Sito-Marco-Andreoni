@@ -14,7 +14,7 @@ const capabilities = [
 export default function TrustBar() {
   return (
     <section className="border-y border-line bg-paper py-8">
-<Marquee items={capabilities} duration={30} />
+      <Marquee items={capabilities} duration={30} />
     </section>
   )
 }

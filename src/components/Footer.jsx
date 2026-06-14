@@ -7,9 +7,11 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-cream">
+    <footer className="relative overflow-hidden bg-cream">
+      {/* Cucitura gradiente: separa il footer dalla sezione precedente */}
+      <div aria-hidden="true" className="h-[2px] w-full grad opacity-70" />
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 border-t border-line py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
@@ -27,6 +29,7 @@ export default function Footer() {
             <nav className="flex flex-col gap-3 text-sm">
               <Link to="/" className="w-fit text-muted transition-colors hover:text-ink link-u">Home</Link>
               <Link to="/chi-sono" className="w-fit text-muted transition-colors hover:text-ink link-u">Chi sono</Link>
+              <Link to="/lab" className="w-fit text-muted transition-colors hover:text-ink link-u">Lab</Link>
               <Link to="/contatti" className="w-fit text-muted transition-colors hover:text-ink link-u">Contatti</Link>
             </nav>
           </div>

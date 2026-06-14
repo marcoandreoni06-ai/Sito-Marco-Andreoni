@@ -3,10 +3,8 @@ import SEO from '../seo/SEO'
 import { getOrganizationSchema, getBreadcrumbSchema } from '../lib/structuredData'
 import HeroSection from '../components/HeroSection'
 import TrustBar from '../components/TrustBar'
-import PilastriSection from '../components/PilastriSection'
+import MetodoLiftOffSection from '../components/MetodoLiftOffSection'
 import StatsSection from '../components/StatsSection'
-import MetodoSection from '../components/MetodoSection'
-import PercheMeSection from '../components/PercheMeSection'
 import CtaSection from '../components/CtaSection'
 
 export default function Home() {
@@ -24,10 +22,8 @@ export default function Home() {
 
       <HeroSection />
       <TrustBar />
-      <PilastriSection />
+      <MetodoLiftOffSection />
       <StatsSection />
-      <MetodoSection />
-      <PercheMeSection />
       <CtaSection
         headline="Il primo passo è una chiacchierata."
         body="Niente preventivi forzati. 15 minuti gratuiti: mi racconti cosa ti blocca e, se c'è feeling, costruiamo qualcosa insieme."

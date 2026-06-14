@@ -38,6 +38,10 @@ export default function Cursor() {
     function onMove(e) {
       tx = e.clientX
       ty = e.clientY
+      const under = document.elementFromPoint(e.clientX, e.clientY)
+      const isDark = !!under?.closest('[data-dark-bg]')
+      r?.classList.toggle('is-light', isDark)
+      d?.classList.toggle('is-light', isDark)
       r?.classList.remove('is-hidden')
       d?.classList.remove('is-hidden')
     }

@@ -39,7 +39,7 @@ const fasiDettaglio = [
 
 export default function ComeLavoroSection() {
   return (
-    <section className="px-6 py-24 md:py-32">
+    <section className="px-6 py-20 md:py-32">
       <div className="mx-auto max-w-5xl">
         <div className="mb-14 max-w-2xl">
           <Reveal><Eyebrow>Come lavoro</Eyebrow></Reveal>
@@ -53,7 +53,7 @@ export default function ComeLavoroSection() {
         <div className="flex flex-col gap-4">
           {fasiDettaglio.map((f, i) => (
             <Reveal key={f.n} delay={i * 60}>
-              <div className="grid gap-6 rounded-3xl border border-line bg-panel p-7 sm:grid-cols-[auto_1fr] sm:p-9">
+              <div data-cursor className="card-hover grid gap-6 rounded-3xl border border-line bg-panel p-7 sm:grid-cols-[auto_1fr] sm:p-9">
                 <span className="font-display text-5xl font-semibold leading-none grad-text sm:text-6xl">{f.n}</span>
                 <div>
                   <div className="flex flex-wrap items-center gap-3">

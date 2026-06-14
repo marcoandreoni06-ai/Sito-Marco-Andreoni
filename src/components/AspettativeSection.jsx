@@ -9,7 +9,7 @@ const steps = [
 
 export default function AspettativeSection() {
   return (
-    <section className="border-y border-line bg-cream px-6 py-24 md:py-28">
+    <section className="border-y border-line bg-cream px-6 py-20 md:py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal><Eyebrow>Dopo l'invio</Eyebrow></Reveal>
         <Reveal>
@@ -21,7 +21,7 @@ export default function AspettativeSection() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {steps.map((s, i) => (
             <Reveal key={s.num} delay={i * 70}>
-              <div className="rounded-2xl border border-line bg-panel p-7">
+              <div data-cursor className="card-hover rounded-2xl border border-line bg-panel p-7">
                 <span className="font-display text-4xl font-semibold leading-none grad-text">{s.num}</span>
                 <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{s.desc}</p>

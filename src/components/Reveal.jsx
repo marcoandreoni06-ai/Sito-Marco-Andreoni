@@ -6,6 +6,9 @@ const variants = {
   'scale-in': 'reveal-scale-in',
   clip: 'reveal-clip',
   'pixel-step': 'reveal-pixel-step',
+  rocket: 'reveal-rocket',
+  left: 'reveal-left',
+  right: 'reveal-right',
 }
 
 /**

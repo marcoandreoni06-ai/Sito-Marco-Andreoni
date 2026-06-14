@@ -43,7 +43,7 @@ const competenze = [
 
 export default function CompetenzeSection() {
   return (
-    <section id="competenze" className="border-t border-line bg-cream px-6 py-24 md:py-32">
+    <section id="competenze" className="border-t border-line bg-cream px-6 py-20 md:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="mb-14 max-w-2xl">
           <Reveal><Eyebrow>Competenze</Eyebrow></Reveal>
@@ -59,7 +59,12 @@ export default function CompetenzeSection() {
             const Icon = c.icon
             return (
               <Reveal key={c.area} delay={(i % 3) * 70}>
-                <div data-cursor className="group h-full rounded-3xl border border-line bg-panel p-7 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong">
+                <div data-cursor className="group card-hover relative h-full overflow-hidden rounded-3xl border border-line bg-panel p-7">
+                  {/* Accento gradiente che si disegna in alto all'hover */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 grad transition-transform duration-500 ease-out group-hover:scale-x-100"
+                  />
                   <div className="grad-ring flex h-12 w-12 items-center justify-center rounded-2xl bg-cream">
                     <Icon className="h-5 w-5 text-violet transition-colors group-hover:text-orange" />
                   </div>

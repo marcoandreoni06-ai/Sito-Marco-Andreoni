@@ -102,7 +102,10 @@ summary::marker { content: ""; }
   z-index: 9999;
   pointer-events: none;
   transform: translate(-50%, -50%);
+  transition: background-color .18s ease;
 }
+.cursor-dot.is-light { background: #fff; }
+
 .cursor-ring {
   position: fixed;
   top: 0; left: 0;
@@ -115,10 +118,13 @@ summary::marker { content: ""; }
   transition: width .22s var(--ease-out-expo), height .22s var(--ease-out-expo),
               border-color .22s ease, background-color .22s ease, opacity .2s ease;
 }
+.cursor-ring.is-light { border-color: #fff; }
 .cursor-ring.is-active {
   width: 56px; height: 56px;
   background: rgba(12,11,10,0.06);
 }
+.cursor-ring.is-light.is-active { background: rgba(255,255,255,0.08); }
+.cursor-ring.is-hidden { opacity: 0; }
 .cursor-ring.is-hidden { opacity: 0; }
 
 /* ── Cinematic grain overlay ──────────────────────────── */
@@ -290,11 +296,11 @@ summary::marker { content: ""; }
     0 2px 6px -1px rgba(12, 11, 10, 0.08);
 }
 
-/* Mobile full-screen overlay — same glass family, more opaque for readability */
+/* Mobile full-screen overlay — near-solid light surface for full readability */
 .glass-overlay {
-  background: color-mix(in oklab, var(--color-paper) 80%, transparent);
-  backdrop-filter: blur(48px) saturate(1.7) brightness(1.04);
-  -webkit-backdrop-filter: blur(48px) saturate(1.7) brightness(1.04);
+  background: color-mix(in oklab, var(--color-panel) 92%, var(--color-paper));
+  backdrop-filter: blur(28px) saturate(1.4);
+  -webkit-backdrop-filter: blur(28px) saturate(1.4);
 }
 
 /* ── App fade-in (first paint) ────────────────────────── */
@@ -304,6 +310,53 @@ summary::marker { content: ""; }
   to   { opacity: 1; }
 }
 .app-fade-in { animation: app-in 240ms ease-out both; }
+
+/* ── Hero (immersive) ─────────────────────────────────── */
+
+/* Brand halftone dot-field, masked to a soft central bloom for depth. */
+.hero-halftone {
+  background-image: radial-gradient(var(--color-ink) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+  opacity: 0.05;
+  -webkit-mask-image: radial-gradient(ellipse 66% 56% at 50% 42%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(ellipse 66% 56% at 50% 42%, #000 0%, transparent 72%);
+}
+/* Light dots for dark (ink) heroes */
+.hero-halftone-light {
+  background-image: radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+  opacity: 0.06;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 0%, transparent 74%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 0%, transparent 74%);
+}
+
+/* Editorial registration ticks framing the hero (decorative, arcade accent). */
+.hero-ticks { --tick: var(--color-line-strong); }
+.hero-ticks::before,
+.hero-ticks::after {
+  content: "";
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--tick);
+  pointer-events: none;
+}
+.hero-ticks::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.hero-ticks::after  { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+.hero-ticks-light { --tick: rgba(255,255,255,0.28); }
+
+/* ── Cards (shared elevated hover) ────────────────────── */
+
+/* Adds life to otherwise-static cards: gentle lift + brand-tinted glow. */
+.card-hover {
+  transition: transform .3s var(--ease-out-expo),
+              box-shadow .3s var(--ease-out-expo),
+              border-color .3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-line-strong);
+  box-shadow: 0 24px 50px -30px rgba(157, 100, 241, 0.45);
+}
 
 /* ── Stat card hover ──────────────────────────────────── */
 
@@ -410,21 +463,32 @@ summary::marker { content: ""; }
 
 /* ── Scroll reveal ────────────────────────────────────── */
 
-.reveal { opacity: 0; will-change: transform, opacity; }
-.reveal-fade-up.is-visible { animation: r-fade-up .9s var(--ease-out-expo) forwards; }
+.reveal { opacity: 0; will-change: transform, opacity, filter; }
+.reveal-fade-up.is-visible { animation: r-fade-up .95s var(--ease-out-expo) forwards; }
 .reveal-fade.is-visible { animation: r-fade 1s ease forwards; }
-.reveal-scale-in.is-visible { animation: r-scale .9s var(--ease-out-expo) forwards; }
+.reveal-scale-in.is-visible { animation: r-scale .95s var(--ease-out-expo) forwards; }
 .reveal-clip.is-visible { animation: r-clip 1s var(--ease-out-expo) forwards; }
 .reveal-pixel-step.is-visible { animation: r-pixel .7s steps(7) forwards; }
+.reveal-rocket.is-visible { animation: r-rocket 1.1s var(--ease-out-expo) forwards; }
+.reveal-left.is-visible { animation: r-side-l .95s var(--ease-out-expo) forwards; }
+.reveal-right.is-visible { animation: r-side-r .95s var(--ease-out-expo) forwards; }
 
 @keyframes r-fade-up {
-  from { opacity: 0; transform: translateY(26px); filter: blur(6px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: 0; transform: translateY(34px) scale(0.986); filter: blur(8px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 @keyframes r-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes r-scale {
-  from { opacity: 0; transform: scale(0.94); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.92); filter: blur(6px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes r-side-l {
+  from { opacity: 0; transform: translateX(-46px); filter: blur(7px); }
+  to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+@keyframes r-side-r {
+  from { opacity: 0; transform: translateX(46px); filter: blur(7px); }
+  to { opacity: 1; transform: translateX(0); filter: blur(0); }
 }
 @keyframes r-clip {
   from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(12px); }
@@ -433,6 +497,38 @@ summary::marker { content: ""; }
 @keyframes r-pixel {
   0% { opacity: 0; clip-path: inset(100% 0 0 0); }
   100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+@keyframes r-rocket {
+  0%   { opacity:0; transform: translateY(100px) scale(0.4) rotate(-16deg);
+         filter: blur(10px); }
+  52%  { opacity:1; transform: translateY(-18px) scale(1.1) rotate(6deg);
+         filter: blur(0) drop-shadow(0 32px 64px rgba(157,100,241,0.65)); }
+  70%  { transform: translateY(7px) scale(0.94) rotate(-3deg);
+         filter: drop-shadow(0 16px 32px rgba(157,100,241,0.35)); }
+  84%  { transform: translateY(-4px) scale(1.03) rotate(1.5deg); }
+  93%  { transform: translateY(2px) scale(0.98) rotate(-0.5deg); }
+  100% { opacity:1; transform: translateY(0) scale(1) rotate(0);
+         filter: drop-shadow(0 16px 32px rgba(157,100,241,0.20)); }
+}
+
+/* ── Typewriter cursor ───────────────────────────────── */
+
+@keyframes cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cursor-type {
+  display: inline-block;
+  width: 3px;
+  border-radius: 1px;
+  vertical-align: middle;
+  background: currentColor;
+  margin-left: 3px;
+  height: 0.72em;
+  animation: cursor-blink 0.62s step-end infinite;
+}
+.cursor-type-done {
+  animation: cursor-blink 0.62s step-end 3 forwards;
 }
 
 /* ── Utilities ────────────────────────────────────────── */

@@ -19,20 +19,23 @@ export default function StatsSection() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-3">
-          {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 70} className="stat-card bg-paper">
-              <div className="h-full p-7">
-                <p className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
-                  <span className="grad-text">
-                    <CountUp value={s.value} suffix={s.suffix} />
-                  </span>
-                </p>
-                <p className="mt-3 font-semibold text-ink">{s.label}</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="mt-14 overflow-hidden rounded-3xl border border-line">
+          <div aria-hidden="true" className="h-1 w-full grad" />
+          <div className="grid gap-px bg-line sm:grid-cols-3">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 70} className="stat-card bg-paper">
+                <div className="h-full p-7">
+                  <p className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-6xl">
+                    <span className="grad-text">
+                      <CountUp value={s.value} suffix={s.suffix} />
+                    </span>
+                  </p>
+                  <p className="mt-3 font-semibold text-ink">{s.label}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

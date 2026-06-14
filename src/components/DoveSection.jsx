@@ -4,7 +4,7 @@ import Eyebrow from './ui/Eyebrow'
 
 export default function DoveSection() {
   return (
-    <section className="px-6 py-24 md:py-28">
+    <section className="px-6 py-20 md:py-28">
       <div className="mx-auto max-w-5xl">
         <div className="grid items-center gap-10 md:grid-cols-[1fr_0.8fr]">
           <div>
@@ -14,7 +14,7 @@ export default function DoveSection() {
                 Opero principalmente nelle Marche.
               </h2>
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal variant="left" delay={80}>
               <div className="mt-5 space-y-4 text-pretty leading-relaxed text-muted">
                 <p>
                   La mia base è a <strong className="font-semibold text-ink">Fano</strong>, in provincia di
@@ -28,7 +28,7 @@ export default function DoveSection() {
             </Reveal>
           </div>
 
-          <Reveal variant="scale-in" delay={60}>
+          <Reveal variant="right" delay={60}>
             <div className="grad-ring relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-cream">
               <iframe
                 title="Mappa — Via Vittorio De Sica 1, Fano"

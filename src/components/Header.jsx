@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
 import MagneticButton from './ui/MagneticButton'
@@ -30,12 +30,15 @@ function HamburgerIcon({ open }) {
 const links = [
   { to: '/', label: 'Home' },
   { to: '/chi-sono', label: 'Chi sono' },
+  { to: '/lab', label: 'Lab' },
   { to: '/contatti', label: 'Contatti' },
 ]
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [overDark, setOverDark] = useState(false)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -43,6 +46,31 @@ export default function Header() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Watch any [data-dark-bg] section intersecting the navbar area.
+  // MutationObserver re-wires IntersectionObserver when lazy pages add [data-dark-bg] to the DOM.
+  useEffect(() => {
+    let obs = null
+
+    function setup() {
+      obs?.disconnect()
+      const sections = document.querySelectorAll('[data-dark-bg]')
+      if (!sections.length) { setOverDark(false); return }
+      obs = new IntersectionObserver(
+        (entries) => setOverDark(entries.some((e) => e.isIntersecting)),
+        { rootMargin: '0px 0px -85% 0px', threshold: 0 },
+      )
+      sections.forEach((s) => obs.observe(s))
+    }
+
+    setup()
+
+    // Re-wire when lazy-loaded pages inject [data-dark-bg] into the DOM
+    const mut = new MutationObserver(setup)
+    mut.observe(document.body, { subtree: true, childList: true })
+
+    return () => { obs?.disconnect(); mut.disconnect() }
+  }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -54,6 +82,9 @@ export default function Header() {
   // The glass pill only materialises once you scroll (or open the mobile menu).
   // At the very top the bar is fully transparent — no background, no border.
   const showPill = scrolled || open
+
+  // True when a [data-dark-bg] section occupies the navbar area.
+  const darkHero = overDark && !open
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
@@ -76,7 +107,9 @@ export default function Header() {
               end={link.to === '/'}
               className={({ isActive }) =>
                 `link-u rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'text-ink' : 'text-muted hover:text-ink'
+                  isActive
+                    ? darkHero ? 'text-white' : 'text-ink'
+                    : darkHero ? 'text-white/60 hover:text-white' : 'text-muted hover:text-ink'
                 }`
               }
             >
@@ -93,7 +126,7 @@ export default function Header() {
         </div>
 
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
+          className={`flex h-10 w-10 items-center justify-center rounded-full md:hidden transition-colors ${darkHero ? 'text-white' : 'text-ink'}`}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Chiudi menu' : 'Apri menu'}
           aria-expanded={open}
