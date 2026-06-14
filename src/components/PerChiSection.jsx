@@ -23,21 +23,27 @@ export default function PerChiSection() {
           <p className="mt-5 leading-relaxed text-muted">Mi trovo bene con chi:</p>
         </Reveal>
 
-        <ul className="mt-8 flex flex-col gap-3">
+        <ul className="mt-10">
           {punti.map((p, i) => (
-            <Reveal key={p} delay={i * 60}>
-              <li data-cursor className="card-hover flex items-start gap-4 rounded-2xl border border-line bg-panel p-5">
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full grad font-pixel text-[0.6rem] text-white">
-                  {i + 1}
+            <Reveal
+              key={p}
+              as="li"
+              variant="left"
+              delay={i * 70}
+              className="block border-t border-line py-6 last:border-b"
+            >
+              <div className="flex items-baseline gap-5 sm:gap-7">
+                <span className="font-display text-3xl font-semibold leading-none grad-text sm:text-4xl">
+                  {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="pt-1 leading-relaxed text-ink-soft">{p}</span>
-              </li>
+                <span className="text-lg leading-relaxed text-ink-soft sm:text-xl">{p}</span>
+              </div>
             </Reveal>
           ))}
         </ul>
 
         <Reveal delay={120}>
-          <p className="mt-8 text-pretty italic text-muted">
+          <p className="mt-10 max-w-xl text-pretty text-lg italic leading-relaxed text-muted">
             Se ti riconosci in almeno uno di questi punti, probabilmente possiamo lavorare bene insieme.
           </p>
         </Reveal>

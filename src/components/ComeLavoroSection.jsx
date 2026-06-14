@@ -41,7 +41,7 @@ export default function ComeLavoroSection() {
   return (
     <section className="px-6 py-20 md:py-32">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-14 max-w-2xl">
+        <div className="mb-12 max-w-2xl md:mb-16">
           <Reveal><Eyebrow>Come lavoro</Eyebrow></Reveal>
           <Reveal>
             <h2 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
@@ -50,36 +50,47 @@ export default function ComeLavoroSection() {
           </Reveal>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {fasiDettaglio.map((f, i) => (
-            <Reveal key={f.n} delay={i * 60}>
-              <div data-cursor className="card-hover grid gap-6 rounded-3xl border border-line bg-panel p-7 sm:grid-cols-[auto_1fr] sm:p-9">
-                <span className="font-display text-5xl font-semibold leading-none grad-text sm:text-6xl">{f.n}</span>
-                <div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">{f.fase}</h3>
-                    {f.durata && (
-                      <span className="rounded-full border border-line bg-cream px-2.5 py-0.5 font-pixel text-[0.5rem] uppercase tracking-wider text-muted">
-                        {f.durata}
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-3 text-pretty text-sm leading-relaxed text-muted">{f.desc}</p>
-                  <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-                    {f.punti.map((p) => (
-                      <li key={p} className="flex items-start gap-2.5 text-sm text-ink-soft">
-                        <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full grad">
-                          <Check className="h-2.5 w-2.5 text-white" strokeWidth={3.5} />
-                        </span>
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        {/* Sequenza editoriale numerica */}
+        <ol>
+          {fasiDettaglio.map((f) => (
+            <li
+              key={f.n}
+              className="grid gap-x-8 gap-y-5 border-t border-line py-10 first:border-t-0 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-12 sm:py-14"
+            >
+              {/* Numero + durata */}
+              <div>
+                <Reveal variant="pixel-step">
+                  <span className="block font-display text-[3.25rem] font-semibold leading-[0.9] tracking-tight grad-text sm:text-6xl md:text-7xl">
+                    {f.n}
+                  </span>
+                </Reveal>
+                {f.durata && (
+                  <Reveal delay={140}>
+                    <span className="mt-4 inline-block rounded-full border border-line bg-cream px-2.5 py-0.5 font-pixel text-[0.5rem] uppercase tracking-wider text-muted">
+                      {f.durata}
+                    </span>
+                  </Reveal>
+                )}
               </div>
-            </Reveal>
+
+              {/* Contenuto */}
+              <Reveal variant="right" delay={80} className="min-w-0 sm:pt-1">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">{f.fase}</h3>
+                <p className="mt-3 text-pretty leading-relaxed text-muted">{f.desc}</p>
+                <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+                  {f.punti.map((p) => (
+                    <li key={p} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                      <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full grad">
+                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3.5} />
+                      </span>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )
