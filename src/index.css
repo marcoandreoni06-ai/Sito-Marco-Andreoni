@@ -448,6 +448,15 @@ summary::marker { content: ""; }
   white-space: nowrap;
 }
 
+/* ── Form fields ──────────────────────────────────────── */
+
+/* Soft brand glow on focus (ring + violet bloom in one shadow). */
+.field:focus {
+  box-shadow:
+    0 0 0 3px color-mix(in oklab, var(--color-violet) 16%, transparent),
+    0 8px 22px -12px rgba(157, 100, 241, 0.45);
+}
+
 /* ── Marquee ──────────────────────────────────────────── */
 
 .marquee { display: flex; width: max-content; animation: marquee var(--mq-dur, 32s) linear infinite; }

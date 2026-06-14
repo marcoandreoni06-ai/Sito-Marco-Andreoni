@@ -5,7 +5,7 @@ import { submitContactForm } from '../services/contact'
 const budgetOptions = ['Non lo so ancora', 'Sotto i 1.000€', '1.000€ – 3.000€', '3.000€ – 5.000€', 'Oltre 5.000€']
 
 const inputBase =
-  'w-full rounded-xl border bg-panel px-4 py-3 text-sm text-ink placeholder-faint outline-none transition-all duration-200 focus:border-violet focus:ring-2 focus:ring-violet/15'
+  'field w-full rounded-xl border bg-panel px-4 py-3 text-sm text-ink placeholder-faint outline-none transition-all duration-200 focus:border-violet'
 
 export default function ContactForm() {
   const [form, setForm] = useState({ nome: '', attivita: '', email: '', telefono: '', messaggio: '', budget: '' })
@@ -74,7 +74,9 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="rounded-3xl border border-line bg-cream p-6 sm:p-8">
+    <form onSubmit={handleSubmit} noValidate className="relative overflow-hidden rounded-3xl border border-line bg-cream p-6 sm:p-8">
+      {/* Strip gradiente: segnale premium sul punto di conversione */}
+      <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1 grad" />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Nome e cognome" required error={errors.nome}>
           <input name="nome" type="text" value={form.nome} onChange={handleChange} placeholder="Mario Rossi"

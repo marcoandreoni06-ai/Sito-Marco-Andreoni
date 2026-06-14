@@ -44,11 +44,11 @@ export default function Contatti() {
 
       <section className="px-6 pb-8 pt-6">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:gap-12">
-          <Reveal>
+          <Reveal variant="left">
             <ContactForm />
           </Reveal>
 
-          <Reveal delay={80} className="lg:pt-2">
+          <Reveal variant="right" delay={80} className="lg:pt-2">
             <aside className="flex flex-col gap-4">
               <div className="rounded-3xl border border-line bg-panel p-6">
                 <p className="font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Contatto diretto</p>
@@ -81,10 +81,17 @@ export default function Contatti() {
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-line bg-cream p-6">
-                <span className="grad-ring flex h-10 w-10 items-center justify-center rounded-xl bg-panel text-violet">
-                  <Clock className="h-4 w-4" />
-                </span>
+              <div className="relative overflow-hidden rounded-3xl border border-line bg-cream p-6">
+                <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1 grad" />
+                <div className="flex items-center gap-3">
+                  <span className="grad-ring flex h-10 w-10 items-center justify-center rounded-xl bg-panel text-violet">
+                    <Clock className="h-4 w-4" />
+                  </span>
+                  <span className="relative flex h-2 w-2" title="Disponibile">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full grad" />
+                  </span>
+                </div>
                 <p className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">Risposta entro 24 ore</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">
                   Dal lunedì al venerdì. Se scrivi nel weekend, ti rispondo il lunedì successivo.

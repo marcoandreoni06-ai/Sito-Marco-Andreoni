@@ -18,16 +18,29 @@ export default function AspettativeSection() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {steps.map((s, i) => (
-            <Reveal key={s.num} delay={i * 70}>
-              <div data-cursor className="card-hover rounded-2xl border border-line bg-panel p-7">
-                <span className="font-display text-4xl font-semibold leading-none grad-text">{s.num}</span>
-                <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{s.desc}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="relative mt-12 md:mt-14">
+          {/* Connettore orizzontale (desktop): collega i 3 nodi in sequenza */}
+          <div
+            aria-hidden="true"
+            className="absolute left-[16.66%] right-[16.66%] top-7 hidden h-px md:block"
+            style={{
+              background: 'linear-gradient(90deg, var(--color-violet), var(--color-mauve), var(--color-orange))',
+              opacity: 0.5,
+            }}
+          />
+          <ol className="relative grid gap-10 md:grid-cols-3 md:gap-6">
+            {steps.map((s, i) => (
+              <Reveal key={s.num} delay={i * 90} as="li">
+                <div className="flex flex-col items-center text-center">
+                  <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-line bg-panel shadow-sm">
+                    <span className="font-display text-xl font-semibold grad-text">{s.num}</span>
+                  </span>
+                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-ink">{s.title}</h3>
+                  <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">{s.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </div>
 
         <Reveal delay={120}>
