@@ -37,8 +37,8 @@ export default function Footer() {
           <div>
             <p className="mb-4 font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Contatti</p>
             <div className="flex flex-col gap-3 text-sm">
-              <a href="mailto:marco.andreoni06@gmail.com" className="inline-flex w-fit items-center gap-2 text-muted transition-colors hover:text-ink link-u">
-                <Mail className="h-4 w-4" /> marco.andreoni06@gmail.com
+              <a href="mailto:info.mawebstudio@gmail.com" className="inline-flex w-fit items-center gap-2 text-muted transition-colors hover:text-ink link-u">
+                <Mail className="h-4 w-4" /> info.mawebstudio@gmail.com
               </a>
               <div className="mt-1 flex gap-3">
                 <a

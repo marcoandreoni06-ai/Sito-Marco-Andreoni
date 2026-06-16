@@ -14,7 +14,7 @@ export default {
           },
           body: JSON.stringify({
             from: 'Sito Web <onboarding@resend.dev>',
-            to: 'marco.andreoni06@gmail.com',
+            to: 'info.mawebstudio@gmail.com',
             subject: `Nuovo contatto da ${nome}`,
             html: `<p><strong>Nome:</strong> ${nome}</p>
                    <p><strong>Attività:</strong> ${attivita || '—'}</p>
@@ -34,11 +34,8 @@ export default {
           headers: { 'Content-Type': 'application/json' },
         })
       } catch (err) {
-        return new Response(JSON.stringify({
-          error: err.message,
-          hasKey: !!env.RESEND_API_KEY,
-          keyPrefix: env.RESEND_API_KEY ? env.RESEND_API_KEY.substring(0, 8) + '...' : null,
-        }), {
+        console.error('send-email error:', err.message)
+        return new Response(JSON.stringify({ error: 'Invio non riuscito' }), {
           status: 500,
           headers: { 'Content-Type': 'application/json' },
         })

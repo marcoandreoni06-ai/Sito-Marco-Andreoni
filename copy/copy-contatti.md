@@ -42,10 +42,10 @@
 ## 3. Messaggi di risposta (feedback utente)
 
 **Successo:**
-> ✅ *Grazie, ho ricevuto il tuo messaggio! Ti risponderò entro 24 ore. Se hai urgenza, puoi contattarmi direttamente su [LinkedIn](#) o via email a marco@marcandreoni.it.*
+> ✅ *Grazie, ho ricevuto il tuo messaggio! Ti risponderò entro 24 ore. Se hai urgenza, puoi contattarmi direttamente su [LinkedIn](#) o via email a info.mawebstudio@gmail.com.*
 
 **Errore:**
-> ⚠️ *Qualcosa è andato storto. Riprova tra qualche minuto o scrivimi direttamente a marco@marcandreoni.it. Ti risponderò io al più presto.*
+> ⚠️ *Qualcosa è andato storto. Riprova tra qualche minuto o scrivimi direttamente a info.mawebstudio@gmail.com. Ti risponderò io al più presto.*
 
 **Validazione campi:**
 - Nome: *Inserisci il tuo nome*
@@ -63,7 +63,7 @@
 
 | Canale | Dettaglio |
 |---|---|
-| **Email** | marco@marcandreoni.it |
+| **Email** | info.mawebstudio@gmail.com |
 | **LinkedIn** | linkedin.com/in/marcoandreoni |
 | **Instagram** | @marcoandreoni |
 | **Telefono** | (disponibile dopo il primo contatto) |

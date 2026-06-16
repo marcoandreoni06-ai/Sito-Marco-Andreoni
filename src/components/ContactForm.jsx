@@ -64,7 +64,7 @@ export default function ContactForm() {
           Ti rispondo entro 24 ore. Se hai urgenza, scrivimi su{' '}
           <a href="https://linkedin.com/in/marcoandreoni" target="_blank" rel="noopener noreferrer" className="link-u font-medium text-ink">LinkedIn</a>{' '}
           o a{' '}
-          <a href="mailto:marco.andreoni06@gmail.com" className="link-u font-medium text-ink">marco.andreoni06@gmail.com</a>.
+          <a href="mailto:info.mawebstudio@gmail.com" className="link-u font-medium text-ink">info.mawebstudio@gmail.com</a>.
         </p>
         <button onClick={() => setStatus('idle')} className="btn btn-ghost mt-7 px-6 py-3 text-sm">
           Invia un altro messaggio
@@ -139,7 +139,7 @@ export default function ContactForm() {
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
           <p>
             Qualcosa è andato storto. Riprova tra poco o scrivimi direttamente a{' '}
-            <a href="mailto:marco.andreoni06@gmail.com" className="link-u font-medium text-ink">marco.andreoni06@gmail.com</a>.
+            <a href="mailto:info.mawebstudio@gmail.com" className="link-u font-medium text-ink">info.mawebstudio@gmail.com</a>.
           </p>
         </div>
       )}

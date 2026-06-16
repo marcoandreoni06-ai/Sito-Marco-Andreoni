@@ -19,7 +19,7 @@ const contattiFaq = [
 ]
 
 const canali = [
-  { icon: Mail, label: 'Email', value: 'marco.andreoni06@gmail.com', href: 'mailto:marco.andreoni06@gmail.com' },
+  { icon: Mail, label: 'Email', value: 'info.mawebstudio@gmail.com', href: 'mailto:info.mawebstudio@gmail.com' },
   { icon: LinkedinIcon, label: 'LinkedIn', value: 'in/marcoandreoni', href: 'https://linkedin.com/in/marcoandreoni' },
   { icon: InstagramIcon, label: 'Instagram', value: '@marcoandreoni', href: 'https://instagram.com/marcoandreoni' },
   { icon: Phone, label: 'Telefono', value: 'Dopo il primo contatto', href: null },
