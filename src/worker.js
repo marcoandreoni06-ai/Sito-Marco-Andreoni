@@ -13,8 +13,9 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Sito Web <onboarding@resend.dev>',
+            from: 'MA Web Studio <contatti@mawebstudio.it>',
             to: 'info.mawebstudio@gmail.com',
+            reply_to: email,
             subject: `Nuovo contatto da ${nome}`,
             html: `<p><strong>Nome:</strong> ${nome}</p>
                    <p><strong>Attività:</strong> ${attivita || '—'}</p>
