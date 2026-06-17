@@ -48,9 +48,48 @@ export default {
       return env.ASSETS.fetch(request)
     }
 
-    const index = await env.ASSETS.fetch(`${url.origin}/index.html`)
-    return new Response(await index.text(), {
-      headers: { 'content-type': 'text/html;charset=UTF-8' },
-    })
+    try {
+      const index = await env.ASSETS.fetch(`${url.origin}/index.html`)
+      let html = await index.text()
+
+      // Meta SEO per-pagina: la SPA serve sempre index.html, quindi qui
+      // sostituiamo titolo/description/canonical della home con quelli della rotta.
+      const page = PAGES[url.pathname]
+      if (page) {
+        html = html
+          .split(HOME.title).join(page.title)
+          .split(HOME.desc).join(page.desc)
+          .split('https://mawebstudio.it/"').join(`https://mawebstudio.it${url.pathname}"`)
+      }
+
+      return new Response(html, {
+        headers: { 'content-type': 'text/html;charset=UTF-8' },
+      })
+    } catch (err) {
+      console.error('asset/render error:', err.message)
+      // Fallback: lascia servire l'asset direttamente
+      return env.ASSETS.fetch(request)
+    }
+  },
+}
+
+// Deve combaciare ESATTAMENTE con il <title> e la description in index.html.
+const HOME = {
+  title: 'Marco Andreoni — Sviluppo web, automazioni AI e comunicazione digitale',
+  desc: 'Sviluppo web, automazioni AI e comunicazione digitale per piccole imprese e professionisti. Siti veloci e su misura, pensati per farti crescere.',
+}
+
+const PAGES = {
+  '/chi-sono': {
+    title: 'Chi sono — Marco Andreoni',
+    desc: 'Chi è Marco Andreoni e come lavora: metodo in 4 fasi, ascolto reale e soluzioni su misura per la tua comunicazione e il tuo digitale.',
+  },
+  '/lab': {
+    title: 'Lab — Progetti e casi reali · Marco Andreoni',
+    desc: 'Lab: progetti, casi reali ed esempi del lavoro di Marco Andreoni tra sviluppo web, automazioni AI e comunicazione digitale.',
+  },
+  '/contatti': {
+    title: 'Contatti — Marco Andreoni',
+    desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 15 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
   },
 }
