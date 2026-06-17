@@ -80,10 +80,6 @@ const HOME = {
 }
 
 const PAGES = {
-  '/chi-sono': {
-    title: 'Chi sono — Marco Andreoni',
-    desc: 'Chi è Marco Andreoni e come lavora: metodo in 4 fasi, ascolto reale e soluzioni su misura per la tua comunicazione e il tuo digitale.',
-  },
   '/lab': {
     title: 'Lab — Progetti e casi reali · Marco Andreoni',
     desc: 'Lab: progetti, casi reali ed esempi del lavoro di Marco Andreoni tra sviluppo web, automazioni AI e comunicazione digitale.',

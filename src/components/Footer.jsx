@@ -28,7 +28,6 @@ export default function Footer() {
             <p className="mb-4 font-pixel text-[0.6rem] uppercase tracking-wider text-faint">Naviga</p>
             <nav className="flex flex-col gap-3 text-sm">
               <Link to="/" className="w-fit text-muted transition-colors hover:text-ink link-u">Home</Link>
-              <Link to="/chi-sono" className="w-fit text-muted transition-colors hover:text-ink link-u">Chi sono</Link>
               <Link to="/lab" className="w-fit text-muted transition-colors hover:text-ink link-u">Lab</Link>
               <Link to="/contatti" className="w-fit text-muted transition-colors hover:text-ink link-u">Contatti</Link>
             </nav>

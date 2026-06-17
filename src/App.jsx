@@ -1,5 +1,5 @@
 import { useEffect, lazy, Suspense } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { ReactLenis, useLenis } from 'lenis/react'
 import Header from './components/Header'
@@ -9,7 +9,6 @@ import Grain from './components/fx/Grain'
 import ScrollTopArrow from './components/ScrollTopArrow'
 
 const Home = lazy(() => import('./pages/Home'))
-const ChiSono = lazy(() => import('./pages/ChiSono'))
 const Contatti = lazy(() => import('./pages/Contatti'))
 const ProofOfWork = lazy(() => import('./pages/ProofOfWork'))
 
@@ -49,9 +48,9 @@ export default function App() {
             <AnimatePresence mode="wait" initial={false}>
               <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
-                <Route path="/chi-sono" element={<ChiSono />} />
                 <Route path="/lab" element={<ProofOfWork />} />
                 <Route path="/contatti" element={<Contatti />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </AnimatePresence>
           </Suspense>

@@ -100,8 +100,8 @@ export default function HeroSection() {
             Prenota una consulenza gratuita
             <ArrowUpRight className="h-4 w-4" />
           </MagneticButton>
-          <MagneticButton to="/chi-sono" variant="ghost" className="px-7 py-3.5 text-sm" strength={0.25}>
-            Scopri come lavoro
+          <MagneticButton to="/lab" variant="ghost" className="px-7 py-3.5 text-sm" strength={0.25}>
+            Guarda i miei lavori
           </MagneticButton>
         </div>
       </div>

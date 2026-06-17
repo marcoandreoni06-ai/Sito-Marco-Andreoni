@@ -29,7 +29,6 @@ function HamburgerIcon({ open }) {
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/chi-sono', label: 'Chi sono' },
   { to: '/lab', label: 'Lab' },
   { to: '/contatti', label: 'Contatti' },
 ]
