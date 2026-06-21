@@ -122,23 +122,77 @@ const fyShuffle = (word) => {
 }
 const shuffleText = (t) => t.split(' ').map(fyShuffle).join(' ')
 
-function ShuffleText({ children, className = '' }) {
+// `active` opzionale: se passato (boolean) lo shuffle è pilotato da fuori (es. hover
+// di un contenitore) invece che dall'hover del singolo span.
+function ShuffleText({ children, className = '', active }) {
   const text = String(children)
   const [display, setDisplay] = useState(text)
   const timers = useRef([])
   const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
-  const enter = () => {
+  const run = () => {
     if (reduceMotion()) return
     clear()
     const steps = 4, total = 250, step = total / steps   // come Locomotive: i=4, Ude=.25
     for (let s = 0; s < steps; s++) timers.current.push(setTimeout(() => setDisplay(shuffleText(text)), step * s))
     timers.current.push(setTimeout(() => setDisplay(text), total))
   }
-  const leave = () => { clear(); setDisplay(text) }
+  const reset = () => { clear(); setDisplay(text) }
   useEffect(() => () => clear(), [])
+  useEffect(() => {
+    if (active === undefined) return
+    if (active) run(); else reset()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active])
+  const handlers = active === undefined ? { onPointerEnter: run, onPointerLeave: reset } : {}
   return (
-    <span className={`shuffle ${className}`} onPointerEnter={enter} onPointerLeave={leave} aria-label={text}>
+    <span className={`shuffle ${className}`} {...handlers} aria-label={text}>
       {display}
+    </span>
+  )
+}
+
+/* Reveal pixelato di un'immagine (stile Locomotive): griglia di celle, ognuna mostra
+   la propria porzione dell'immagine (sprite via background-position); le celle compaiono
+   in ordine sparso, a scatti (steps), riempiendo rapidamente fino all'immagine intera. */
+function PixelImage({ src, active, n = 11 }) {
+  const total = n * n
+  const rank = useRef(null)
+  if (!rank.current) {
+    const order = Array.from({ length: total }, (_, i) => i)
+    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]] }
+    const r = new Array(total)
+    order.forEach((cell, i) => { r[cell] = i })
+    rank.current = r
+  }
+  const rm = reduceMotion()
+  return (
+    <span className="pixfill" aria-hidden="true" style={{ gridTemplateColumns: `repeat(${n}, 1fr)`, gridTemplateRows: `repeat(${n}, 1fr)` }}>
+      {Array.from({ length: total }).map((_, i) => {
+        const c = i % n, r = Math.floor(i / n)
+        const delay = (active && !rm) ? (rank.current[i] / total) * 0.42 : 0
+        return (
+          <span key={i} style={{
+            backgroundImage: `url(${src})`,
+            backgroundSize: `${n * 100}% ${n * 100}%`,
+            backgroundPosition: `${(c / (n - 1)) * 100}% ${(r / (n - 1)) * 100}%`,
+            opacity: active ? 1 : 0,
+            transition: (active && !rm) ? `opacity .05s steps(1) ${delay}s` : 'opacity .18s ease',
+          }} />
+        )
+      })}
+    </span>
+  )
+}
+
+/* Titolo della fase 3: hover → shuffle delle parole (come la navbar) + apertura di
+   uno spazio tra "Operativo" e "assistito" dove l'immagine compare a pixel. */
+function AiPhaseTitle({ pre, post, img }) {
+  const [hover, setHover] = useState(false)
+  return (
+    <span className="ai-title" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
+      <ShuffleText active={hover}>{pre}</ShuffleText>
+      <span className={`ai-slot ${hover ? 'open' : ''}`}><PixelImage src={img} active={hover} /></span>
+      <ShuffleText active={hover}>{post}</ShuffleText>
     </span>
   )
 }
@@ -299,7 +353,7 @@ function Strip() {
 const FASI = [
   { n: '01', sub: 'Fase 1 — Il Sito Web', fase: "L'Hub Digitale ad Alto Margine", body: "Una macchina da conversione su misura: trasforma il traffico in prenotazioni dirette, senza commissioni di piattaforme terze.", items: ['Landing Page dedicate', 'Pixel & Analytics avanzato'] },
   { n: '02', sub: "Fase 2 — L'Acceleratore", fase: 'Il Funnel di Traffico Social & Retargeting', body: "Intercettiamo i clienti dove passano il loro tempo — Instagram, Facebook, TikTok — con campagne sponsorizzate mirate.", items: ['Lead Magnet su misura', 'Retargeting intelligente'] },
-  { n: '03', sub: "Fase 3 — L'Elemento Differenziante", fase: 'Il Sistema Operativo assistito da AI', body: "Ti consegniamo un asset definitivo: un database centralizzato che raccoglie ogni prenotazione e contatto generato dalla tua attività.", items: ['Pannello AI già configurato', 'Storico clienti proprietario'], to: '/lab/ai-systems' },
+  { n: '03', sub: "Fase 3 — L'Elemento Differenziante", fase: 'Il Sistema Operativo assistito da AI', pre: 'Il Sistema Operativo', post: 'assistito da AI', img: '/assets/ai-systems/neuroni.jpg', body: "Ti consegniamo un asset definitivo: un database centralizzato che raccoglie ogni prenotazione e contatto generato dalla tua attività.", items: ['Pannello AI già configurato', 'Storico clienti proprietario'], to: '/lab/ai-systems' },
 ]
 
 function Method() {
@@ -316,7 +370,7 @@ function Method() {
             <div className="srv" data-cursor>
               <span className="idx">{f.n}</span>
               <div>
-                <div className="srv-head"><span className="srv-title display">{f.fase}</span><Arrow s={30} /></div>
+                <div className="srv-head"><span className="srv-title display">{f.img ? <AiPhaseTitle pre={f.pre} post={f.post} img={f.img} /> : f.fase}</span><Arrow s={30} /></div>
                 <div style={{ paddingTop: '.4rem' }}>
                   <p className="srv-sub">{f.sub}</p>
                   <p className="srv-body">{f.body}</p>

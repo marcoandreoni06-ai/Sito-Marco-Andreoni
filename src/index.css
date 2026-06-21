@@ -273,6 +273,16 @@ section { position: relative; }
 @media (max-width: 640px) { .srv { grid-template-columns: 2.6rem 1fr; } }
 .srv-link { display: block; color: inherit; }
 
+/* Fase 3: slot immagine inline che si apre tra "Operativo" e "assistito" */
+.ai-title { display: inline; }
+/* chiuso = larghezza di uno spazio (così "Operativo assistito" resta leggibile);
+   aperto = quadrato dell'immagine con un filo di margine */
+.ai-slot { display: inline-flex; vertical-align: -0.18em; position: relative; overflow: hidden;
+  width: .3em; height: 1.02em; border-radius: .12em; transition: width .45s var(--ease), margin .45s var(--ease); }
+.ai-slot.open { width: 1.02em; margin: 0 .32em; }
+.pixfill { position: absolute; inset: 0; display: grid; }
+.pixfill > span { display: block; background-repeat: no-repeat; }
+
 /* ── Video pilotato dallo scroll (pagina Sistemi AI) ─────── */
 .scrollvid { position: relative; height: 320vh; background: #05060a; }
 .scrollvid-stage { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(120% 100% at 50% 35%, #0c1024 0%, #05060a 70%); }

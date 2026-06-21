@@ -18,7 +18,7 @@ const REAL = [
   { slug: 'lucia',         title: 'Lucia Pierini', tag: 'Social & ADV',     hue: 210, image: '/assets/lucia/lucia-card.jpg' },
   { slug: 'maeng',         title: 'MA Engineering', tag: 'Web Design',      hue: 214, image: '/assets/maeng/maeng-card.jpg' },
   { slug: 'tiguido',       title: 'Ti Guido nella Storia', tag: 'Content & Brand', hue: 30, image: '/assets/tiguido/tiguido-card.jpg' },
-  { slug: 'ai-systems',    title: 'Sistemi AI',   tag: 'AI & Automations',  hue: 198 },
+  { slug: 'ai-systems',    title: 'Sistemi AI',   tag: 'AI & Automations',  hue: 198, image: '/assets/ai-systems/neuroni.jpg' },
 ]
 
 const WORDS = [
