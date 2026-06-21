@@ -147,27 +147,6 @@ const Arrow = ({ s = 14 }) => (
   <svg className="arr" width={s} height={s} viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H4M11 3V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
 )
 
-function Cursor() {
-  const dot = useRef(null), ring = useRef(null)
-  useEffect(() => {
-    if (reduceMotion() || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
-    document.documentElement.classList.add('has-cursor')
-    let rx = 0, ry = 0, x = 0, y = 0, raf
-    const move = (e) => {
-      x = e.clientX; y = e.clientY
-      if (dot.current) dot.current.style.transform = `translate(${x}px, ${y}px) translate(-50%,-50%)`
-      ring.current?.classList.toggle('is-hover', !!e.target.closest('a, button, [data-cursor]'))
-    }
-    const loop = () => { rx += (x - rx) * 0.18; ry += (y - ry) * 0.18; if (ring.current) ring.current.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`; raf = requestAnimationFrame(loop) }
-    const leave = () => { dot.current?.classList.add('is-hidden'); ring.current?.classList.add('is-hidden') }
-    const enter = () => { dot.current?.classList.remove('is-hidden'); ring.current?.classList.remove('is-hidden') }
-    window.addEventListener('pointermove', move); document.addEventListener('mouseleave', leave); document.addEventListener('mouseenter', enter)
-    raf = requestAnimationFrame(loop)
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('pointermove', move); document.removeEventListener('mouseleave', leave); document.removeEventListener('mouseenter', enter); document.documentElement.classList.remove('has-cursor') }
-  }, [])
-  return (<><span ref={dot} className="cur-dot" /><span ref={ring} className="cur-ring" /></>)
-}
-
 function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const w = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 })
@@ -1480,7 +1459,6 @@ export default function App() {
   return (
     <>
       <Loader />
-      <Cursor />
       <ScrollProgress />
       <ScrollToTop />
       <RouteMeta />

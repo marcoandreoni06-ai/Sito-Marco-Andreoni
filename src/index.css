@@ -58,20 +58,6 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 999px; border: 2px solid var(--paper-2); }
 ::-webkit-scrollbar-thumb:hover { background: var(--faint); }
 
-/* ── Custom cursor ───────────────────────────────────────── */
-
-@media (hover: hover) and (pointer: fine) {
-  .has-cursor, .has-cursor * { cursor: none !important; }
-}
-.cur-dot, .cur-ring {
-  position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none;
-  border-radius: 999px; transform: translate(-50%, -50%); mix-blend-mode: difference;
-}
-.cur-dot { width: 7px; height: 7px; background: #fff; }
-.cur-ring { width: 38px; height: 38px; border: 1px solid #fff;
-  transition: width .28s var(--ease), height .28s var(--ease), background-color .28s var(--ease), opacity .25s ease; }
-.cur-ring.is-hover { width: 64px; height: 64px; background: rgba(255,255,255,0.12); }
-.cur-ring.is-hidden, .cur-dot.is-hidden { opacity: 0; }
 
 /* ── Scroll progress ─────────────────────────────────────── */
 
