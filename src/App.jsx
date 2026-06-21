@@ -154,8 +154,9 @@ function ShuffleText({ children, className = '', active }) {
 /* Reveal pixelato di un'immagine (stile Locomotive): griglia di celle, ognuna mostra
    la propria porzione dell'immagine (sprite via background-position); le celle compaiono
    in ordine sparso, a scatti (steps), riempiendo rapidamente fino all'immagine intera. */
-function PixelImage({ src, active, n = 11 }) {
+function PixelImage({ src, active, n = 10 }) {
   const total = n * n
+  // rango di rivelazione casuale (Fisher-Yates), stabile per tutta la vita del componente
   const rank = useRef(null)
   if (!rank.current) {
     const order = Array.from({ length: total }, (_, i) => i)
@@ -164,19 +165,31 @@ function PixelImage({ src, active, n = 11 }) {
     order.forEach((cell, i) => { r[cell] = i })
     rank.current = r
   }
-  const rm = reduceMotion()
+  // reveal pilotato in JS: il numero di celle visibili cresce a scatti (≈14 step)
+  const [count, setCount] = useState(0)
+  useEffect(() => {
+    if (!active) { setCount(0); return }
+    if (reduceMotion()) { setCount(total); return }
+    setCount(0)
+    let c = 0
+    const chunk = Math.max(1, Math.round(total / 14))
+    const id = setInterval(() => {
+      c += chunk
+      if (c >= total) { c = total; clearInterval(id) }
+      setCount(c)
+    }, 28)
+    return () => clearInterval(id)
+  }, [active, total])
   return (
     <span className="pixfill" aria-hidden="true" style={{ gridTemplateColumns: `repeat(${n}, 1fr)`, gridTemplateRows: `repeat(${n}, 1fr)` }}>
       {Array.from({ length: total }).map((_, i) => {
         const c = i % n, r = Math.floor(i / n)
-        const delay = (active && !rm) ? (rank.current[i] / total) * 0.42 : 0
         return (
           <span key={i} style={{
             backgroundImage: `url(${src})`,
             backgroundSize: `${n * 100}% ${n * 100}%`,
             backgroundPosition: `${(c / (n - 1)) * 100}% ${(r / (n - 1)) * 100}%`,
-            opacity: active ? 1 : 0,
-            transition: (active && !rm) ? `opacity .05s steps(1) ${delay}s` : 'opacity .18s ease',
+            opacity: rank.current[i] < count ? 1 : 0,
           }} />
         )
       })}

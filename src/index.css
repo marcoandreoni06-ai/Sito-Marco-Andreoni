@@ -276,11 +276,13 @@ section { position: relative; }
 /* Fase 3: slot immagine inline che si apre tra "Operativo" e "assistito" */
 .ai-title { display: inline; }
 /* chiuso = larghezza di uno spazio (così "Operativo assistito" resta leggibile);
-   aperto = quadrato dell'immagine con un filo di margine */
+   aperto = quadrato dell'immagine con un filo di margine.
+   La griglia ha dimensione FISSA (1.02em quadrato): lo slot, allargandosi, la scopre
+   senza deformarla (overflow hidden). */
 .ai-slot { display: inline-flex; vertical-align: -0.18em; position: relative; overflow: hidden;
-  width: .3em; height: 1.02em; border-radius: .12em; transition: width .45s var(--ease), margin .45s var(--ease); }
+  width: .3em; height: 1.02em; border-radius: .12em; transition: width .4s var(--ease), margin .4s var(--ease); }
 .ai-slot.open { width: 1.02em; margin: 0 .32em; }
-.pixfill { position: absolute; inset: 0; display: grid; }
+.pixfill { position: absolute; left: 0; top: 0; width: 1.02em; height: 1.02em; display: grid; }
 .pixfill > span { display: block; background-repeat: no-repeat; }
 
 /* ── Video pilotato dallo scroll (pagina Sistemi AI) ─────── */
