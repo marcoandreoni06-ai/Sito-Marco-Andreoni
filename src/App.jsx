@@ -151,60 +151,96 @@ function ShuffleText({ children, className = '', active }) {
   )
 }
 
-/* Reveal pixelato di un'immagine (stile Locomotive): griglia di celle, ognuna mostra
-   la propria porzione dell'immagine (sprite via background-position); le celle compaiono
-   in ordine sparso, a scatti (steps), riempiendo rapidamente fino all'immagine intera. */
-function PixelImage({ src, active, n = 10 }) {
-  const total = n * n
-  // rango di rivelazione casuale (Fisher-Yates), stabile per tutta la vita del componente
-  const rank = useRef(null)
-  if (!rank.current) {
-    const order = Array.from({ length: total }, (_, i) => i)
-    for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]] }
-    const r = new Array(total)
-    order.forEach((cell, i) => { r[cell] = i })
-    rank.current = r
-  }
-  // reveal pilotato in JS: il numero di celle visibili cresce a scatti (≈14 step)
-  const [count, setCount] = useState(0)
+/* ─────────────────────────────────────────────────────────────────────────────
+   PixelImageReveal — reveal "a pixel progressivi" (RIUSABILE: fase 3 ora, poi fase 1 e 2).
+   L'immagine compare come blocchi colorati col colore MEDIO della zona sottostante:
+   blocchi grandi → via via più piccoli e definiti in pochi passaggi "scattosi" →
+   immagine nitida. Tutto molto veloce.
+   Tecnica (canvas): downscale dell'immagine CON smoothing (media i colori in pochi
+   blocchi) poi upscale SENZA smoothing (blocchi netti). Più step = blocchi più piccoli
+   e più dettaglio/colore. Uso: <PixelImageReveal src={...} active={hover} />.
+   ───────────────────────────────────────────────────────────────────────────── */
+function PixelImageReveal({ src, active, size = 160, levels = [4, 9, 18, 0], stepMs = 55 }) {
+  const canvasRef = useRef(null)
+  const imgRef = useRef(null)
+  const tmpRef = useRef(null)
+
+  // Precarico (fetch + decode) una sola volta: al primo hover il reveal è istantaneo.
   useEffect(() => {
-    if (!active) { setCount(0); return }
-    if (reduceMotion()) { setCount(total); return }
-    setCount(0)
-    let c = 0
-    const chunk = Math.max(1, Math.round(total / 14))
-    const id = setInterval(() => {
-      c += chunk
-      if (c >= total) { c = total; clearInterval(id) }
-      setCount(c)
-    }, 28)
-    return () => clearInterval(id)
-  }, [active, total])
-  return (
-    <span className="pixfill" aria-hidden="true" style={{ gridTemplateColumns: `repeat(${n}, 1fr)`, gridTemplateRows: `repeat(${n}, 1fr)` }}>
-      {Array.from({ length: total }).map((_, i) => {
-        const c = i % n, r = Math.floor(i / n)
-        return (
-          <span key={i} style={{
-            backgroundImage: `url(${src})`,
-            backgroundSize: `${n * 100}% ${n * 100}%`,
-            backgroundPosition: `${(c / (n - 1)) * 100}% ${(r / (n - 1)) * 100}%`,
-            opacity: rank.current[i] < count ? 1 : 0,
-          }} />
-        )
-      })}
-    </span>
-  )
+    const im = new Image()
+    im.src = src
+    const done = () => { imgRef.current = im }
+    im.decode?.().then(done).catch(done)
+    im.onload = done
+  }, [src])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const W = canvas.width, H = canvas.height
+    let timer = null, wait = null
+    const clear = () => ctx.clearRect(0, 0, W, H)
+    if (!active) { clear(); return }
+
+    // blocchi per lato: passaggi grande→piccolo, poi 0 = immagine nitida finale
+    const seq = reduceMotion() ? [0] : levels
+    let i = 0
+
+    const drawLevel = (n) => {
+      clear()
+      if (n === 0) {
+        ctx.imageSmoothingEnabled = true
+        ctx.drawImage(imgRef.current, 0, 0, W, H)
+        return
+      }
+      const tmp = tmpRef.current || (tmpRef.current = document.createElement('canvas'))
+      tmp.width = n; tmp.height = n
+      const tctx = tmp.getContext('2d')
+      tctx.imageSmoothingEnabled = true            // downscale → media dei colori
+      tctx.clearRect(0, 0, n, n)
+      tctx.drawImage(imgRef.current, 0, 0, n, n)
+      ctx.imageSmoothingEnabled = false            // upscale → blocchi netti
+      ctx.drawImage(tmp, 0, 0, n, n, 0, 0, W, H)
+    }
+
+    const step = () => {
+      drawLevel(seq[i]); i++
+      if (i < seq.length) timer = setTimeout(step, stepMs)
+    }
+
+    if (imgRef.current) step()
+    else wait = setInterval(() => { if (imgRef.current) { clearInterval(wait); wait = null; step() } }, 30)
+
+    return () => { if (timer) clearTimeout(timer); if (wait) clearInterval(wait) }
+  }, [active, src, stepMs]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return <canvas ref={canvasRef} width={size} height={size} className="pixcanvas" aria-hidden="true" />
 }
 
 /* Titolo della fase 3: hover → shuffle delle parole (come la navbar) + apertura di
-   uno spazio tra "Operativo" e "assistito" dove l'immagine compare a pixel. */
+   uno slot tra "Operativo" e "assistito" dove l'immagine compare a pixel.
+   L'immagine viene PRECARICATA al mount: così al primo hover il reveal parte
+   istantaneo, senza il vuoto/scatto del JPG ancora da scaricare. */
 function AiPhaseTitle({ pre, post, img }) {
+  const ref = useRef(null)
   const [hover, setHover] = useState(false)
+  // Listener sull'INTERA card (.srv): bersaglio ampio → l'animazione parte ogni volta
+  // che il mouse entra nella fase, non solo sopra la riga del titolo. La geometria di
+  // .srv non cambia quando lo slot si apre, quindi niente enter/leave in loop (flicker).
+  useEffect(() => {
+    const host = ref.current?.closest('.srv')
+    if (!host) return
+    const on = () => setHover(true)
+    const off = () => setHover(false)
+    host.addEventListener('pointerenter', on)
+    host.addEventListener('pointerleave', off)
+    return () => { host.removeEventListener('pointerenter', on); host.removeEventListener('pointerleave', off) }
+  }, [])
   return (
-    <span className="ai-title" onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
+    <span className="ai-title" ref={ref}>
       <ShuffleText active={hover}>{pre}</ShuffleText>
-      <span className={`ai-slot ${hover ? 'open' : ''}`}><PixelImage src={img} active={hover} /></span>
+      <span className={`ai-slot ${hover ? 'open' : ''}`}><PixelImageReveal src={img} active={hover} /></span>
       <ShuffleText active={hover}>{post}</ShuffleText>
     </span>
   )
@@ -893,7 +929,7 @@ function Footer() {
           <div className="foot-col"><h4>Menu</h4><Link to="/"><ShuffleText>Home</ShuffleText></Link><Link to="/lab"><ShuffleText>Lab</ShuffleText></Link><Link to="/contatti"><ShuffleText>Contatti</ShuffleText></Link></div>
           <div className="foot-col"><h4>Contatti</h4><a href="mailto:info.mawebstudio@gmail.com"><ShuffleText>info.mawebstudio@gmail.com</ShuffleText></a><span style={{ color: 'var(--muted)', fontWeight: 300 }}>Fano (PU), Italia</span></div>
         </div>
-        <div className="foot-bottom"><span>© 2026 Marco Andreoni — Fano (PU), Italia</span><span>Preview redesign v2 · electric blue</span></div>
+        <div className="foot-bottom"><span>© 2026 Marco Andreoni — Fano (PU), Italia</span><span>P.IVA in attivazione</span></div>
       </div>
     </footer>
   )
@@ -1345,12 +1381,22 @@ function ScrollVideo({ src }) {
     return () => { cancelAnimationFrame(raf); v.removeEventListener('loadedmetadata', onMeta) }
   }, [rm])
 
+  // Copia editoriale: comunica che il sito è l'hub centrale del processo, sempre
+  // visibile accanto al video mentre scorre.
+  const copy = (
+    <div className="scrollvid-copy">
+      <span className="pixel">Il punto di partenza</span>
+      <h2 className="scrollvid-title display">Il tuo sito web è <span className="serif">l'hub centrale</span>.</h2>
+    </div>
+  )
+
   // Reduced motion: niente scrubbing, video in autoplay loop contenuto
   if (rm) {
     return (
       <section className="scrollvid scrollvid-static">
         <div className="scrollvid-stage">
-          <video src={src} autoPlay muted loop playsInline preload="auto" />
+          {copy}
+          <div className="scrollvid-media"><video src={src} autoPlay muted loop playsInline preload="auto" /></div>
         </div>
       </section>
     )
@@ -1358,7 +1404,8 @@ function ScrollVideo({ src }) {
   return (
     <section ref={trackRef} className="scrollvid">
       <div className="scrollvid-stage">
-        <video ref={vidRef} src={src} muted playsInline preload="auto" />
+        {copy}
+        <div className="scrollvid-media"><video ref={vidRef} src={src} muted playsInline preload="auto" /></div>
         <span className="scrollvid-hint mono">Scorri per esplorare</span>
       </div>
     </section>
@@ -1382,6 +1429,14 @@ function AiSystemsBody() {
       <ScrollVideo src="/video/ai-systems.mp4" />
 
       <section className="detail-body wrap" style={{ paddingTop: 'clamp(3rem, 6vw, 5rem)' }}>
+        <Reveal><p className="pixel">Perché tutto parte da qui</p></Reveal>
+        <Reveal delay={0.05}>
+          <p className="detail-lead" style={{ marginBottom: 'clamp(2.5rem, 5vw, 4rem)' }}>
+            Il sito web è <strong style={{ fontWeight: 600, color: 'var(--ink)' }}>l'hub centrale</strong> del sistema:
+            il punto da cui parte tutto. Form, prenotazioni e contatti confluiscono qui, e da questo centro l'AI,
+            il database e le automazioni si agganciano e lavorano. Non l'ultimo tassello — il <strong style={{ fontWeight: 600, color: 'var(--ink)' }}>cuore</strong> del processo.
+          </p>
+        </Reveal>
         <div className="detail-grid">
           <div><span className="idx">01</span><h3>Contesto</h3><p>{AI_PROJECT.contesto}</p></div>
           <div><span className="idx">02</span><h3>Intervento</h3><p>{AI_PROJECT.intervento}</p></div>
@@ -1533,8 +1588,9 @@ export default function App() {
       <main>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div key={location.pathname}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: EASE }}>
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: 0.42, ease: [0.16, 1, 0.3, 1] } }}
+            exit={{ opacity: 0, y: -8, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] } }}>
             <Routes location={location}>
               <Route path="/" element={<HomePage />} />
               <Route path="/lab" element={<LabPage />} />

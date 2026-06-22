@@ -177,8 +177,10 @@ section { position: relative; }
 /* ── Buttons ─────────────────────────────────────────────── */
 
 .btn { display: inline-flex; align-items: center; gap: .55rem; font-size: 0.92rem; font-weight: 500; letter-spacing: -0.01em;
-  border-radius: 999px; padding: .8rem 1.4rem; border: 1px solid var(--ink); transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+  border-radius: 999px; padding: .8rem 1.4rem; border: 1px solid var(--ink); transition: background-color .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease), transform .25s var(--ease);
   cursor: pointer; background: transparent; color: var(--ink); will-change: transform; }
+/* Feedback tattile: micro-compressione alla pressione, rilascio morbido (.25s sopra) */
+.btn:active { transform: scale(0.96); transition-duration: 90ms; }
 .btn-fill { background: var(--ink); color: var(--paper); }
 .btn-fill:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
 .btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 10px 30px -10px rgba(39,64,255,.6); }
@@ -264,6 +266,8 @@ section { position: relative; }
 .srv-sub { color: var(--blue); font-family: var(--mono); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .8rem; }
 .srv-title { font-weight: 300; letter-spacing: -0.03em; line-height: 1.02; font-size: clamp(1.7rem, 4.2vw, 3.4rem); transition: color .5s var(--ease); }
 .srv:hover .srv-title { color: var(--blue); }
+/* Fase 3 (titolo con immagine inline): resta SEMPRE nero, niente blu all'hover */
+.srv:hover .srv-title:has(.ai-title) { color: var(--ink); }
 .srv-body { color: var(--muted); max-width: 52ch; font-size: 1.02rem; margin-top: 1rem; }
 .srv-tags { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.3rem; }
 .tag { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid var(--line-2); border-radius: 999px; padding: .35rem .85rem; font-size: .82rem; color: var(--ink-2); background: color-mix(in oklab, var(--paper) 50%, transparent); }
@@ -274,25 +278,34 @@ section { position: relative; }
 .srv-link { display: block; color: inherit; }
 
 /* Fase 3: slot immagine inline che si apre tra "Operativo" e "assistito" */
-.ai-title { display: inline; }
+.ai-title { display: inline; white-space: nowrap; }
 /* chiuso = larghezza di uno spazio (così "Operativo assistito" resta leggibile);
    aperto = quadrato dell'immagine con un filo di margine.
    La griglia ha dimensione FISSA (1.02em quadrato): lo slot, allargandosi, la scopre
    senza deformarla (overflow hidden). */
-.ai-slot { display: inline-flex; vertical-align: -0.18em; position: relative; overflow: hidden;
-  width: .3em; height: 1.02em; border-radius: .12em; transition: width .4s var(--ease), margin .4s var(--ease); }
-.ai-slot.open { width: 1.02em; margin: 0 .32em; }
-.pixfill { position: absolute; left: 0; top: 0; width: 1.02em; height: 1.02em; display: grid; }
-.pixfill > span { display: block; background-repeat: no-repeat; }
+.ai-slot { display: inline-flex; vertical-align: -0.22em; position: relative; overflow: hidden;
+  width: .3em; height: 1.15em; transition: width .45s var(--ease), margin .45s var(--ease); }
+.ai-slot.open { width: 1.15em; margin: 0 .34em; }
+/* canvas del reveal a pixel progressivo (quadrato netto, niente bordi stondati) */
+.pixcanvas { position: absolute; left: 0; top: 0; width: 1.15em; height: 1.15em; display: block; image-rendering: pixelated; }
 
 /* ── Video pilotato dallo scroll (pagina Sistemi AI) ─────── */
-.scrollvid { position: relative; height: 320vh; background: #05060a; }
-.scrollvid-stage { position: sticky; top: 0; height: 100svh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(120% 100% at 50% 35%, #0c1024 0%, #05060a 70%); }
-.scrollvid-stage video { height: 88%; width: auto; max-width: 92%; object-fit: contain; border-radius: 16px; box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.06); }
-.scrollvid-hint { position: absolute; left: 50%; bottom: clamp(1.2rem, 3vw, 2rem); transform: translateX(-50%); color: rgba(255,255,255,.55); }
+/* Sfondo BIANCO come quello interno del video: nessuno stacco percepibile attorno al video */
+.scrollvid { position: relative; height: 320vh; background: #fff; }
+/* Colonna centrata: scritta "hub centrale" sopra, video al CENTRO della sezione */
+.scrollvid-stage { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(1.2rem, 3vh, 2.2rem); overflow: hidden; background: #fff; padding: clamp(1.5rem, 4vh, 3rem) var(--pad); }
+.scrollvid-copy { text-align: center; max-width: 42ch; }
+.scrollvid-title { font-size: clamp(1.9rem, 4.4vw, 3.4rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.02; margin-top: .8rem; }
+.scrollvid-media { display: flex; justify-content: center; align-items: center; min-height: 0; }
+/* niente ombre/bordi: il video si fonde col bianco */
+.scrollvid-stage video { height: auto; max-height: min(72svh, 860px); width: auto; max-width: 90%; object-fit: contain; display: block; border-radius: 0; }
+.scrollvid-hint { position: absolute; left: 50%; bottom: clamp(1.2rem, 3vw, 2rem); transform: translateX(-50%); color: var(--faint); }
 .scrollvid-static { height: auto; }
-.scrollvid-static .scrollvid-stage { position: relative; height: auto; padding: clamp(2rem,5vw,4rem) 0; }
-.scrollvid-static .scrollvid-stage video { height: auto; width: clamp(260px, 40vw, 420px); }
+.scrollvid-static .scrollvid-stage { position: relative; height: auto; padding: clamp(2rem,5vw,4rem) var(--pad); }
+@media (max-width: 640px) {
+  .scrollvid-title { font-size: clamp(1.8rem, 7.5vw, 2.6rem); }
+  .scrollvid-stage video { max-height: 62svh; max-width: 86%; }
+}
 
 /* ── Showreel / lavori (video tiles) ─────────────────────── */
 
@@ -482,8 +495,10 @@ section { position: relative; }
 .dove-body { color: var(--muted); margin-top: 1.4rem; display: flex; flex-direction: column; gap: 1rem; font-weight: 300; line-height: 1.6; }
 .dove-body strong { color: var(--ink); font-weight: 600; }
 .dove-map { position: relative; aspect-ratio: 3/2; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); background: var(--paper-2); }
-.dove-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(.25) contrast(1.05); }
-.dove-pin { position: absolute; inset-inline: 1rem; bottom: 1rem; display: flex; flex-direction: column; gap: .1rem; background: color-mix(in oklab, var(--paper) 90%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1rem; }
+.dove-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(1.05) brightness(1.03); }
+/* Velo electric-blue sottile: rende la mappa coerente col brand (b/n + blu) */
+.dove-map::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--blue); opacity: .1; mix-blend-mode: multiply; }
+.dove-pin { position: absolute; z-index: 2; inset-inline: 1rem; bottom: 1rem; display: flex; flex-direction: column; gap: .1rem; background: color-mix(in oklab, var(--paper) 90%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1rem; }
 .dove-pin-title { font-weight: 600; font-size: .92rem; letter-spacing: -0.01em; }
 .dove-pin-sub { font-size: .78rem; color: var(--muted); }
 

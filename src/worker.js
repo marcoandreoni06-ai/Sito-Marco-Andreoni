@@ -6,10 +6,14 @@ export default {
       try {
         const { nome, attivita, email, telefono, messaggio, budget } = await request.json()
 
+        // Il secret è stato caricato come RESEND_API_KEY1; teniamo il fallback al
+        // nome standard RESEND_API_KEY nel caso venga rinominato in futuro.
+        const apiKey = env.RESEND_API_KEY || env.RESEND_API_KEY1
+
         const res = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
