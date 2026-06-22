@@ -35,7 +35,9 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; }
+/* overflow-x: clip su html+body evita lo scroll/zoom-out orizzontale su mobile
+   (clip, non hidden: non rompe le position:sticky come lo scrollvid) */
+html { -webkit-text-size-adjust: 100%; scroll-behavior: auto; overflow-x: clip; }
 
 body {
   background: var(--paper);
@@ -45,7 +47,8 @@ body {
   font-feature-settings: "ss01", "cv01";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   line-height: 1.5;
 }
 
@@ -278,7 +281,8 @@ section { position: relative; }
 .srv-link { display: block; color: inherit; }
 
 /* Fase 3: slot immagine inline che si apre tra "Operativo" e "assistito" */
-.ai-title { display: inline; white-space: nowrap; }
+/* niente nowrap: su mobile la frase lunga deve poter andare a capo (evita overflow) */
+.ai-title { display: inline; }
 /* chiuso = larghezza di uno spazio (così "Operativo assistito" resta leggibile);
    aperto = quadrato dell'immagine con un filo di margine.
    La griglia ha dimensione FISSA (1.02em quadrato): lo slot, allargandosi, la scopre
@@ -370,6 +374,8 @@ section { position: relative; }
 .foot-col h4 { font-family: var(--mono); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-bottom: 1rem; }
 .foot-col a { display: block; font-size: 1rem; color: var(--ink-2); padding: .25rem 0; transition: color .3s var(--ease); }
 .foot-col a:hover { color: var(--blue); }
+/* l'email (lunga, senza spazi) deve poter andare a capo su mobile, non essere tagliata */
+.foot-col a .shuffle { white-space: normal; overflow-wrap: anywhere; }
 .foot-bottom { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); flex-wrap: wrap; }
 .foot-bottom span { font-family: var(--mono); font-size: .78rem; color: var(--faint); }
 
