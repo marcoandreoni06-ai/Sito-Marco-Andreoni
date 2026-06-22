@@ -52,6 +52,10 @@ body {
   line-height: 1.5;
 }
 
+/* Più aria ai lati su mobile: margine interno delle sezioni un po' più ampio
+   (il video di Sistemi AI ha un padding proprio, quindi resta a pieno schermo) */
+@media (max-width: 640px) { :root { --pad: 1.6rem; } }
+
 ::selection { background: var(--blue); color: #fff; }
 a { color: inherit; text-decoration: none; }
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 2px; }
@@ -652,4 +656,14 @@ body.on-lab { background: #060608; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
   .strip-track, .grain, .scroll-cue .bar::after { animation: none !important; }
   .hero-media video { height: 100%; }
+}
+
+/* Più aria ai lati su MOBILE per le sezioni del corpo: queste hanno la classe .wrap
+   ma la loro CSS usa "padding: V 0 V" che azzera il padding orizzontale del wrap.
+   Solo su mobile lo ripristino (il desktop resta com'è). */
+@media (max-width: 640px) {
+  .method, .cta, .detail-body, .lab-work {
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
 }
