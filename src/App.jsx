@@ -388,7 +388,7 @@ function Strip() {
   const line = (
     <span className="strip-item">
       {items.map((t) => (
-        <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: '3.5rem' }}><span className="sep">✳</span> {t}</span>
+        <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: '3.5rem' }}><img className="sep" src="/logo-star-blue.png" alt="" aria-hidden="true" draggable="false" /> {t}</span>
       ))}
     </span>
   )

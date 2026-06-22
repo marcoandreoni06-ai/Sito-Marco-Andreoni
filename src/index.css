@@ -253,7 +253,8 @@ section { position: relative; }
 .strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.1rem 0; overflow: hidden; white-space: nowrap; background: var(--paper); }
 .strip-track { display: inline-flex; gap: 3.5rem; animation: marquee 30s linear infinite; will-change: transform; }
 .strip-item { display: inline-flex; align-items: center; gap: 3.5rem; font-size: 1.05rem; font-weight: 400; color: var(--ink-2); }
-.strip-item .sep { color: var(--blue); }
+/* separatore = logo stella blu (coerenza col brand) al posto del glifo ✳ */
+.strip-item .sep { height: 1.05em; width: auto; display: inline-block; object-fit: contain; -webkit-user-select: none; user-select: none; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ── Section heads ───────────────────────────────────────── */
