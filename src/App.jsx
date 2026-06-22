@@ -957,6 +957,12 @@ function HomePage() {
 }
 
 function SphereSection() {
+  // Sfondo del body scuro mentre siamo sulla pagina Lab: evita la striscia beige
+  // (sfondo --paper) che spunta sotto la sfera su mobile quando la barra indirizzi si ritrae.
+  useEffect(() => {
+    document.body.classList.add('on-lab')
+    return () => document.body.classList.remove('on-lab')
+  }, [])
   return (
     <section data-hero="dark" className="sphere-section">
       <SphereGallery />
