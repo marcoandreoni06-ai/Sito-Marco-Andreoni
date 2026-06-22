@@ -92,4 +92,8 @@ const PAGES = {
     title: 'Contatti — Marco Andreoni',
     desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 15 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
   },
+  '/privacy': {
+    title: 'Privacy & Cookie Policy — Marco Andreoni',
+    desc: 'Informativa sulla privacy e sui cookie del sito di Marco Andreoni (MA Web Studio): quali dati raccogliamo, perché e i tuoi diritti.',
+  },
 }

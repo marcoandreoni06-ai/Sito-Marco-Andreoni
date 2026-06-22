@@ -929,7 +929,7 @@ function Footer() {
           <div className="foot-col"><h4>Menu</h4><Link to="/"><ShuffleText>Home</ShuffleText></Link><Link to="/lab"><ShuffleText>Lab</ShuffleText></Link><Link to="/contatti"><ShuffleText>Contatti</ShuffleText></Link></div>
           <div className="foot-col"><h4>Contatti</h4><a href="mailto:info.mawebstudio@gmail.com"><ShuffleText>info.mawebstudio@gmail.com</ShuffleText></a><span style={{ color: 'var(--muted)', fontWeight: 300 }}>Fano (PU), Italia</span></div>
         </div>
-        <div className="foot-bottom"><span>© 2026 Marco Andreoni — Fano (PU), Italia</span><span>P.IVA in attivazione</span></div>
+        <div className="foot-bottom"><span>© 2026 Marco Andreoni — Fano (PU), Italia</span><span><Link to="/privacy" className="link-u">Privacy & Cookie Policy</Link> · P.IVA in attivazione</span></div>
       </div>
     </footer>
   )
@@ -1522,6 +1522,99 @@ function ContattiPage() {
 }
 
 /* ================================================================
+   Privacy & Cookie Policy (informativa GDPR — testo standard da rivedere)
+================================================================ */
+
+function PrivacyPage() {
+  return (
+    <>
+      <section data-hero="light" className="con-hero">
+        <div className="wrap">
+          <div className="sec-head">
+            <Reveal mount><span className="pixel">Legale</span></Reveal>
+            <Reveal mount><span className="idx">(Privacy)</span></Reveal>
+          </div>
+          <h1 className="con-h1 display"><LineReveal mount>Privacy & Cookie Policy</LineReveal></h1>
+          <Reveal mount delay={0.15}><p className="con-hero-body">Ultimo aggiornamento: 22 giugno 2026</p></Reveal>
+        </div>
+      </section>
+
+      <section className="detail-body wrap legal-body">
+        <h2>1. Titolare del trattamento</h2>
+        <p>
+          Il titolare del trattamento dei dati è <strong>Marco Andreoni</strong> (MA Web Studio), con sede a
+          Fano (PU), Italia · P.IVA in attivazione. Per qualsiasi questione relativa ai tuoi dati puoi
+          scrivere a <a href="mailto:info.mawebstudio@gmail.com">info.mawebstudio@gmail.com</a>.
+        </p>
+
+        <h2>2. Quali dati raccogliamo</h2>
+        <p>Raccogliamo solo i dati che ci fornisci volontariamente tramite il <strong>modulo di contatto</strong>:</p>
+        <ul>
+          <li>Nome e cognome</li>
+          <li>Attività o azienda</li>
+          <li>Indirizzo email</li>
+          <li>Numero di telefono (facoltativo)</li>
+          <li>Budget indicativo (facoltativo)</li>
+          <li>Il contenuto del messaggio che scrivi</li>
+        </ul>
+        <p>
+          Raccogliamo inoltre dati tecnici e anonimi di navigazione (es. pagine visitate, paese di provenienza)
+          tramite un sistema di statistiche che <strong>non usa cookie e non identifica le singole persone</strong>.
+        </p>
+
+        <h2>3. Perché trattiamo i tuoi dati</h2>
+        <p>
+          Usiamo i dati del modulo <strong>esclusivamente per rispondere alla tua richiesta</strong> e valutare
+          un'eventuale collaborazione (esecuzione di misure precontrattuali su tua richiesta). Non inviamo
+          newsletter né comunicazioni commerciali senza il tuo consenso, e non vendiamo i tuoi dati a terzi.
+        </p>
+
+        <h2>4. Strumenti e fornitori esterni</h2>
+        <p>Per far funzionare il sito ci appoggiamo a fornitori affidabili che trattano i dati per nostro conto:</p>
+        <ul>
+          <li><strong>Resend</strong> — invio delle email del modulo di contatto.</li>
+          <li><strong>Cloudflare</strong> — hosting del sito e statistiche di traffico anonime (senza cookie).</li>
+          <li><strong>Google Fonts</strong> — caricamento dei caratteri tipografici (può comportare la trasmissione dell'indirizzo IP a Google).</li>
+        </ul>
+
+        <h2>5. Cookie</h2>
+        <p>
+          Questo sito utilizza <strong>solo cookie tecnici necessari</strong> al suo funzionamento e <strong>non
+          installa cookie di profilazione</strong> o di tracciamento pubblicitario. Le statistiche di visita sono
+          raccolte in forma anonima e senza cookie. Per questo non è presente un banner di consenso: non ce n'è
+          bisogno. Qualora in futuro venissero introdotti cookie non tecnici, ti verrà richiesto il consenso preventivo.
+        </p>
+
+        <h2>6. Per quanto tempo conserviamo i dati</h2>
+        <p>
+          Conserviamo i dati del modulo per il tempo necessario a gestire la tua richiesta e gli eventuali sviluppi,
+          dopodiché vengono cancellati o resi anonimi.
+        </p>
+
+        <h2>7. I tuoi diritti</h2>
+        <p>
+          In qualsiasi momento puoi chiedere l'accesso, la rettifica, la cancellazione, la limitazione o la
+          portabilità dei tuoi dati, oppure opporti al trattamento, scrivendo a
+          {' '}<a href="mailto:info.mawebstudio@gmail.com">info.mawebstudio@gmail.com</a>. Hai inoltre diritto di
+          proporre reclamo all'Autorità Garante per la protezione dei dati personali (www.garanteprivacy.it).
+        </p>
+
+        <h2>8. Modifiche a questa informativa</h2>
+        <p>
+          Questa informativa può essere aggiornata nel tempo. La data in alto indica l'ultima revisione: ti
+          invitiamo a consultarla periodicamente.
+        </p>
+
+        <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
+          <Magnetic to="/" className="btn btn-fill">Torna alla home <Arrow s={15} /></Magnetic>
+          <Magnetic to="/contatti" className="btn btn-ghost">Contattami</Magnetic>
+        </div>
+      </section>
+    </>
+  )
+}
+
+/* ================================================================
    App — routing + smooth scroll
 ================================================================ */
 
@@ -1545,6 +1638,10 @@ const PAGE_META = {
   '/contatti': {
     title: 'Contatti — Marco Andreoni',
     desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 15 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
+  },
+  '/privacy': {
+    title: 'Privacy & Cookie Policy — Marco Andreoni',
+    desc: 'Informativa sulla privacy e sui cookie del sito di Marco Andreoni (MA Web Studio): quali dati raccogliamo, perché e i tuoi diritti.',
   },
 }
 
@@ -1596,6 +1693,7 @@ export default function App() {
               <Route path="/lab" element={<LabPage />} />
               <Route path="/lab/:slug" element={<DetailPage />} />
               <Route path="/contatti" element={<ContattiPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </motion.div>
