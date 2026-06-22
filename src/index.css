@@ -307,8 +307,12 @@ section { position: relative; }
 .scrollvid-static { height: auto; }
 .scrollvid-static .scrollvid-stage { position: relative; height: auto; padding: clamp(2rem,5vw,4rem) var(--pad); }
 @media (max-width: 640px) {
-  .scrollvid-title { font-size: clamp(1.8rem, 7.5vw, 2.6rem); }
-  .scrollvid-stage video { max-height: 62svh; max-width: 86%; }
+  /* video quasi a pieno schermo: riduco il padding laterale della sezione così il
+     video può riempire la larghezza; titolo compatto sopra (con il suo padding) */
+  .scrollvid-stage { padding: clamp(.8rem, 2.5vh, 1.5rem) .4rem; gap: clamp(.6rem, 2vh, 1.1rem); }
+  .scrollvid-title { font-size: clamp(1.45rem, 6vw, 2.1rem); margin-top: .5rem; }
+  .scrollvid-copy { max-width: 34ch; padding: 0 var(--pad); }
+  .scrollvid-stage video { max-height: 86svh; max-width: 100%; }
 }
 
 /* ── Showreel / lavori (video tiles) ─────────────────────── */
