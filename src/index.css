@@ -87,9 +87,9 @@ a { color: inherit; text-decoration: none; }
 .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
 .display { font-weight: 300; line-height: 0.95; letter-spacing: -0.035em; text-wrap: balance; }
 .eyebrow { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-.pixel { font-family: var(--pixel); font-size: 0.56rem; letter-spacing: 0.08em; line-height: 1.6; text-transform: uppercase; display: inline-flex; align-items: center; gap: .7rem; color: var(--muted); }
-.pixel::before { content: ""; width: 1.4rem; height: 2px; background: var(--blue); }
-.pixel.bare::before { display: none; }
+.pixel { font-family: var(--pixel); font-size: 0.56rem; letter-spacing: 0.08em; line-height: 1.6; text-transform: uppercase; display: inline-flex; align-items: center; color: var(--muted); }
+/* La barretta blu accanto agli occhielli è stata rimossa da tutto il sito (scelta estetica). */
+.pixel::before { display: none; }
 .mono { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--faint); }
 .idx { font-family: var(--mono); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; color: var(--faint); }
 .lead { font-weight: 300; letter-spacing: -0.01em; line-height: 1.32; }
@@ -595,6 +595,40 @@ body.on-lab { background: #060608; }
 /* Reel social quadrato (1:1) */
 .reel-vert { overflow: hidden; border-radius: 1.2rem; border: 1px solid var(--line); aspect-ratio: 1/1; width: clamp(260px, 42vw, 460px); background: var(--paper-2); }
 .reel-vert video { width: 100%; height: 100%; display: block; object-fit: cover; }
+
+/* ── Galleria progetti Lab: immagini cliccabili + lightbox ──────── */
+.shot-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 1rem; margin-top: clamp(2.5rem, 5vw, 4rem); }
+.shot-cell--full { grid-column: 1 / -1; }
+.shot { position: relative; display: block; width: 100%; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; background: var(--paper-2); cursor: zoom-in; -webkit-tap-highlight-color: transparent; }
+.shot--static { cursor: default; }
+.shot img, .shot video { width: 100%; display: block; object-fit: cover; transition: transform .7s cubic-bezier(.19,1,.22,1); }
+.shot:hover img { transform: scale(1.04); }
+.shot:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+/* Singola immagine "lead": più contenuta su desktop, piena su mobile */
+.shots--lead { max-width: 560px; }
+/* Locandina / poster: rettangolo netto, senza angoli stondati, ben grande */
+.shots--poster { max-width: 520px; margin-left: auto; margin-right: auto; }
+.shots--poster .shot { border-radius: 0; }
+
+/* Indicatore "ingrandisci" sulle immagini cliccabili */
+.shot-zoom, .feed-item .shot-zoom { position: absolute; top: .7rem; right: .7rem; width: 2rem; height: 2rem; display: grid; place-items: center; border-radius: 999px; background: rgba(12,11,10,.5); color: #fff; opacity: 0; transform: translateY(-4px); transition: opacity .3s var(--ease), transform .3s var(--ease); backdrop-filter: blur(4px); pointer-events: none; }
+.shot:hover .shot-zoom, .shot:focus-visible .shot-zoom,
+.feed-item:hover .shot-zoom, .feed-item:focus-visible .shot-zoom { opacity: 1; transform: translateY(0); }
+
+/* feed-grid (Scatolificio) ora cliccabile: reset del button */
+.feed-item { position: relative; padding: 0; background: var(--paper-2); font: inherit; cursor: zoom-in; -webkit-tap-highlight-color: transparent; }
+.feed-item:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .shot-grid { grid-template-columns: 1fr !important; gap: 1.1rem; }
+  .shot-zoom { opacity: 1; transform: none; }
+}
+
+/* Lightbox a tutto schermo */
+.lightbox { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: clamp(1rem, 4vw, 3rem); background: rgba(8,7,6,.88); backdrop-filter: blur(8px); cursor: zoom-out; }
+.lightbox-img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; border-radius: .35rem; box-shadow: 0 40px 120px -30px rgba(0,0,0,.85); cursor: default; }
+.lightbox-x { position: fixed; top: clamp(1rem, 3vw, 1.6rem); right: clamp(1rem, 3vw, 1.6rem); width: 2.6rem; height: 2.6rem; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: background .3s var(--ease); }
+.lightbox-x:hover { background: rgba(255,255,255,.18); }
 
 /* Card case-study cliccabili (l'intera card è un link) */
 .proj-link { display: block; color: inherit; }

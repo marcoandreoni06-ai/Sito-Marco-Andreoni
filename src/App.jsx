@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, Children } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, useScroll, useTransform, useInView, useSpring, animate, AnimatePresence } from 'framer-motion'
 import { Routes, Route, Link, NavLink, useLocation, useParams, Navigate } from 'react-router-dom'
 import Lenis from 'lenis'
@@ -978,12 +979,86 @@ function SphereSection() {
   )
 }
 
+/* ================================================================
+   Galleria progetti Lab — immagini cliccabili + lightbox a tutto schermo.
+   Su mobile la griglia collassa a una colonna (immagini grandi e leggibili).
+================================================================ */
+
+function Lightbox({ src, alt = '', onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
+  }, [onClose])
+
+  return createPortal(
+    <motion.div
+      className="lightbox" onClick={onClose} role="dialog" aria-modal="true"
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
+    >
+      <button type="button" className="lightbox-x" aria-label="Chiudi" onClick={onClose}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+      <motion.img
+        src={src} alt={alt} className="lightbox-img" onClick={(e) => e.stopPropagation()}
+        initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.96, opacity: 0 }}
+        transition={{ duration: 0.32, ease: EASE }}
+      />
+    </motion.div>,
+    document.body,
+  )
+}
+
+const ZoomGlyph = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3M11 8v6M8 11h6" />
+  </svg>
+)
+
+/* `items`: array di stringhe-src oppure { src, alt?, type?, full? }.
+   `cols`: colonne su desktop (mobile = sempre 1). `className`: modificatori (es. poster). */
+function Gallery({ items, cols = 3, className = '' }) {
+  const [zoom, setZoom] = useState(null)
+  return (
+    <>
+      <div className={`shot-grid ${className}`.trim()} style={{ '--cols': cols }}>
+        {items.map((raw, i) => {
+          const m = typeof raw === 'string' ? { src: raw } : raw
+          const cellClass = m.full ? 'shot-cell--full' : ''
+          if (m.type === 'video') {
+            return (
+              <Reveal key={m.src} delay={i * 0.06} className={cellClass}>
+                <div className="shot shot--static">
+                  <video src={m.src} autoPlay muted loop playsInline preload="metadata" />
+                </div>
+              </Reveal>
+            )
+          }
+          return (
+            <Reveal key={m.src} delay={i * 0.06} className={cellClass}>
+              <button type="button" className="shot" onClick={() => setZoom(m)} aria-label="Ingrandisci immagine">
+                <img src={m.src} alt={m.alt || ''} loading={i === 0 ? 'eager' : 'lazy'} />
+                <span className="shot-zoom"><ZoomGlyph /></span>
+              </button>
+            </Reveal>
+          )
+        })}
+      </div>
+      <AnimatePresence>
+        {zoom && <Lightbox src={zoom.src} alt={zoom.alt || ''} onClose={() => setZoom(null)} />}
+      </AnimatePresence>
+    </>
+  )
+}
+
 const SONORA_BRAND = [
-  '/assets/sonora/sonora-brand-1.jpg',
-  '/assets/sonora/sonora-brand-2.jpg',
-  '/assets/sonora/sonora-brand-3.jpg',
-  '/assets/sonora/sonora-brand-4.jpg',
-  '/assets/sonora/sonora-brand-5.jpg',
+  { src: '/assets/sonora/sonora-brand-1.jpg', alt: 'Sonora Brand Design 1' },
+  { src: '/assets/sonora/sonora-brand-2.jpg', alt: 'Sonora Brand Design 2' },
+  { src: '/assets/sonora/sonora-brand-3.jpg', alt: 'Sonora Brand Design 3' },
+  { src: '/assets/sonora/sonora-brand-4.jpg', alt: 'Sonora Brand Design 4' },
+  { src: '/assets/sonora/sonora-brand-5.jpg', alt: 'Sonora Brand Design 5', full: true },
 ]
 
 function SonoraBody({ item }) {
@@ -1000,22 +1075,7 @@ function SonoraBody({ item }) {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
-          {SONORA_BRAND.map((src, i) => (
-            <Reveal key={src} delay={i * 0.06}>
-              <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)', gridColumn: i === 4 ? '1 / -1' : undefined }}>
-                <img
-                  src={src}
-                  alt={`Sonora Brand Design ${i + 1}`}
-                  style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.02)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                />
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Gallery items={SONORA_BRAND} cols={2} />
       </section>
 
       {/* Locandine / Social */}
@@ -1031,18 +1091,11 @@ function SonoraBody({ item }) {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', maxWidth: '33%', overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)' }}>
-              <img
-                src="/assets/sonora/sonora-locandina.jpg"
-                alt="Sonora — Locandina Social"
-                style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                loading="lazy"
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.02)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-              />
-            </div>
-          </Reveal>
+          <Gallery
+            className="shots--poster"
+            cols={1}
+            items={[{ src: '/assets/sonora/sonora-locandina.jpg', alt: 'Sonora — Locandina Social' }]}
+          />
 
           <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
             <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1074,22 +1127,7 @@ function SanitariaBody() {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          {SANITARIA_IMAGES.map((src, i) => (
-            <Reveal key={src} delay={i * 0.07}>
-              <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)' }}>
-                <img
-                  src={src}
-                  alt={`Sanitaria ${i + 1}`}
-                  style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                />
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Gallery items={SANITARIA_IMAGES.map((src, i) => ({ src, alt: `Sanitaria ${i + 1}` }))} cols={3} />
 
         <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1123,22 +1161,7 @@ function SantorsoBody() {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          {SANTORSO_IMAGES.map((src, i) => (
-            <Reveal key={src} delay={i * 0.07}>
-              <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)' }}>
-                <img
-                  src={src}
-                  alt={`Sant'Orso ${i + 1}`}
-                  style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                />
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Gallery items={SANTORSO_IMAGES.map((src, i) => ({ src, alt: `Sant'Orso ${i + 1}` }))} cols={3} />
 
         <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1162,20 +1185,11 @@ function LuciaBody() {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'flex', justifyContent: 'flex-start' }}>
-          <Reveal>
-            <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)', maxWidth: 560 }}>
-              <img
-                src="/assets/lucia/lucia-1.jpg"
-                alt="Lucia Pierini — creatività social"
-                style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                loading="eager"
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-              />
-            </div>
-          </Reveal>
-        </div>
+        <Gallery
+          className="shots--lead"
+          cols={1}
+          items={[{ src: '/assets/lucia/lucia-1.jpg', alt: 'Lucia Pierini — creatività social' }]}
+        />
 
         <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1211,9 +1225,9 @@ function MaEngBody() {
 }
 
 const TIGUIDO_MEDIA = [
-  { type: 'img', src: '/assets/tiguido/tiguido-1.jpg' },
+  { src: '/assets/tiguido/tiguido-1.jpg', alt: 'Ti Guido nella Storia 1' },
   { type: 'video', src: '/assets/tiguido/tiguido.mp4' },
-  { type: 'img', src: '/assets/tiguido/tiguido-2.jpg' },
+  { src: '/assets/tiguido/tiguido-2.jpg', alt: 'Ti Guido nella Storia 2' },
 ]
 
 function TiGuidoBody() {
@@ -1230,30 +1244,7 @@ function TiGuidoBody() {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          {TIGUIDO_MEDIA.map((m, i) => (
-            <Reveal key={m.src} delay={i * 0.07}>
-              <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)' }}>
-                {m.type === 'video' ? (
-                  <video
-                    src={m.src}
-                    autoPlay muted loop playsInline preload="metadata"
-                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <img
-                    src={m.src}
-                    alt={`Ti Guido nella Storia ${i + 1}`}
-                    style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                  />
-                )}
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Gallery items={TIGUIDO_MEDIA} cols={3} />
 
         <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1284,22 +1275,7 @@ function SiderealBody() {
           </p>
         </Reveal>
 
-        <div style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          {SIDEREAL_IMAGES.map((src, i) => (
-            <Reveal key={src} delay={i * 0.07}>
-              <div style={{ overflow: 'hidden', borderRadius: '1rem', border: '1px solid var(--line)' }}>
-                <img
-                  src={src}
-                  alt={`Sidereal ${i + 1}`}
-                  style={{ width: '100%', display: 'block', objectFit: 'cover', transition: 'transform .7s cubic-bezier(.19,1,.22,1)' }}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-                />
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Gallery items={SIDEREAL_IMAGES.map((src, i) => ({ src, alt: `Sidereal ${i + 1}` }))} cols={3} />
 
         <div className="cta-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 4rem)' }}>
           <Magnetic to="/lab" className="btn btn-fill">Torna ai progetti <Arrow s={15} /></Magnetic>
@@ -1318,6 +1294,7 @@ const SCATOLIFICIO_IMAGES = [
 ]
 
 function ScatolificioBody() {
+  const [zoom, setZoom] = useState(null)
   return (
     <>
       <section className="detail-body wrap">
@@ -1342,9 +1319,10 @@ function ScatolificioBody() {
         <div className="feed-grid">
           {SCATOLIFICIO_IMAGES.map((src, i) => (
             <Reveal key={src} delay={i * 0.06}>
-              <div className="feed-item">
+              <button type="button" className="feed-item" onClick={() => setZoom(src)} aria-label="Ingrandisci immagine">
                 <img src={src} alt={`Scatolificio Artigiano — post ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} />
-              </div>
+                <span className="shot-zoom"><ZoomGlyph /></span>
+              </button>
             </Reveal>
           ))}
         </div>
@@ -1354,6 +1332,9 @@ function ScatolificioBody() {
           <Magnetic to="/contatti" className="btn btn-ghost">Parliamone</Magnetic>
         </div>
       </section>
+      <AnimatePresence>
+        {zoom && <Lightbox src={zoom} alt="Scatolificio Artigiano" onClose={() => setZoom(null)} />}
+      </AnimatePresence>
     </>
   )
 }
