@@ -9,6 +9,32 @@ import { getGalleryItem, gradientFor } from './galleryData'
 const EASE = [0.19, 1, 0.22, 1]
 const reduceMotion = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+/* ----------------------------------------------------------------
+   Lock dello scroll a conteggio: più componenti (menu mobile, pagina
+   Lab, lightbox) bloccano lo scroll del body. Scrivere direttamente
+   document.body.style.overflow li faceva litigare — con AnimatePresence
+   mode="wait" l'ordine di mount/unmount fra le rotte non è garantito, e
+   il body restava bloccato ("non si clicca più nulla"). Un contatore
+   garantisce che il lock si sciolga solo quando l'ultimo lo rilascia.
+---------------------------------------------------------------- */
+let scrollLocks = 0
+function lockScroll() {
+  scrollLocks += 1
+  if (scrollLocks === 1) document.body.style.overflow = 'hidden'
+}
+function unlockScroll() {
+  scrollLocks = Math.max(0, scrollLocks - 1)
+  if (scrollLocks === 0) document.body.style.overflow = ''
+}
+/* Hook: blocca lo scroll finché `active` è true, rilasciando in modo sicuro. */
+function useScrollLock(active) {
+  useEffect(() => {
+    if (!active) return
+    lockScroll()
+    return unlockScroll
+  }, [active])
+}
+
 // Hero: video showreel "agenzia" scaricato da Mixkit (royalty-free, no attribution).
 // Alternativa più blu: '/video/hero-alt-blue.mp4'
 const HERO_VIDEO = '/video/hero-showreel.mp4'
@@ -280,9 +306,13 @@ function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   // chiudi il menu mobile a ogni cambio rotta + blocca lo scroll quando è aperto
   useEffect(() => { setMenuOpen(false) }, [pathname])
+  useScrollLock(menuOpen)
+  // chiusura con Escape quando il menu è aperto
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (!menuOpen) return
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [menuOpen])
   useEffect(() => {
     // il colore dell'hero dipende dalla rotta (home/lab scuri, resto chiaro):
@@ -324,7 +354,7 @@ function Nav() {
       </div>
 
       {/* Menu mobile a tutto schermo */}
-      <div className={`nav-mobile ${menuOpen ? 'is-open' : ''}`}>
+      <div className={`nav-mobile ${menuOpen ? 'is-open' : ''}`} inert={menuOpen ? undefined : true} aria-hidden={!menuOpen}>
         <NavLink className="nav-mobile-link" to="/" end onClick={() => setMenuOpen(false)}>Home</NavLink>
         <NavLink className="nav-mobile-link" to="/lab" onClick={() => setMenuOpen(false)}>Lab</NavLink>
         <NavLink className="nav-mobile-link" to="/contatti" onClick={() => setMenuOpen(false)}>Contatti</NavLink>
@@ -508,10 +538,25 @@ const REEL = [
 
 function Tile({ item, n }) {
   const vref = useRef(null)
+  const tileRef = useRef(null)
   const play = () => { if (!reduceMotion()) vref.current?.play().catch(() => {}) }
   const stop = () => { vref.current?.pause() }
+  // Su touch non c'è hover: il video parte/si ferma quando entra/esce dallo schermo
+  // (così la tile vive anche da mobile, senza decodificare video fuori vista).
+  useEffect(() => {
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    if (!coarse || reduceMotion()) return
+    const el = tileRef.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) play(); else stop() },
+      { threshold: 0.4 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
   return (
-    <div className="tile" data-cursor onMouseEnter={play} onMouseLeave={stop}>
+    <div className="tile" data-cursor ref={tileRef} onMouseEnter={play} onMouseLeave={stop}>
       <div className="tile-media">
         <video ref={vref} muted loop playsInline preload="metadata"><source src={item.src} type="video/mp4" /></video>
         <span className="tile-num">{String(n).padStart(2, '0')}</span>
@@ -985,20 +1030,26 @@ function SphereSection() {
 ================================================================ */
 
 function Lightbox({ src, alt = '', onClose }) {
+  const closeRef = useRef(null)
+  useScrollLock(true)
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
+    // sposta il focus nel dialog e lo ripristina alla chiusura
+    const prevFocus = document.activeElement
+    closeRef.current?.focus()
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      if (prevFocus instanceof HTMLElement) prevFocus.focus()
+    }
   }, [onClose])
 
   return createPortal(
     <motion.div
-      className="lightbox" onClick={onClose} role="dialog" aria-modal="true"
+      className="lightbox" onClick={onClose} role="dialog" aria-modal="true" aria-label={alt || 'Immagine ingrandita'}
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
     >
-      <button type="button" className="lightbox-x" aria-label="Chiudi" onClick={onClose}>
+      <button ref={closeRef} type="button" className="lightbox-x" aria-label="Chiudi" onClick={onClose}>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
       </button>
       <motion.img
@@ -1478,10 +1529,7 @@ function DetailPage() {
 }
 
 function LabPage() {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
+  useScrollLock(true)
   return <SphereSection />
 }
 

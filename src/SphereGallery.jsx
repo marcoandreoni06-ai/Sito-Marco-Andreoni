@@ -211,13 +211,19 @@ export default function SphereGallery() {
   useEffect(() => {
     const mount = mountRef.current
     if (!mount) return
+    const veil = overlayRef.current   // nodo stabile per tutta la vita dell'effetto
+
+    // Capacità del dispositivo: su mobile (puntatore "coarse", niente hover)
+    // alleggeriamo il rendering e saltiamo il raycast hover per-frame.
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100)
     camera.position.set(0, 0, 0.001) // praticamente al centro della sfera
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+    const renderer = new THREE.WebGLRenderer({ antialias: !isCoarse, alpha: true, powerPreference: 'high-performance' })
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCoarse ? 1.5 : 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     mount.appendChild(renderer.domElement)
     renderer.domElement.style.display = 'block'
@@ -267,8 +273,9 @@ export default function SphereGallery() {
         v.style.cssText = 'position:absolute;left:-9999px;top:0;width:2px;height:2px;opacity:0;pointer-events:none'
         mount.appendChild(v)
         v.play().catch(() => {})
-        // non deve mai fermarsi: se va in pausa lo riavvio
-        v.addEventListener('pause', () => { if (!closing) v.play().catch(() => {}) })
+        // non deve mai fermarsi mentre è visibile: se va in pausa lo riavvio
+        // (ma non quando la tab è nascosta o stiamo smontando)
+        v.addEventListener('pause', () => { if (!closing && !document.hidden) v.play().catch(() => {}) })
         v.addEventListener('ended', () => { if (!closing) { v.currentTime = 0; v.play().catch(() => {}) } })
         videos.push(v)
         tex = new THREE.VideoTexture(v)
@@ -331,11 +338,15 @@ export default function SphereGallery() {
     const raycaster = new THREE.Raycaster()
     const ndc = new THREE.Vector2()
     let hovered = null
+    let pointerMoved = false
 
-    const rect = () => renderer.domElement.getBoundingClientRect()
+    // rect del canvas in cache: ricalcolato solo su resize/scroll, non a ogni
+    // pointermove (getBoundingClientRect è un reflow → jank su mobile).
+    let cachedRect = renderer.domElement.getBoundingClientRect()
+    const refreshRect = () => { cachedRect = renderer.domElement.getBoundingClientRect() }
 
     function setNdc(e) {
-      const r = rect()
+      const r = cachedRect
       ndc.x = ((e.clientX - r.left) / r.width) * 2 - 1
       ndc.y = -((e.clientY - r.top) / r.height) * 2 + 1
     }
@@ -355,6 +366,7 @@ export default function SphereGallery() {
     }
     function onMove(e) {
       setNdc(e)
+      pointerMoved = true
       if (dragging) {
         const dx = e.clientX - lastX, dy = e.clientY - lastY
         lastX = e.clientX; lastY = e.clientY
@@ -370,6 +382,7 @@ export default function SphereGallery() {
       if (!dragging) return
       dragging = false
       renderer.domElement.style.cursor = 'grab'
+      renderer.domElement.releasePointerCapture?.(e.pointerId)
       const dt = performance.now() - downT
       // tap = poco movimento + breve → apri card
       if (moved < 9 && dt < 420 && !transitioning) {
@@ -380,6 +393,12 @@ export default function SphereGallery() {
     }
 
     function onLeave() { dragging = false }
+    // gesto annullato (es. cambio rotta / multitouch): rilascia tutto, niente stato bloccato
+    function onCancel(e) {
+      dragging = false
+      renderer.domElement.style.cursor = 'grab'
+      renderer.domElement.releasePointerCapture?.(e.pointerId)
+    }
 
     function openCard(mesh) {
       transitioning = true
@@ -413,7 +432,9 @@ export default function SphereGallery() {
     el.addEventListener('pointerdown', onDown)
     window.addEventListener('pointermove', onMove)
     window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onCancel)
     el.addEventListener('pointerleave', onLeave)
+    window.addEventListener('scroll', refreshRect, { passive: true })
 
     // ---- resize ----
     function resize() {
@@ -422,6 +443,7 @@ export default function SphereGallery() {
       renderer.setSize(w, h, false)
       camera.aspect = w / h
       camera.updateProjectionMatrix()
+      refreshRect()
     }
     const ro = new ResizeObserver(resize)
     ro.observe(mount)
@@ -461,18 +483,23 @@ export default function SphereGallery() {
       current.x += (target.x - current.x) * k
       current.y += (target.y - current.y) * k
 
-      // parallasse dolce verso il cursore (vita anche da fermi)
-      pointerSm.x += (ndc.x - pointerSm.x) * (reduce ? 1 : 0.05)
-      pointerSm.y += (ndc.y - pointerSm.y) * (reduce ? 1 : 0.05)
-      const par = transitioning ? 0 : 0.06
+      // parallasse dolce verso il cursore (vita anche da fermi) — solo dove c'è
+      // un vero cursore: su touch è inutile e costa.
+      const par = (transitioning || !canHover) ? 0 : 0.06
+      if (canHover) {
+        pointerSm.x += (ndc.x - pointerSm.x) * (reduce ? 1 : 0.05)
+        pointerSm.y += (ndc.y - pointerSm.y) * (reduce ? 1 : 0.05)
+      }
       group.rotation.x = current.x + pointerSm.y * par
       group.rotation.y = current.y + pointerSm.x * par
 
       // intro: scala dolce dell'intera sfera
       group.scale.setScalar(0.86 + 0.14 * introObj.v)
 
-      // hover (solo a riposo)
-      if (!dragging && !transitioning) {
+      // hover (solo a riposo, e solo con un vero cursore: su touch niente hover,
+      // così evitiamo un raycast su ~48 piani a ogni frame).
+      if (canHover && !dragging && !transitioning && pointerMoved) {
+        pointerMoved = false
         const hit = pick()
         if (hit !== hovered) {
           hovered = hit
@@ -503,24 +530,45 @@ export default function SphereGallery() {
     }
     frame()
 
+    // Tab nascosta: ferma il loop e i video (niente GPU/batteria sprecata);
+    // alla riapertura riparte senza salto temporale.
+    function onVisibility() {
+      if (document.hidden) {
+        cancelAnimationFrame(raf); raf = 0
+        videos.forEach((v) => v.pause())
+      } else {
+        videos.forEach((v) => { if (!closing) v.play().catch(() => {}) })
+        if (!raf) { clock.getDelta(); frame() }
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
     // ---- cleanup ----
     return () => {
       closing = true
       cancelAnimationFrame(raf)
+      document.removeEventListener('visibilitychange', onVisibility)
       ro.disconnect()
       el.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onCancel)
+      window.removeEventListener('scroll', refreshRect)
       el.removeEventListener('pointerleave', onLeave)
+      if (veil) { gsap.killTweensOf(veil); veil.style.opacity = '0' }
       gsap.killTweensOf(camera.position); gsap.killTweensOf(camera); gsap.killTweensOf(target); gsap.killTweensOf(introObj)
       meshes.forEach((m) => { gsap.killTweensOf(m.material); if (m.userData.overlayMat) gsap.killTweensOf(m.userData.overlayMat) })
       geo.dispose()
       textures.forEach((t) => t.dispose())
       overlayTextures.forEach((t) => t.dispose())
       roundMask.dispose()
-      videos.forEach((v) => { v.pause(); v.removeAttribute('src'); v.load(); if (v.parentNode) v.parentNode.removeChild(v) })
+      videos.forEach((v) => { v.onpause = null; v.onended = null; v.pause(); v.removeAttribute('src'); v.load(); if (v.parentNode) v.parentNode.removeChild(v) })
       meshes.forEach((m) => { m.material.dispose(); if (m.userData.overlayMat) m.userData.overlayMat.dispose() })
       renderer.dispose()
+      // CRUCIALE su mobile: dispose() non libera il contesto WebGL della GPU.
+      // Senza questo, ogni visita a /lab crea un nuovo contesto finché il
+      // browser ne scarta di vecchi e la GPU si blocca (la pagina "si freeza").
+      renderer.forceContextLoss()
       if (renderer.domElement.parentNode === mount) mount.removeChild(renderer.domElement)
     }
   }, [navigate])

@@ -147,7 +147,7 @@ section { position: relative; }
 .nav-talk:hover .arr { transform: translate(3px, -3px); }
 
 /* Hamburger (due lineette) — visibile solo su mobile, eredita il colore della nav */
-.nav-burger { display: none; flex-direction: column; justify-content: center; gap: 6px; width: 36px; height: 36px;
+.nav-burger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 6px; width: 44px; height: 44px;
   background: none; border: 0; padding: 0; cursor: pointer; color: inherit; position: relative; z-index: 60; }
 .nav-burger span { display: block; width: 26px; height: 2px; background: currentColor; border-radius: 2px;
   transition: transform .35s var(--ease), opacity .35s var(--ease); }
@@ -627,7 +627,7 @@ body.on-lab { background: #060608; }
 /* Lightbox a tutto schermo */
 .lightbox { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: clamp(1rem, 4vw, 3rem); background: rgba(8,7,6,.88); backdrop-filter: blur(8px); cursor: zoom-out; }
 .lightbox-img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; border-radius: .35rem; box-shadow: 0 40px 120px -30px rgba(0,0,0,.85); cursor: default; }
-.lightbox-x { position: fixed; top: clamp(1rem, 3vw, 1.6rem); right: clamp(1rem, 3vw, 1.6rem); width: 2.6rem; height: 2.6rem; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: background .3s var(--ease); }
+.lightbox-x { position: fixed; top: clamp(1rem, 3vw, 1.6rem); right: clamp(1rem, 3vw, 1.6rem); width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; cursor: pointer; transition: background .3s var(--ease); }
 .lightbox-x:hover { background: rgba(255,255,255,.18); }
 
 /* Card case-study cliccabili (l'intera card è un link) */
