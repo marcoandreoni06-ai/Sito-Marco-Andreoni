@@ -9,7 +9,6 @@
 const PALETTE = [230, 232, 248, 260, 212, 200, 280, 222, 205, 268, 24, 16]
 
 const REAL = [
-  { slug: 'test',          title: 'Test',         tag: 'Client',            hue: 230 },
   { slug: 'sonora',        title: 'Sonora',       tag: 'Brand & Web',       hue: 265, video: '/video/Sonora.mp4' },
   { slug: 'scatolificio',  title: 'Scatolificio', tag: 'Social Media',      hue: 24,  video: '/video/scatolificio.mp4' },
   { slug: 'sidereal',      title: 'Sidereal',     tag: 'Brand & Foto',      hue: 212, video: '/video/sidereal.mp4' },

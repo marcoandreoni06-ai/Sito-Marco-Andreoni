@@ -90,7 +90,7 @@ const PAGES = {
   },
   '/contatti': {
     title: 'Contatti — Marco Andreoni',
-    desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 15 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
+    desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 30 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
   },
   '/privacy': {
     title: 'Privacy & Cookie Policy — Marco Andreoni',

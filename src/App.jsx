@@ -600,12 +600,6 @@ const FILTERS = [
 
 const PROJECTS = [
   {
-    id: 'test', title: 'Test', tags: ['brand', 'ai'], tagLabels: ['Client', 'Sphere Gallery'], to: '/lab/test',
-    contesto: 'Esperimento di galleria immersiva in WebGL: i lavori tappezzano la superficie interna di una sfera navigabile.',
-    intervento: 'Galleria sferica costruita in Three.js + GSAP, con drag inerziale stile Lenis e transizione di apertura card → pagina.',
-    asset: 'Componente gallery riutilizzabile, performante e su misura, pronto per esporre qualsiasi portfolio.',
-  },
-  {
     id: 'sonora', title: 'Sonora', tags: ['brand', 'social'], tagLabels: ['Brand & Web Design', 'Social Media'], to: '/lab/sonora',
     contesto: "Target Gen-Z notturno in cerca di un'identità visiva underground e riconoscibile.",
     intervento: "Ecosistema grafico underground: palette scura, griglia social coesa e linguaggio visivo distintivo costruito dalla radice.",
@@ -934,7 +928,7 @@ function Dove() {
 }
 
 const FAQ = [
-  { q: 'Quanto costa una consulenza?', a: 'La prima call di 15 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
+  { q: 'Quanto costa una consulenza?', a: 'La prima call di 30 minuti è gratuita e senza impegno. Solo dopo, se decidiamo di lavorare insieme, ti presento un preventivo dettagliato.' },
   { q: 'Offri assistenza anche dopo il progetto?', a: 'Sì, ogni progetto include assistenza post-lancio. Per gli aggiornamenti successivi possiamo concordare un piano di manutenzione.' },
   { q: 'Lavori anche con partite IVA?', a: 'Certo. Lavoro con partite IVA, ditte individuali e società, con fattura per ogni prestazione.' },
   { q: 'Accetti pagamenti rateali?', a: 'Per i progetti più consistenti valutiamo insieme un piano di pagamento personalizzato.' },
@@ -995,8 +989,8 @@ function HomePage() {
       <CtaBlock
         titleA="Il primo passo è"
         titleB={<>una <span className="serif">chiacchierata</span>.</>}
-        body="Niente preventivi forzati. 15 minuti gratuiti: mi racconti cosa ti blocca e, se c'è feeling, costruiamo qualcosa insieme."
-        cta="Prenota i tuoi 15 minuti gratuiti"
+        body="Niente preventivi forzati. 30 minuti gratuiti: mi racconti cosa ti blocca e, se c'è feeling, costruiamo qualcosa insieme."
+        cta="Prenota i tuoi 30 minuti gratuiti"
       />
     </>
   )
@@ -1672,7 +1666,7 @@ const PAGE_META = {
   },
   '/contatti': {
     title: 'Contatti — Marco Andreoni',
-    desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 15 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
+    desc: 'Contatta Marco Andreoni e prenota una consulenza gratuita di 30 minuti per sviluppo web, automazioni AI e comunicazione digitale.',
   },
   '/privacy': {
     title: 'Privacy & Cookie Policy — Marco Andreoni',
